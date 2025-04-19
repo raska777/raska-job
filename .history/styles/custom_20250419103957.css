@@ -1,0 +1,145 @@
+/* ===== BASE STYLES ===== */
+.raskajob-container {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  
+  /* ===== ANIMATED HEADER ===== */
+  .raskajob-header {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    padding: 1rem 1rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Animated floating bubbles */
+  .raskajob-header-bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .raskajob-header-bubbles span {
+    position: absolute;
+    bottom: -100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 15s linear infinite;
+  }
+  
+  .raskajob-header-bubbles span:nth-child(1) {
+    width: 60px;
+    height: 60px;
+    left: 10%;
+    animation-duration: 15s;
+  }
+  
+  .raskajob-header-bubbles span:nth-child(2) {
+    width: 80px;
+    height: 80px;
+    left: 20%;
+    animation-duration: 12s;
+    animation-delay: 2s;
+  }
+  
+  .raskajob-header-bubbles span:nth-child(3) {
+    width: 100px;
+    height: 100px;
+    left: 35%;
+    animation-duration: 18s;
+    animation-delay: 4s;
+  }
+  
+  .raskajob-header-bubbles span:nth-child(4) {
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    animation-duration: 14s;
+    animation-delay: 1s;
+  }
+  
+  .raskajob-header-bubbles span:nth-child(5) {
+    width: 70px;
+    height: 70px;
+    left: 65%;
+    animation-duration: 16s;
+    animation-delay: 3s;
+  }
+  
+  .raskajob-header-bubbles span:nth-child(6) {
+    width: 90px;
+    height: 90px;
+    left: 80%;
+    animation-duration: 13s;
+    animation-delay: 5s;
+  }
+  
+  /* Header content */
+  .raskajob-header-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Main title with animation */
+  .raskajob-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    color: white;
+    margin: 2rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: titleGlow 3s ease-in-out infinite alternate;
+  }
+  
+  /* ===== ANIMATIONS ===== */
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      bottom: -100px;
+    }
+    100% {
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      bottom: 100%;
+    }
+  }
+  
+  @keyframes titleGlow {
+    from {
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+                   0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    to {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                   0 0 20px rgba(255, 255, 255, 0.5),
+                   0 0 30px rgba(255, 255, 255, 0.3);
+    }
+  }
+  
+  /* ===== RESPONSIVE DESIGN ===== */
+  @media (min-width: 768px) {
+    .raskajob-header {
+      padding-bottom: 8rem;
+    }
+    
+    .raskajob-main-title {
+      font-size: 2.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .raskajob-header {
+      padding-bottom: 10rem;
+    }
+    
+    .raskajob-main-title {
+      font-size: 3rem;
+    }
+  }
