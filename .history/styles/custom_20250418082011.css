@@ -1,0 +1,351 @@
+/* Base styles */
+.raskajob-container {
+    min-height: 100vh;
+    background-color: #f0f9ff;
+  }
+  
+  /* Header section - Mobile first approach */
+  .raskajob-header {
+    background: linear-gradient(to bottom, #3b82f6, #2563eb);
+    padding: 1rem 1rem 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .raskajob-header-background {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+  }
+  
+  /* Header circles - hidden on mobile */
+  .raskajob-header-circle {
+    display: none;
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+  }
+  
+  /* Navigation elements */
+  .raskajob-notification,
+  .raskajob-profile {
+    position: absolute;
+    top: 1rem;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-notification {
+    left: 1rem;
+  }
+  
+  .raskajob-profile {
+    right: 1rem;
+  }
+  
+  .raskajob-profile-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .raskajob-profile-icon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Search components */
+  .raskajob-search-container {
+    width: 90%;
+    margin: 3rem auto 0 auto;
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .raskajob-search-box {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .raskajob-search-input {
+    padding: 0.75rem 1rem;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .raskajob-search-button {
+    background-color: #1d4ed8;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .raskajob-search-button:hover {
+    background-color: #1e40af;
+  }
+  
+  /* Content styles */
+  .raskajob-main-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-align: center;
+    color: transparent;
+    margin: 1.5rem auto 0.5rem auto;
+    background: linear-gradient(90deg, #ffffff, #93c5fd, #ffffff);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: text-gradient 3s linear infinite;
+  }
+  
+  .raskajob-subtitle {
+    font-size: 1rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    width: 90%;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-content {
+    width: 90%;
+    margin: -2rem auto 0 auto;
+    padding: 1.5rem 0;
+  }
+  
+  .raskajob-results-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+  
+  /* Job listings grid */
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Utility styles */
+  .raskajob-alert {
+    background-color: #fef9c3;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-spinner {
+    animation: spin 1s linear infinite;
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-top: 2px solid #3b82f6;
+    border-bottom: 2px solid #3b82f6;
+    margin: 2rem auto;
+  }
+  
+  /* Search panel - mobile optimized */
+  .search-panel-container {
+    width: 90%;
+    margin: 0 auto;
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  .search-panel-box {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .search-input,
+  .city-selector {
+    padding: 12px 16px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .search-button {
+    background: #2563eb;
+    color: white;
+    padding: 12px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  /* Pagination - mobile friendly */
+  .pagination {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 1.5rem;
+  }
+  
+  .pagination-button,
+  .page-button {
+    padding: 0.5rem;
+    min-width: 36px;
+  }
+  
+  /* Language switcher */
+  .language-switcher {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .language-switcher button {
+    padding: 0.25rem 0.5rem;
+    font-size: 14px;
+  }
+  
+  /* Tablet and larger screens */
+  @media (min-width: 640px) {
+    .raskajob-search-box {
+      flex-direction: row;
+    }
+    
+    .raskajob-search-input {
+      border-radius: 0.5rem 0 0 0.5rem;
+      margin-bottom: 0;
+      flex-grow: 1;
+    }
+    
+    .raskajob-search-button {
+      border-radius: 0 0.5rem 0.5rem 0;
+      padding: 0.75rem 1.5rem;
+    }
+    
+    .jobs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .search-panel-box {
+      flex-direction: row;
+    }
+    
+    .search-input,
+    .city-selector {
+      border-bottom: none;
+    }
+    
+    .city-selector {
+      border-left: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+    }
+  }
+  
+  /* Desktop screens */
+  @media (min-width: 1024px) {
+    .raskajob-header {
+      padding-bottom: 6rem;
+    }
+    
+    .raskajob-header-circle {
+      display: block;
+    }
+    
+    .raskajob-header-circle-1 {
+      top: 2.5rem;
+      left: 5rem;
+      width: 10rem;
+      height: 10rem;
+      animation: float-slow 8s ease-in-out infinite;
+    }
+    
+    .raskajob-header-circle-2 {
+      top: 33%;
+      right: 25%;
+      width: 8rem;
+      height: 8rem;
+      animation: float-medium 6s ease-in-out infinite;
+    }
+    
+    .raskajob-header-circle-3 {
+      bottom: 2.5rem;
+      right: 5rem;
+      width: 9rem;
+      height: 9rem;
+      animation: float-fast 4s ease-in-out infinite;
+    }
+    
+    .raskajob-main-title {
+      font-size: 2.25rem;
+    }
+    
+    .raskajob-subtitle {
+      font-size: 1.125rem;
+    }
+    
+    .jobs-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .raskajob-content {
+      max-width: 1200px;
+      padding: 2rem 1rem;
+    }
+  }
+  
+  /* Animations */
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-15px) translateX(10px); }
+  }
+  
+  @keyframes float-medium {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(10px) translateX(-15px); }
+  }
+  
+  @keyframes float-fast {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-8px) translateX(-8px); }
+  }
+  
+  @keyframes text-gradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }

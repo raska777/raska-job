@@ -1,0 +1,27 @@
+import * as nodemailer from 'nodemailer';
+
+async function sendTestEmail() {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'your-email@gmail.com',
+      pass: 'your-password'
+    }
+  });
+
+  const mailOptions = {
+    from: 'your-email@gmail.com',
+    to: 'recipient@example.com',
+    subject: 'Test Email',
+    text: 'This is a test email sent from Node.js!'
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
+
+sendTestEmail();

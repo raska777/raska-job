@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* global.css */
+/* global.css */
+html, body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb; /* Light background */
+    margin: 0;
+    padding: 0;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
+  h2, p {
+    margin-bottom: 8px;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  

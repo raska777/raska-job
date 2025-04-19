@@ -1,0 +1,31 @@
+import nodemailer from "nodemailer";
+
+const main = async () => {
+  // Transporter yaratish
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST, // SMTP server manzili, .env faylda o'rnatish
+    port: Number(process.env.SMTP_PORT), // SMTP porti (masalan, 587)
+    secure: false, // Port 465 uchun true, boshqa holatlar uchun false bo'lishi mumkin
+    auth: {
+      user: process.env.EMAIL_USER, // Email foydalanuvchisi (masalan, smtp username)
+      pass: process.env.EMAIL_PASS, // Email parol (masalan, SMTP paroli)
+    },
+  });
+
+  try {
+    // Email yuborish
+    const info = await transporter.sendMail({
+      from: `"Raska Platformasi" <${process.env.EMAIL_USER}>`, // Yuboruvchi manzil
+      to: "abdurasulodiljanov@gmail.com", // Qabul qiluvchi manzil
+      subject: "SMTP test", // Mavzu
+      text: "Bu test email xabari", // Oddiy matn xabari
+      html: "<p>Bu test email xabari</p>", // HTML formatida yuborish
+    });
+
+    console.log("✅ Email yuborildi:", info.response); // Email yuborilganini tasdiqlash
+  } catch (error: any) {
+    console.error("❌ Email yuborishda xato:", error.response || error); // Xato haqida ma'lumot
+  }
+};
+
+main();

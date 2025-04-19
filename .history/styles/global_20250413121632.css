@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* global.css */
+/* global.css */
+html, body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb; /* Light background */
+    margin: 0;
+    padding: 0;
+  }
+  
+  button {
+    cursor: pointer;
+    width: 60px;
+  }
+  
+  h2, p {
+    margin-bottom: 8px;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* Global CSS or component-specific CSS */
+.card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .card-button {
+    background-color: #3182ce;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .card-button:hover {
+    background-color: #2b6cb0;
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .header {
+    background-color: green;
+  }

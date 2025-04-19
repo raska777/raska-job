@@ -1,0 +1,502 @@
+/* Asosiy stil */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #3b82f6;
+    --text-white: #ffffff;
+    --text-light: #f0f9ff;
+    --bg-light: #f8fafc;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --transition: all 0.3s ease;
+  }
+  
+  .raskajob-container {
+    min-height: 100vh;
+    height: 100px;
+    background-color: var(--bg-light);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  
+  /* Header qismi */
+  .raskajob-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 0.75rem 1rem 5rem;
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+  }
+  
+  /* Header animatsiyalari */
+  .raskajob-header-background {
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+  }
+  
+  /* Navigatsiya elementlari */
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .auth-button {
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  
+  .login-button {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--text-white);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .login-button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  .register-button {
+    background-color: var(--text-white);
+    color: var(--primary-color);
+    border: 1px solid var(--text-white);
+  }
+  
+  .register-button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .profile-action {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-white);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .profile-action:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* Qidiruv bo‘limi */
+/* Qidiruv bo‘limi */
+.search-section {
+    margin-top: 2rem;
+    position: relative;
+    z-index: 5;
+  }
+  
+  .raskajob-search-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .raskajob-search-box {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  /* Select (All Cities) – input bilan bir xil kenglikda */
+  .raskajob-search-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    width: 100%;
+    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23667' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.646 6.146a.5.5 0 0 1 .708 0L8 8.793l2.646-2.647a.5.5 0 1 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); */
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .raskajob-search-select:hover {
+    background-color: #e2e8f0;
+    padding: 0.45rem 0.5rem;
+
+  }
+  
+  /* Input maydoni */
+  .raskajob-search-input {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #cbd5e1;
+    outline: none;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+    width: 100%;
+  }
+  
+  .raskajob-search-input::placeholder {
+    color: #94a3b8;
+  }
+  
+  /* Search button */
+  .raskajob-search-button {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 0.35rem 0.55rem;
+    border: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .raskajob-search-button:hover {
+    background-color: #1e40af;
+  }
+  
+  /* Responsive: kichik ekranlar */
+  @media (max-width: 640px) {
+    .raskajob-search-box {
+      padding: 1rem;
+    }
+  
+    .raskajob-search-input,
+    .raskajob-search-select,
+    .raskajob-search-button {
+      width: 100%;
+    }
+  }
+  
+  /* Kontent bo'limi */
+  .main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: -2.5rem auto 0;
+    padding: 0 1rem 2rem;
+    position: relative;
+  }
+  
+  .content-card {
+    background-color: var(--text-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+  }
+  
+  /* Sarlavhalar */
+  .raskajob-main-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--text-white);
+    margin: 1rem 0 0.5rem;
+    position: relative;
+    z-index: 5;
+  }
+  
+  .raskajob-subtitle {
+    font-size: 1rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+  }
+  
+  .raskajob-results-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: #1e293b;
+  }
+  
+  /* Ishlar gridi */
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  /* Xabar va yuklash indikatorlari */
+  .alert-message {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .alert-info {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-left: 4px solid #0ea5e9;
+  }
+  
+  .loading-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 3px solid rgba(59, 130, 246, 0.2);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+  }
+  
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .page-button {
+    padding: 0.5rem 0.75rem;
+    min-width: 2.5rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--text-white);
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .page-button.active {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-color: var(--primary-color);
+  }
+  
+  .page-button:hover:not(.active) {
+    background-color: #f1f5f9;
+  }
+  
+  /* Til almashtirish */
+  .language-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+  
+  .language-button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .language-button.active {
+    background-color: var(--text-white);
+    color: var(--primary-color);
+  }
+  
+  /* Tablet (640px+) */
+  @media (min-width: 640px) {
+    .raskajob-header {
+      padding-bottom: 6rem;
+    }
+    
+    .auth-button {
+      padding: 0.6rem 1.1rem;
+      font-size: 0.95rem;
+      color: #0ea5e9;
+    }
+    
+    .profile-action {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    
+    .raskajob-search-box {
+      flex-direction: row;
+    }
+    
+    .raskajob-search-button {
+      padding: 0 1.5rem;
+    }
+    
+    .jobs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .raskajob-main-title {
+      font-size: 2rem;
+    }
+  }
+  
+  /* Katta ekranlar (1024px+) */
+  @media (min-width: 1024px) {
+    .raskajob-header {
+      padding-bottom: 8rem;
+    }
+    
+    .main-content {
+      padding: 0 1.5rem 3rem;
+      margin-top: -3.5rem;
+    }
+    
+    .content-card {
+      padding: 2rem;
+    }
+    
+    .jobs-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .raskajob-main-title {
+      font-size: 2.5rem;
+    }
+    
+    .raskajob-results-title {
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* Animatsiyalar */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { 
+      transform: translateY(20px); 
+      opacity: 0; 
+    }
+    to { 
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+  }
+  
+  /* Qo'shimcha effektlar */
+  .gradient-text {
+    background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 4s ease infinite;
+    background-size: 200% auto;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Maxsus scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  /* Navigatsiya konteyneri */
+.raskajob-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Profile qismi */
+  .raskajob-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f1f5f9;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .raskajob-profile:hover {
+    background-color: #e2e8f0;
+  }
+  
+  /* Profil ichidagi icon (Link) */
+  .raskajob-profile-icon {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #1e293b;
+  }
+  
+  /* "Profile" matni */
+  .raskajob-profile p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #1e293b;
+    font-weight: 500;
+  }
+  
+  /* Mobilga moslashuv */
+  @media (max-width: 600px) {
+    .raskajob-profile {
+      padding: 0.3rem 0.6rem;
+      gap: 0.3rem;
+    }
+  
+    .raskajob-profile p {
+      font-size: 0.85rem;
+    }
+  
+    .raskajob-profile-icon {
+      font-size: 1rem;
+    }
+  }
+  

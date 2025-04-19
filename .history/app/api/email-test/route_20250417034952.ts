@@ -1,0 +1,13 @@
+import { NextResponse } from 'next/server';
+import sendEmail from '@/lib/email';
+
+export async function POST(request: Request) {
+  try {
+    const { to, subject, text } = await request.json();
+    const result = await sendEmail(to, subject, text);
+    return NextResponse.json({ message: 'Email yuborildi!' }, { status: 200 });
+  } catch (error: unknown) {
+    console.error("Error:", error);  // Terminalda to‘liq chiqadi
+    return NextResponse.json({ error: 'Xatolik yuz berdi', details: error.message }, { status: 500 });
+  }
+}

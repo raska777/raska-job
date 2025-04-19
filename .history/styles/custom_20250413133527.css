@@ -1,0 +1,275 @@
+/* Main Layout */
+.raskajob-container {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header Section */
+  .raskajob-header {
+    background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .raskajob-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    padding: 1rem 0 6rem 0;
+  }
+  
+  /* Background Animation Elements */
+  .raskajob-header-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    overflow: hidden;
+  }
+  
+  .raskajob-header-circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    filter: blur(20px);
+  }
+  
+  .raskajob-header-circle-1 {
+    top: 20%;
+    left: 10%;
+    width: 300px;
+    height: 300px;
+    animation: float 12s ease-in-out infinite;
+  }
+  
+  .raskajob-header-circle-2 {
+    top: 50%;
+    right: 15%;
+    width: 200px;
+    height: 200px;
+    animation: float 8s ease-in-out infinite reverse;
+  }
+  
+  .raskajob-header-circle-3 {
+    bottom: 10%;
+    right: 25%;
+    width: 250px;
+    height: 250px;
+    animation: float 10s ease-in-out infinite 2s;
+  }
+  
+  /* Navigation Elements */
+  .raskajob-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .raskajob-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .raskajob-profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .raskajob-profile-icon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+  
+  /* Search Components */
+  .raskajob-search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .raskajob-search-box {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .raskajob-search-input {
+    flex-grow: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  .raskajob-search-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0 2rem;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .raskajob-search-button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Content Styles */
+  .raskajob-main-title {
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    color: white;
+    margin: 2rem 0 1rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .raskajob-subtitle {
+    font-size: 1.25rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Main Content Area */
+  .raskajob-main {
+    flex: 1;
+    padding: 2rem 0;
+  }
+  
+  .raskajob-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .raskajob-results-header {
+    margin-bottom: 2rem;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-results-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Job List Container */
+  .raskajob-joblist-container {
+    width: 100%;
+  }
+  
+  /* Utility Styles */
+  .raskajob-alert {
+    background-color: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+  }
+  
+  .raskajob-spinner {
+    animation: spin 1s linear infinite;
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    border: 3px solid rgba(59, 130, 246, 0.2);
+    border-top-color: #3b82f6;
+  }
+  
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-20px) translateX(10px); }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .raskajob-main-title {
+      font-size: 2.5rem;
+    }
+    
+    .raskajob-header-circle-1 {
+      width: 200px;
+      height: 200px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .raskajob-main-title {
+      font-size: 2rem;
+    }
+    
+    .raskajob-subtitle {
+      font-size: 1rem;
+    }
+    
+    .raskajob-search-box {
+      flex-direction: column;
+    }
+    
+    .raskajob-search-input {
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .raskajob-search-button {
+      border-radius: 0 0 8px 8px;
+      padding: 1rem;
+      width: 100%;
+    }
+    
+    .raskajob-header-circle {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .raskajob-main-title {
+      font-size: 1.75rem;
+    }
+    
+    .raskajob-nav {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .raskajob-profile {
+      margin-top: 1rem;
+    }
+  }

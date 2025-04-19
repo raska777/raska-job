@@ -1,0 +1,573 @@
+/* Base container styles */
+.raskajob-container {
+    min-height: 100vh;
+    background-color: #f0f9ff;
+  }
+  
+  /* Header section */
+  .raskajob-header {
+    background: linear-gradient(to bottom, #3b82f6, #2563eb);
+    padding: 1rem 1rem 5rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .raskajob-header-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+  }
+  
+  .raskajob-header-circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+  }
+  
+  .raskajob-header-circle-1 {
+    top: 2.5rem;
+    left: 5rem;
+    width: 10rem;
+    height: 10rem;
+    animation: float-slow 8s ease-in-out infinite;
+  }
+  
+  .raskajob-header-circle-2 {
+    top: 33%;
+    right: 25%;
+    width: 8rem;
+    height: 8rem;
+    animation: float-medium 6s ease-in-out infinite;
+  }
+  
+  .raskajob-header-circle-3 {
+    bottom: 2.5rem;
+    right: 5rem;
+    width: 9rem;
+    height: 9rem;
+    animation: float-fast 4s ease-in-out infinite;
+  }
+  
+  /* Navigation elements */
+  .raskajob-notification {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-profile {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-profile-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .raskajob-profile-icon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Search components */
+  .raskajob-search-container {
+    max-width: 42rem;
+    margin: 4rem auto 0 auto;
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .raskajob-search-box {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    padding: 0.25rem;
+    display: flex;
+  }
+  
+  .raskajob-search-input {
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+  
+  .raskajob-search-button {
+    background-color: #1d4ed8;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .raskajob-search-button:hover {
+    background-color: #1e40af;
+  }
+  
+  /* Content styles */
+  .raskajob-main-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    text-align: center;
+    color: transparent;
+    margin: 2rem auto 0.5rem auto;
+    background: linear-gradient(90deg, #ffffff, #93c5fd, #ffffff);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: text-gradient 3s linear infinite;
+  }
+  
+  .raskajob-subtitle {
+    font-size: 1.125rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 42rem;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-content {
+    width: 100%;
+    max-width: 56rem;
+    margin: -2.5rem auto 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .raskajob-results-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+  
+  /* Utility styles */
+  .raskajob-alert {
+    background-color: #fef9c3;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .raskajob-spinner {
+    animation: spin 1s linear infinite;
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    border-top: 2px solid #3b82f6;
+    border-bottom: 2px solid #3b82f6;
+  }
+  
+  /* Animations */
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-15px) translateX(10px); }
+  }
+  
+  @keyframes float-medium {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(10px) translateX(-15px); }
+  }
+  
+  @keyframes float-fast {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-8px) translateX(-8px); }
+  }
+  
+  @keyframes text-gradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .raskajob-main-title {
+      font-size: 1.75rem;
+    }
+    
+    .raskajob-header-circle-1,
+    .raskajob-header-circle-2,
+    .raskajob-header-circle-3 {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .raskajob-search-box {
+      flex-direction: column;
+    }
+    
+    .raskajob-search-input {
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .raskajob-search-button {
+      border-radius: 0.5rem;
+      width: 100%;
+    }
+  }
+  /* Yangi qidiruv paneli uchun stil */
+.search-panel-container {
+    max-width: 800px;
+    margin: 0 auto;
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  .search-panel-box {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .city-selector {
+    padding: 12px 16px;
+    border-left: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    border-top: none;
+    border-bottom: none;
+    background: #f8fafc;
+    color: #1e293b;
+    cursor: pointer;
+  }
+  
+  .search-button {
+    background: #2563eb;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .search-button:hover {
+    background: #1d4ed8;
+  }
+  
+  /* Animatsiya */
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* Yuklanish holati */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Xato holati */
+  .error-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fef2f2;
+    border-radius: 8px;
+    margin: 1rem 0;
+  }
+  
+  .error-message {
+    color: #dc2626;
+    margin-bottom: 1rem;
+  }
+  
+  .retry-button {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .retry-button:hover {
+    background-color: #b91c1c;
+  }
+  
+  /* Asosiy konteyner */
+  .job-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  /* Natijalar soni */
+  .results-summary {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+  
+  /* Ish e'lonlari gridi */
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Ish kartasi */
+  .job-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Kartaning header qismi */
+  .job-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .job-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #111827;
+  }
+  
+  .job-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .job-location, .job-type {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  /* Kartaning body qismi */
+  .job-body {
+    padding: 1.25rem;
+    flex-grow: 1;
+  }
+  
+  .job-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .job-details li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
+  
+  /* Kengaytirilgan kontent */
+  .job-expanded {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #e5e7eb;
+  }
+  
+  .job-expanded ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .job-expanded li {
+    font-size: 0.875rem;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .post-date {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.5rem;
+  }
+  
+  /* Toggle tugmasi */
+  .toggle-details-button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .toggle-details-button:hover {
+    text-decoration: underline;
+  }
+  
+  /* Natija topilmagan holat */
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6b7280;
+  }
+  
+  .no-results svg {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Paginatsiya */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  
+  .pagination-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    color: #4b5563;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: background-color 0.2s;
+  }
+  
+  .pagination-button:not(:disabled):hover {
+    background-color: #f3f4f6;
+  }
+  
+  .pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .page-numbers {
+    display: flex;
+    gap: 0.25rem;
+  }
+  
+  .page-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    color: #4b5563;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .page-button.active {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  
+  .page-button:not(.active):hover {
+    background-color: #f3f4f6;
+  }
+  
+  .page-ellipsis {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }

@@ -1,0 +1,200 @@
+/* styles/postjob.css */
+
+/* Main container styles */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  /* Heading styles */
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+  }
+  
+  /* Button base styles */
+  button {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  button:active {
+    transform: translateY(1px);
+  }
+  
+  /* Primary button */
+  button[type="button"]:first-of-type {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  button[type="button"]:first-of-type:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+  }
+  
+  /* Form styles */
+  form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Form field styles */
+  .flex.flex-col {
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+    font-size: 0.95rem;
+  }
+  
+  input {
+    padding: 1.75rem 1rem;
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+  }
+  
+  /* Button group styles */
+  .flex.space-x-4 {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  /* Submit button */
+  button[type="submit"] {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    flex: 1;
+  }
+  
+  button[type="submit"]:hover {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+  }
+  
+  /* Cancel button */
+  button[type="button"]:last-of-type {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    flex: 1;
+  }
+  
+  button[type="button"]:last-of-type:hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+  }
+  
+  /* Error message styles */
+  .text-red-500 {
+    color: #e74c3c;
+    padding: 0.75rem 1rem;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #e74c3c;
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  
+  /* Login prompt styles */
+  .text-red-600 {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #e74c3c;
+  }
+  
+  .text-blue-600 {
+    color: #3498db;
+    transition: all 0.3s ease;
+  }
+  
+  .text-blue-600:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    main {
+      padding: 1rem;
+    }
+    
+    form {
+      padding: 3rem;
+    }
+    
+    .flex.space-x-4 {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    button {
+      width: 100%;
+    }
+  }

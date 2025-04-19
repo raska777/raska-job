@@ -1,0 +1,134 @@
+/* styles/postjob.css */
+
+.post-job-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .form-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.8rem;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 0.8rem;
+  }
+  
+  .form-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+  }
+  
+  /* Form group - yangi qo'shilgan */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+    font-size: 0.95rem;
+    display: block;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    background-color: #f9f9f9;
+  }
+  
+  .form-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: #fff;
+    outline: none;
+  }
+  
+  .job-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .upload-btn, 
+  .submit-btn,
+  .cancel-btn {
+    font-weight: 600;
+    transition: all 0.25s ease;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  
+  .upload-btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+  }
+  
+  .submit-btn {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+  }
+  
+  .cancel-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    padding: 0.8rem 1rem;
+    background-color: rgba(231, 76, 60, 0.08);
+    border-radius: 6px;
+    border-left: 3px solid #e74c3c;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-prompt {
+    color: #e74c3c;
+    padding: 1rem;
+    background-color: rgba(231, 76, 60, 0.08);
+    border-radius: 6px;
+    border-left: 3px solid #e74c3c;
+  }
+  
+  .login-link {
+    color: #3498db;
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 640px) {
+    .post-job-container {
+      padding: 1.5rem;
+    }
+    
+    .job-form {
+      padding: 1.5rem;
+    }
+    
+    .button-group {
+      flex-direction: column;
+    }
+  }

@@ -1,0 +1,205 @@
+/* postjob.module.css */
+
+/* Asosiy konteyner */
+.postJobContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Sarlavha */
+  .postJobHeader {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+  
+  .postJobHeader::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+    border-radius: 2px;
+  }
+  
+  /* Forma */
+  .postJobForm {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Forma guruhlari */
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .formLabel {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #374151;
+    font-size: 0.95rem;
+  }
+  
+  .formInput {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9fafb;
+  }
+  
+  .formInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    background-color: #fff;
+    outline: none;
+  }
+  
+  .formInput::placeholder {
+    color: #9ca3af;
+    opacity: 0.8;
+  }
+  
+  /* Tugmalar guruhi */
+  .formActions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .submitButton {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+  }
+  
+  .submitButton:hover {
+    background: linear-gradient(135deg, #059669, #10b981);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+  }
+  
+  .submitButton:active {
+    transform: translateY(0);
+  }
+  
+  .cancelButton {
+    background: #f3f4f6;
+    color: #4b5563;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+  }
+  
+  .cancelButton:hover {
+    background: #e5e7eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .cancelButton:active {
+    transform: translateY(0);
+  }
+  
+  /* Xato xabari */
+  .errorMessage {
+    color: #dc2626;
+    background-color: #fee2e2;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    border-left: 4px solid #dc2626;
+    animation: shake 0.4s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  
+  /* Kirish so'rovi */
+  .loginPrompt {
+    color: #dc2626;
+    background-color: #fee2e2;
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    border-left: 4px solid #dc2626;
+    text-align: center;
+  }
+  
+  /* Yuklash indikatori */
+  .loadingIndicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Mobil moslashuv */
+  @media (max-width: 768px) {
+    .postJobContainer {
+      padding: 1.5rem;
+    }
+    
+    .postJobForm {
+      padding: 1.5rem;
+    }
+    
+    .formActions {
+      flex-direction: column;
+    }
+    
+    .submitButton,
+    .cancelButton {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .postJobHeader {
+      font-size: 1.75rem;
+    }
+    
+    .formInput {
+      padding: 0.85rem;
+    }
+  }

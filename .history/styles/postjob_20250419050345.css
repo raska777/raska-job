@@ -1,0 +1,203 @@
+/* styles/postjob.css */
+
+/* Asosiy container */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Sarlavha */
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+}
+
+/* Form group container */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+/* Label stil */
+label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+    font-size: 0.92rem;
+    display: block;
+}
+
+/* Input maydonlari - optimized */
+input {
+    width: 100%;
+    padding: 0.65rem 1rem; /* More compact padding */
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    background-color: #f9f9f9;
+    height: 42px; /* Fixed height for consistency */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+input::placeholder {
+    color: #95a5a6;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: #fff;
+    outline: none;
+}
+
+/* Forma */
+form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tugmalar */
+button {
+    font-weight: 600;
+    transition: all 0.25s ease;
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Bosh tugma */
+button.bg-blue-500 {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+button.bg-blue-500:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+}
+
+/* Yuborish tugmasi */
+button[type="submit"] {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    flex: 1;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+/* Bekor qilish tugmasi */
+button.bg-red-500 {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    flex: 1;
+}
+
+button.bg-red-500:hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+}
+
+/* Xato xabari */
+.text-red-500 {
+    color: #e74c3c;
+    padding: 0.8rem 1rem;
+    background-color: rgba(231, 76, 60, 0.08);
+    border-radius: 6px;
+    border-left: 3px solid #e74c3c;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+}
+
+/* Tugmalar guruhi */
+.flex.space-x-4 {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.8rem;
+}
+
+/* Login so'rovi */
+.text-red-600 {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.08);
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 3px solid #e74c3c;
+    font-size: 0.95rem;
+}
+
+/* Mobil moslashuv */
+@media (max-width: 640px) {
+    main {
+        padding: 1.2rem;
+    }
+    
+    form {
+        padding: 1.5rem;
+    }
+    
+    .flex.space-x-4 {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    input {
+        padding: 0.8rem 1rem; /* Adjusted for mobile */
+        height: auto; /* Flexible height on mobile */
+    }
+}
