@@ -239,7 +239,7 @@ export default function NotificationBell() {
       <button
         onClick={toggleSubscription}
         disabled={loading}
-        className={`notification-btn px-4 py-2 rounded text-white ${
+        className={`notif-btn px-4 py-2 rounded text-white ${
           isSubscribed ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
         } transition duration-300 ease-in-out transform active:scale-95`}
       >

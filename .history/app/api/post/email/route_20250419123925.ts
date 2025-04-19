@@ -79,54 +79,46 @@
 //   }
 // }
 
+import clientPromise from "@/lib/mongodb";
+import { NextRequest, NextResponse } from "next/server";
+import sendEmail from "@/lib/email";
+import { ObjectId } from "mongodb";
 
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    console.log("🧾 Kelgan request:", body);
 
+    const { userId } = body;
 
+    if (!userId || !ObjectId.isValid(userId)) {
+      return NextResponse.json({ error: "Noto‘g‘ri yoki yo‘q userId" }, { status: 400 });
+    }
 
+    const client = await clientPromise;
+    const db = client.db("raska");
 
+    const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
 
+    if (!user) {
+      return NextResponse.json({ error: "Foydalanuvchi topilmadi" }, { status: 404 });
+    }
 
+    if (user.isSubscribed) {
+      const subject = `🔔 Obuna faollashtirildi`;
+      const text = `Assalomu alaykum ${user.name || ""}, siz Raska Job xizmatiga muvaffaqiyatli obuna bo‘ldingiz. Rahmat!`;
 
-// import clientPromise from "@/lib/mongodb";
-// import { NextRequest, NextResponse } from "next/server";
-// import sendEmail from "@/lib/email";
-// import { ObjectId } from "mongodb";
+      await sendEmail(user.email, subject, text);
 
-// export async function POST(request: NextRequest) {
-//   try {
-//     const body = await request.json();
-//     console.log("🧾 Kelgan request:", body);
-
-//     const { userId } = body;
-
-//     if (!userId || !ObjectId.isValid(userId)) {
-//       return NextResponse.json({ error: "Noto‘g‘ri yoki yo‘q userId" }, { status: 400 });
-//     }
-
-//     const client = await clientPromise;
-//     const db = client.db("raska");
-
-//     const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
-
-//     if (!user) {
-//       return NextResponse.json({ error: "Foydalanuvchi topilmadi" }, { status: 404 });
-//     }
-
-//     if (user.isSubscribed) {
-//       const subject = `🔔 Obuna faollashtirildi`;
-//       const text = `Assalomu alaykum ${user.name || ""}, siz Raska Job xizmatiga muvaffaqiyatli obuna bo‘ldingiz. Rahmat!`;
-
-//       await sendEmail(user.email, subject, text);
-
-//       return NextResponse.json({ message: "Email yuborildi" }, { status: 200 });
-//     } else {
-//       return NextResponse.json({ message: "User hali obuna bo‘lmagan" }, { status: 400 });
-//     }
-//   } catch (err) {
-//     console.error("❌ Email yuborishda xato:", err);
-//     return NextResponse.json({ error: "Server xatosi" }, { status: 500 });
-//   }
-// }
+      return NextResponse.json({ message: "Email yuborildi" }, { status: 200 });
+    } else {
+      return NextResponse.json({ message: "User hali obuna bo‘lmagan" }, { status: 400 });
+    }
+  } catch (err) {
+    console.error("❌ Email yuborishda xato:", err);
+    return NextResponse.json({ error: "Server xatosi" }, { status: 500 });
+  }
+}
 
 
 
@@ -219,40 +211,3 @@
 //     return NextResponse.json({ error: 'Server xatosi' }, { status: 500 });
 //   }
 // }
-
-// ishlagan kod
-
-import { NextRequest, NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
-import sendEmail from '@/lib/email';
-import { ObjectId } from 'mongodb';
-
-export async function POST(req: NextRequest) {
-  try {
-    const { userId } = await req.json();
-
-    if (!userId) {
-      return NextResponse.json({ error: 'userId kerak' }, { status: 400 });
-    }
-
-    const client = await clientPromise;
-    const db = client.db('raska');
-
-    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
-
-    if (!user || !user.email) {
-      return NextResponse.json({ error: 'Foydalanuvchi topilmadi' }, { status: 404 });
-    }
-
-    const to = user.email;
-    const subject = 'Raska: Obunangiz faollashtirildi';
-    const text = `Hurmatli ${user.name || 'foydalanuvchi'},\n\nSiz Raska platformasida yangi ish e'lonlariga obuna bo'ldingiz.\n\nHurmat bilan,\nRaska jamoasi`;
-
-    await sendEmail(to, subject, text);
-
-    return NextResponse.json({ message: 'Email yuborildi' }, { status: 200 });
-  } catch (error) {
-    console.error('Email yuborishda xato:', error);
-    return NextResponse.json({ error: 'Server xatosi' }, { status: 500 });
-  }
-}
