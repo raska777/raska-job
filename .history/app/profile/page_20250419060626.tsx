@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useSession, signOut } from "next-auth/react";
@@ -15,7 +16,7 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.profileContainer}>
-      {/* Back button */}
+      {/* Ortga qaytish tugmasi */}
       <button
         onClick={() => router.back()}
         className={styles.backButton}
@@ -25,7 +26,7 @@ export default function ProfilePage() {
 
       {session ? (
         <div>
-          {/* Header section */}
+          {/* Header qismi */}
           <div className={styles.profileHeader}>
             <div className={styles.profileInfo}>
               <div className={styles.profileAvatar}>
@@ -46,7 +47,7 @@ export default function ProfilePage() {
             <NotificationBell />
           </div>
 
-          {/* Main content */}
+          {/* Asosiy kontent */}
           <div className={styles.profileContent}>
             <Link
               href="/post"
@@ -62,7 +63,7 @@ export default function ProfilePage() {
               Mening e'lonlarim
             </Link>
 
-            {/* Settings button */}
+            {/* Sozlamalar tugmasi */}
             <button
               onClick={() => setShowSettings(true)}
               className={`${styles.actionButton} ${styles.secondaryButton}`}
@@ -70,7 +71,7 @@ export default function ProfilePage() {
               ⚙️ Sozlamalar
             </button>
 
-            {/* Sign out button */}
+            {/* Chiqish tugmasi */}
             <button
               onClick={() => signOut()}
               className={`${styles.actionButton} ${styles.dangerButton}`}
@@ -79,7 +80,7 @@ export default function ProfilePage() {
             </button>
           </div>
 
-          {/* Settings form */}
+          {/* Sozlamalar formasi */}
           {showSettings && (
             <div className={styles.settingsSection}>
               <button

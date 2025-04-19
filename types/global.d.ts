@@ -1,6 +1,11 @@
 // types/global.d.ts
 
 import NextAuth from "next-auth";
+import type { MongoClient } from "mongodb";
+
+declare global {
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
 
 declare module "next-auth" {
   interface Session {
@@ -12,3 +17,5 @@ declare module "next-auth" {
     };
   }
 }
+
+export {};

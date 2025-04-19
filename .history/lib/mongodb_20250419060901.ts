@@ -34,6 +34,7 @@
 
 // export default clientPromise;
 
+
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI as string;
@@ -46,14 +47,9 @@ if (!uri) {
   throw new Error("MONGODB_URI aniqlanmagan (.env.local faylida)");
 }
 
-// TypeScript-ga globalThis._mongoClientPromise o'zgaruvchisini qanday ishlashini aytib beramiz
-declare global {
-  var _mongoClientPromise: Promise<MongoClient>;
-}
-
 if (process.env.NODE_ENV === "development") {
-  // Rivojlanish rejimida client ulanishini saqlash uchun global o‘zgaruvchidan foydalanamiz
-  if (!globalThis._mongoClientPromise) {
+  // Use global variable to persist client connection in development mode
+  if (!globalThis.mongoClientPromise) {
     client = new MongoClient(uri, options);
     globalThis._mongoClientPromise = client.connect();
   }

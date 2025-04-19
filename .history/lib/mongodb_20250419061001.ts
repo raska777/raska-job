@@ -46,11 +46,6 @@ if (!uri) {
   throw new Error("MONGODB_URI aniqlanmagan (.env.local faylida)");
 }
 
-// TypeScript-ga globalThis._mongoClientPromise o'zgaruvchisini qanday ishlashini aytib beramiz
-declare global {
-  var _mongoClientPromise: Promise<MongoClient>;
-}
-
 if (process.env.NODE_ENV === "development") {
   // Rivojlanish rejimida client ulanishini saqlash uchun global o‘zgaruvchidan foydalanamiz
   if (!globalThis._mongoClientPromise) {
