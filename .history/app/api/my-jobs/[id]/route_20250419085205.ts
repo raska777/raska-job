@@ -108,8 +108,8 @@ import clientPromise from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-function sanitizeUpdateData(body: { _id?: string; [key: string]: unknown }) {
-  const { _id: _, ...updateData } = body;
+function sanitizeUpdateData(body: any) {
+  const { _id, ...updateData } = body;
   return updateData;
 }
 
@@ -141,7 +141,7 @@ export async function PUT(
       { success: true, message: "Job updated successfully" },
       { status: 200 }
     );
-  } catch {
+  } catch (error) {
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
@@ -183,7 +183,7 @@ export async function DELETE(
       { success: true, message: "Job deleted successfully" },
       { status: 200 }
     );
-  } catch {
+  } catch (error) {
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
