@@ -75,9 +75,8 @@ import { authOptions } from "@/lib/auth";
 // Helper function to remove _id from the request body
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function sanitizeUpdateData(body: any) {
-  const { _id, ...updateData } = body;
-
-  console.log("_id:", _id)
+  const { _id: _unusedId, ...updateData } = body;
+  console.log(_unusedId + "raska")
   return updateData;
 }
 
