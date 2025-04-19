@@ -115,45 +115,32 @@ function sanitizeUpdateData(body: Record<string, unknown>) {
 }
 
 export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-): Promise<NextResponse> {
+  req: NextRequest,
+  context: { params: { id: string } }
+)  {
+  const { id } = context;
+  
   try {
-    const { id } = params;
-    
-    // Validate ID format
-    if (!ObjectId.isValid(id)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid job ID format" },
-        { status: 400 }
-      );
-    }
-
-    const body = await request.json();
+    const body = await req.json();
     const client = await clientPromise;
     const db = client.db("raska");
 
-    // Remove _id if present in body
-    const { _id, ...updateData } = body;
-
     const result = await db.collection("jobs").updateOne(
       { _id: new ObjectId(id) },
-      { $set: updateData }
+      { $set: sanitizeUpdateData(body) }
     );
 
-    if (result.modifiedCount === 0) {
-      return NextResponse.json(
-        { success: false, error: "No changes made or job not found" },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(
-      { success: true, message: "Job updated successfully" },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("PUT error:", error);
+    return result.modifiedCount === 1
+      ? NextResponse.json(
+          { success: true, message: "Job updated successfully" },
+          { status: 200 }
+        )
+      : NextResponse.json(
+          { success: false, error: "Job not found or no changes made" },
+          { status: 404 }
+        );
+  } catch (error: unknown) {
+    console.error("Update error:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
