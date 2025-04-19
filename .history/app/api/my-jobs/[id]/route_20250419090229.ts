@@ -110,7 +110,6 @@ import { authOptions } from "@/lib/auth";
 
 function sanitizeUpdateData(body: Record<string, unknown>) {
   const { _id, ...updateData } = body;
-  console.log("id:",_id)
   return updateData;
 }
 

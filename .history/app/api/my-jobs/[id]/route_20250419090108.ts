@@ -108,39 +108,40 @@ import clientPromise from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-function sanitizeUpdateData(body: Record<string, unknown>) {
+function sanitizeUpdateData(body: { _id?: string; [key: string]: unknown }) {
   const { _id, ...updateData } = body;
-  console.log("id:",_id)
   return updateData;
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
-  const { id } = params;
-  
   try {
+    const { id } = context.params;
     const body = await req.json();
     const client = await clientPromise;
     const db = client.db("raska");
 
+    const updateData = sanitizeUpdateData(body);
+
     const result = await db.collection("jobs").updateOne(
       { _id: new ObjectId(id) },
-      { $set: sanitizeUpdateData(body) }
+      { $set: updateData }
     );
 
-    return result.modifiedCount === 1
-      ? NextResponse.json(
-          { success: true, message: "Job updated successfully" },
-          { status: 200 }
-        )
-      : NextResponse.json(
-          { success: false, error: "Job not found or no changes made" },
-          { status: 404 }
-        );
-  } catch (error: unknown) {
-    console.error("Update error:", error);
+    if (result.modifiedCount === 0) {
+      return NextResponse.json(
+        { success: false, error: "Update failed" },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: "Job updated successfully" },
+      { status: 200 }
+    );
+  } catch {
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
@@ -150,10 +151,12 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
+    const { id } = context.params;
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
@@ -163,24 +166,24 @@ export async function DELETE(
 
     const client = await clientPromise;
     const db = client.db("raska");
-    const { id } = params;
 
     const result = await db.collection("jobs").deleteOne({
       _id: new ObjectId(id),
-      creator: session.user.id
+      creator: session.user.id,
     });
 
-    return result.deletedCount === 1
-      ? NextResponse.json(
-          { success: true, message: "Job deleted successfully" },
-          { status: 200 }
-        )
-      : NextResponse.json(
-          { success: false, error: "Job not found" },
-          { status: 404 }
-        );
-  } catch (error: unknown) {
-    console.error("Delete error:", error);
+    if (result.deletedCount === 0) {
+      return NextResponse.json(
+        { success: false, error: "Job not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: "Job deleted successfully" },
+      { status: 200 }
+    );
+  } catch {
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
