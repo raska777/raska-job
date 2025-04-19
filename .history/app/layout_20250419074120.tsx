@@ -25,6 +25,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react"; // Auth provayder
+import { usePathname } from "next/navigation"; // Sahifalar yo'lini olish uchun
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
