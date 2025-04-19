@@ -12,18 +12,13 @@ function sanitizeUpdateData(body: Record<string, unknown>) {
 }
 
 // PUT request: Update job listing
-export async function PUT(req: NextRequest) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+
   try {
-    const url = new URL(req.url);
-    const id = url.pathname.split("/").pop(); // id ni URL'dan olish
-
-    if (!id) {
-      return NextResponse.json(
-        { success: false, error: "Missing job ID in request" },
-        { status: 400 }
-      );
-    }
-
     const body = await req.json();
     const client = await clientPromise;
     const db = client.db("raska");
