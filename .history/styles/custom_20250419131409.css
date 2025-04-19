@@ -26,40 +26,7 @@
   }
   
   /* ===== ANIMATED HEADER ===== */
-  .raskajob-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    padding: 1rem 1.5rem 6rem;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-  }
-  
-  /* Header background animation */
-  .raskajob-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
-    opacity: 0.8;
-    z-index: -1;
-    animation: patternMove 60s linear infinite;
-  }
-  
-  /* Floating circles animation */
-  .raskajob-header::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    animation: float 15s infinite ease-in-out;
-    z-index: -1;
-  }
+ 
   
   /* Header content */
   .raskajob-header-content {
@@ -276,8 +243,9 @@
       font-size: 3rem;
     }
   }
+  /* animatsiya header uchun */
 
-  .raskajob-header-bg {
+  .raskajob-header- {
     overflow: hidden;
     z-index: 0;
   }

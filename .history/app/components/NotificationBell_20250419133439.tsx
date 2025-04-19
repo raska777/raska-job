@@ -97,80 +97,115 @@
 
 
 
-// 'use client';
 
-// import { useState } from 'react';
-// import { useSession } from 'next-auth/react';
-// import styles from 'styles/notification.module.css'
 
-// export default function NotificationBell() {
-//   const { data: session, status } = useSession();
-//   const [isSubscribed, setIsSubscribed] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [showDropdown, setShowDropdown] = useState(false);
 
-//   const toggleSubscription = () => {
-//     setLoading(true);
-//     // Bu yerda faqat UI ni o'zgartirish uchun simulatsiya
-//     setTimeout(() => {
-//       setIsSubscribed(!isSubscribed);
-//       setLoading(false);
-//     }, 500);
-//   };
 
-//   if (status === 'loading') return null;
-//   if (!session) return null;
 
-//   return (
-//     <div className={styles.notificationContainer}>
-//       <button 
-//         className={`${styles.notificationButton} ${showDropdown ? 'active' : ''}`}
-//         onClick={() => setShowDropdown(!showDropdown)}
-//       >
-//         🔔
-//       </button>
 
-//       {showDropdown && (
-//         <div className={styles.notificationDropdown}>
-//           <div className={styles.notificationHeader}>
-//             <h3 className={styles.notificationTitle}>Bildirishnomalar</h3>
-//             <button 
-//               className={styles.notificationClose}
-//               onClick={() => setShowDropdown(false)}
-//             >
-//               ×
-//             </button>
-//           </div>
 
-//           <div className={styles.notificationContent}>
-//             <div className={styles.notificationEmpty}>
-//               Bildirishnomalar mavjud emas
-//             </div>
-//           </div>
 
-//           <button
-//             onClick={toggleSubscription}
-//             disabled={loading}
-//             className={`${styles.subscriptionToggle} ${
-//               isSubscribed ? styles.unsubscribe : ''
-//             }`}
-//           >
-//             {loading ? (
-//               <>
-//                 <span className={styles.loadingSpinner} />
-//                 Yuklanmoqda...
-//               </>
-//             ) : isSubscribed ? (
-//               '🔕 Obunani bekor qilish'
-//             ) : (
-//               '🔔 Obuna boʻlish'
-//             )}
-//           </button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'use client';
+
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import styles from 'styles/notification.module.css'
+
+export default function NotificationBell() {
+  const { data: session, status } = useSession();
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const toggleSubscription = () => {
+    setLoading(true);
+    // Bu yerda faqat UI ni o'zgartirish uchun simulatsiya
+    setTimeout(() => {
+      setIsSubscribed(!isSubscribed);
+      setLoading(false);
+    }, 500);
+  };
+
+  if (status === 'loading') return null;
+  if (!session) return null;
+
+  return (
+    <div className={styles.notificationContainer}>
+      <button 
+        className={`${styles.notificationButton} ${showDropdown ? 'active' : ''}`}
+        onClick={() => setShowDropdown(!showDropdown)}
+      >
+        🔔
+      </button>
+
+      {showDropdown && (
+        <div className={styles.notificationDropdown}>
+          <div className={styles.notificationHeader}>
+            <h3 className={styles.notificationTitle}>Bildirishnomalar</h3>
+            <button 
+              className={styles.notificationClose}
+              onClick={() => setShowDropdown(false)}
+            >
+              ×
+            </button>
+          </div>
+
+          <div className={styles.notificationContent}>
+            <div className={styles.notificationEmpty}>
+              Bildirishnomalar mavjud emas
+            </div>
+          </div>
+
+          <button
+            onClick={toggleSubscription}
+            disabled={loading}
+            className={`${styles.subscriptionToggle} ${
+              isSubscribed ? styles.unsubscribe : ''
+            }`}
+          >
+            {loading ? (
+              <>
+                <span className={styles.loadingSpinner} />
+                Yuklanmoqda...
+              </>
+            ) : isSubscribed ? (
+              '🔕 Obunani bekor qilish'
+            ) : (
+              '🔔 Obuna boʻlish'
+            )}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -365,119 +400,3 @@
 //     </div>
 //   );
 // }
-
-
-
-//-zamonaviy
-
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-
-export default function NotificationBell() {
-  const { data: session, status } = useSession();
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchSubscriptionStatus = async () => {
-      try {
-        const res = await fetch('/api/user/subscription');
-        if (!res.ok) throw new Error('Maʼlumot olinmadi');
-
-        const data = await res.json();
-        setIsSubscribed(data.isSubscribed);
-      } catch (err) {
-        console.error('Obuna holatini olishda xatolik:', err);
-        setError('Obuna holatini olishda muammo yuz berdi');
-      }
-    };
-
-    if (session?.user) {
-      fetchSubscriptionStatus();
-    }
-  }, [session]);
-
-  const toggleSubscription = async () => {
-    if (!session?.user) return;
-
-    setLoading(true);
-    setError(null);
-    setSuccessMsg(null);
-
-    try {
-      const res = await fetch('/api/user/subscription', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: session.user.id }),
-      });
-
-      if (!res.ok) throw new Error('Server xatosi');
-
-      const data = await res.json();
-      setIsSubscribed(data.isSubscribed);
-
-      if (data.isSubscribed) {
-        await fetch('/api/post/email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId: session.user.id }),
-        });
-        setSuccessMsg('Siz muvaffaqiyatli obuna bo‘ldingiz!');
-      } else {
-        setSuccessMsg('Obuna bekor qilindi.');
-      }
-    } catch (err) {
-      console.error('Toggle xatolik:', err);
-      setError('Amal bajarishda xatolik yuz berdi');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (status === 'loading') return <div>Yuklanmoqda...</div>;
-  if (!session) return <div className="text-sm text-gray-600">Tizimga kiring</div>;
-
-  return (
-    <div className="flex flex-col items-start gap-2">
-      {error && <div className="text-red-500">{error}</div>}
-      {successMsg && <div className="text-green-600">{successMsg}</div>}
-
-      <button
-        onClick={toggleSubscription}
-        disabled={loading}
-        className={`flex items-center gap-2 px-4 py-2 rounded-lg shadow text-white transition duration-300 ease-in-out transform active:scale-95 ${
-          isSubscribed
-            ? 'bg-red-600 hover:bg-red-700'
-            : 'bg-green-600 hover:bg-green-700'
-        }`}
-      >
-        {loading ? (
-          '⏳ Yuklanmoqda...'
-        ) : isSubscribed ? (
-          <>
-            🔕 Obunani bekor qilish
-          </>
-        ) : (
-          <>
-            🔔 Obuna bo‘lish
-          </>
-        )}
-      </button>
-    </div>
-  );
-}
-
-
-
-
-
-
-

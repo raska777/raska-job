@@ -97,6 +97,31 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 'use client';
 
 // import { useState } from 'react';
@@ -176,93 +201,103 @@
 
 
 
-// 'use client';
 
-// import { useState, useEffect } from 'react';
-// import { useSession } from 'next-auth/react';
 
-// export default function NotificationBell() {
-//   const { data: session, status } = useSession();
-//   const [isSubscribed, setIsSubscribed] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState<string | null>(null);
 
-//   useEffect(() => {
-//     const fetchSubscriptionStatus = async () => {
-//       try {
-//         const res = await fetch('/api/user/subscription');
-//         const data = await res.json();
-//         setIsSubscribed(data.isSubscribed);
-//       } catch (err) {
-//         console.error('Obuna holatini olishda xato:', err);
-//         setError(" ");
-//       }
-//     };
 
-//     if (session?.user) {
-//       fetchSubscriptionStatus();
-//     }
-//   }, [session]);
 
-//   const toggleSubscription = async () => {
-//     if (!session?.user?.id) return;
 
-//     setLoading(true);
-//     setError(null);
 
-//     try {
-//       // Obunani yoqish yoki o‘chirish
-//       const res = await fetch('/api/user/subscription', {
-//         method: 'PATCH',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ userId: session.user.id }),
-//       });
 
-//       const data = await res.json();
-//       setIsSubscribed(data.isSubscribed);
 
-//       // Agar obuna faollashtirilgan bo‘lsa, email yuboramiz
-//       if (data.isSubscribed) {
-//         await fetch('/api/post/email', {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({ userId: session.user.id }),
-//         });
-//       }
-//     } catch (err: any) {
-//       console.error('Xatolik:', err);
-//       setError('Serverda xatolik yuz berdi');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
 
-//   if (status === 'loading') return <div>Yuklanmoqda...</div>;
-//   if (!session) return <div>Tizimga kiring</div>;
+'use client';
 
-//   return (
-//     <div>
-//       {error && <div className="text-red-500 mb-2">{error}</div>}
-//       <button
-//         onClick={toggleSubscription}
-//         disabled={loading}
-//         className={`notification-btn px-4 py-2 rounded text-white ${
-//           isSubscribed ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
-//         } transition duration-300 ease-in-out transform active:scale-95`}
-//       >
-//         {loading
-//           ? 'Yuklanmoqda...'
-//           : isSubscribed
-//           ? '🔕 Obunani bekor qilish'
-//           : '🔔 Obuna bo‘lish'}
-//       </button>
-//     </div>
-//   );
-// }
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+
+export default function NotificationBell() {
+  const { data: session, status } = useSession();
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSubscriptionStatus = async () => {
+      try {
+        const res = await fetch('/api/user/subscription');
+        const data = await res.json();
+        setIsSubscribed(data.isSubscribed);
+      } catch (err) {
+        console.error('Obuna holatini olishda xato:', err);
+        setError(" ");
+      }
+    };
+
+    if (session?.user) {
+      fetchSubscriptionStatus();
+    }
+  }, [session]);
+
+  const toggleSubscription = async () => {
+    if (!session?.user?.id) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Obunani yoqish yoki o‘chirish
+      const res = await fetch('/api/user/subscription', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: session.user.id }),
+      });
+
+      const data = await res.json();
+      setIsSubscribed(data.isSubscribed);
+
+      // Agar obuna faollashtirilgan bo‘lsa, email yuboramiz
+      if (data.isSubscribed) {
+        await fetch('/api/post/email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: session.user.id }),
+        });
+      }
+    } catch (err: any) {
+      console.error('Xatolik:', err);
+      setError('Serverda xatolik yuz berdi');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (status === 'loading') return <div>Yuklanmoqda...</div>;
+  if (!session) return <div>Tizimga kiring</div>;
+
+  return (
+    <div>
+      {error && <div className="text-red-500 mb-2">{error}</div>}
+      <button
+        onClick={toggleSubscription}
+        disabled={loading}
+        className={`notification-btn px-4 py-2 rounded text-white ${
+          isSubscribed ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
+        } transition duration-300 ease-in-out transform active:scale-95`}
+      >
+        {loading
+          ? 'Yuklanmoqda...'
+          : isSubscribed
+          ? '🔕 Obunani bekor qilish'
+          : '🔔 Obuna bo‘lish'}
+      </button>
+    </div>
+  );
+}
 
 
 
@@ -365,119 +400,3 @@
 //     </div>
 //   );
 // }
-
-
-
-//-zamonaviy
-
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-
-export default function NotificationBell() {
-  const { data: session, status } = useSession();
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchSubscriptionStatus = async () => {
-      try {
-        const res = await fetch('/api/user/subscription');
-        if (!res.ok) throw new Error('Maʼlumot olinmadi');
-
-        const data = await res.json();
-        setIsSubscribed(data.isSubscribed);
-      } catch (err) {
-        console.error('Obuna holatini olishda xatolik:', err);
-        setError('Obuna holatini olishda muammo yuz berdi');
-      }
-    };
-
-    if (session?.user) {
-      fetchSubscriptionStatus();
-    }
-  }, [session]);
-
-  const toggleSubscription = async () => {
-    if (!session?.user) return;
-
-    setLoading(true);
-    setError(null);
-    setSuccessMsg(null);
-
-    try {
-      const res = await fetch('/api/user/subscription', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: session.user.id }),
-      });
-
-      if (!res.ok) throw new Error('Server xatosi');
-
-      const data = await res.json();
-      setIsSubscribed(data.isSubscribed);
-
-      if (data.isSubscribed) {
-        await fetch('/api/post/email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId: session.user.id }),
-        });
-        setSuccessMsg('Siz muvaffaqiyatli obuna bo‘ldingiz!');
-      } else {
-        setSuccessMsg('Obuna bekor qilindi.');
-      }
-    } catch (err) {
-      console.error('Toggle xatolik:', err);
-      setError('Amal bajarishda xatolik yuz berdi');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (status === 'loading') return <div>Yuklanmoqda...</div>;
-  if (!session) return <div className="text-sm text-gray-600">Tizimga kiring</div>;
-
-  return (
-    <div className="flex flex-col items-start gap-2">
-      {error && <div className="text-red-500">{error}</div>}
-      {successMsg && <div className="text-green-600">{successMsg}</div>}
-
-      <button
-        onClick={toggleSubscription}
-        disabled={loading}
-        className={`flex items-center gap-2 px-4 py-2 rounded-lg shadow text-white transition duration-300 ease-in-out transform active:scale-95 ${
-          isSubscribed
-            ? 'bg-red-600 hover:bg-red-700'
-            : 'bg-green-600 hover:bg-green-700'
-        }`}
-      >
-        {loading ? (
-          '⏳ Yuklanmoqda...'
-        ) : isSubscribed ? (
-          <>
-            🔕 Obunani bekor qilish
-          </>
-        ) : (
-          <>
-            🔔 Obuna bo‘lish
-          </>
-        )}
-      </button>
-    </div>
-  );
-}
-
-
-
-
-
-
-
