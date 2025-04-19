@@ -107,27 +107,15 @@ import clientPromise from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-// Helper function to remove _id from the request body
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function sanitizeUpdateData(body: any) {
-  const { _id, ...updateData } = body;
-  console.log("_id:", _id);
-  return updateData;
-}
-
 // PUT request: Update job listing
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest) {
   try {
-    const { id } = params;  // Extract 'id' from the params
+    const { id } = req.nextUrl.pathname.split('/')[4]; // Extract `id` from URL path
     const body = await req.json();
     const client = await clientPromise;
     const db = client.db("raska");
 
-    // Remove _id from the update data
-    const updateData = sanitizeUpdateData(body);
+    const { _id, ...updateData } = body; // Remove _id from the update data
 
     const result = await db.collection("jobs").updateOne(
       { _id: new ObjectId(id) },
@@ -155,11 +143,9 @@ export async function PUT(
 }
 
 // DELETE request: Delete job listing
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(req: NextRequest) {
   try {
+    const { id } = req.nextUrl.pathname.split('/')[4]; // Extract `id` from URL path
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -169,7 +155,6 @@ export async function DELETE(
       );
     }
 
-    const { id } = params;  // Extract 'id' from the params
     const client = await clientPromise;
     const db = client.db("raska");
 
