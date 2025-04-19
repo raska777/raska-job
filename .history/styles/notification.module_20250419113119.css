@@ -1,0 +1,91 @@
+/* notification.module.css */
+
+.notificationContainer {
+    position: relative;
+    display: inline-block;
+    z-index: 50;
+  }
+  
+  .notificationButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .notificationDropdown {
+    position: fixed;
+    top: 50vh; /* Use viewport height units */
+    left: 50vw; /* Use viewport width units */
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 90%;
+    max-width: 350px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 0;
+    opacity: 0;
+    animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.4) forwards;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Improved animation that stays centered */
+  @keyframes modalAppear {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  /* Ensure content never overflows */
+  .notificationContent {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 1.5rem;
+    max-height: calc(80vh - 120px); /* Account for header/footer */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .notificationDropdown {
+      top: 50vh;
+      left: 50vw;
+      transform: translate(-50%, -50%);
+      width: 95%;
+      max-height: 85vh;
+    }
+    
+    .notificationContent {
+      max-height: calc(85vh - 120px);
+    }
+  }
+  
+  /* The rest of your existing styles... */
+  .notificationBadge {
+    /* ... keep existing badge styles ... */
+  }
+  
+  .notificationHeader {
+    /* ... keep existing header styles ... */
+  }
+  
+  .notificationItem {
+    /* ... keep existing item styles ... */
+  }
+  
+  /* etc... */
