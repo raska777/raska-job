@@ -76,10 +76,8 @@ import { authOptions } from "@/lib/auth";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function sanitizeUpdateData(body: any) {
   const { _id: _unusedId, ...updateData } = body;
-  console.log(_unusedId + "raska")
   return updateData;
 }
-
 
 
 // PUT request: Update job listing

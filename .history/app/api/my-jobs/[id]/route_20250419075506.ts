@@ -76,7 +76,7 @@ import { authOptions } from "@/lib/auth";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function sanitizeUpdateData(body: any) {
   const { _id: _unusedId, ...updateData } = body;
-  console.log(_unusedId + "raska")
+  const someValue = "some static value";  // Bu yerda har doim bir xil qiymat beriladi
   return updateData;
 }
 
