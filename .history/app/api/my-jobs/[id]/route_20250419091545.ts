@@ -107,31 +107,33 @@ import clientPromise from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-// Only change needed - add this type
-interface NextRouteContext {
+function sanitizeUpdateData(body: Record<string, unknown>) {
+  const { _id, ...updateData } = body;
+  console.log("id:", _id);
+  return updateData;
+}
+
+// Explicit type for route context
+interface RouteContext {
   params: {
     id: string;
   };
 }
 
-// Everything else remains EXACTLY the same as your original code
 export async function PUT(
   req: NextRequest,
-  { params }: NextRouteContext  // Only added the type here
+  context: RouteContext  // Using explicit context type
 ) {
-  const { id } = params;
+  const { id } = context.params;  // Access via context
   
   try {
     const body = await req.json();
     const client = await clientPromise;
     const db = client.db("raska");
 
-    const { _id, ...updateData } = body;
-    console.log("id:", _id);
-
     const result = await db.collection("jobs").updateOne(
       { _id: new ObjectId(id) },
-      { $set: updateData }
+      { $set: sanitizeUpdateData(body) }
     );
 
     return result.modifiedCount === 1
@@ -152,10 +154,9 @@ export async function PUT(
   }
 }
 
-// Same minimal change for DELETE
 export async function DELETE(
   req: NextRequest,
-  { params }: NextRouteContext  // Only added the type here
+  context: RouteContext  // Using explicit context type
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -168,7 +169,7 @@ export async function DELETE(
 
     const client = await clientPromise;
     const db = client.db("raska");
-    const { id } = params;
+    const { id } = context.params;  // Access via context
 
     const result = await db.collection("jobs").deleteOne({
       _id: new ObjectId(id),
