@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <SessionProvider>
-        
+         
           {children}
         </SessionProvider>
       </body>

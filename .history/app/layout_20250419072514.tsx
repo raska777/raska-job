@@ -35,7 +35,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <SessionProvider>
-        
+          {/* Agar sahifa root (home) sahifa bo‘lsa, Navbarni ko‘rsatamiz */}
+          {pathname === "/"/>}
           {children}
         </SessionProvider>
       </body>
