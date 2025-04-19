@@ -50,7 +50,12 @@ export async function PUT(req: NextRequest) {
     );
   }
 }
-export async function DELETE(req: NextRequest) {
+
+// DELETE request: Delete job listing
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -60,18 +65,9 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    const url = new URL(req.url);
-    const id = url.pathname.split("/").pop();
-
-    if (!id) {
-      return NextResponse.json(
-        { success: false, error: "Missing job ID" },
-        { status: 400 }
-      );
-    }
-
     const client = await clientPromise;
     const db = client.db("raska");
+    const { id } = params;  // Make sure this is extracted from params
 
     const result = await db.collection("jobs").deleteOne({
       _id: new ObjectId(id),
