@@ -1,0 +1,65 @@
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: white;
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.callButton {
+  background-color: #4CAF50;
+}
+
+.callButton:hover {
+  background-color: #3e8e41;
+}
+
+.saveButton {
+  background-color: #2196F3;
+}
+
+.saveButton:hover {
+  background-color: #0b7dda;
+}
+
+.shareButton {
+  background-color: #9C27B0;
+}
+
+.shareButton:hover {
+  background-color: #7B1FA2;
+}
+
+.telegramButton {
+  background-color: #0088cc;
+}
+
+.telegramButton:hover {
+  background-color: #0077b5;
+}
+
+.kakaoButton {
+  background-color: #FFCD00;
+  color: #3A1D1D;
+}
+
+.kakaoButton:hover {
+  background-color: #E6B800;
+}
