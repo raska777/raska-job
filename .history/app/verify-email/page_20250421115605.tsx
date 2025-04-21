@@ -199,62 +199,61 @@
 // }
 
 // app/verify-email/page.tsx
-'use client';
+import { redirect } from 'next/navigation';
+import clientPromise from '@/lib/mongodb';
+import VerificationStatus from './VerificationStatus';
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+export default async function VerifyEmailPage({
+  searchParams,
+}: {
+  searchParams: { token?: string | string[] };
+}) {
+  const token = Array.isArray(searchParams.token) 
+    ? searchParams.token[0] 
+    : searchParams.token;
 
-export default function VerifyEmailPage() {
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  if (!token) {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    redirect('/auth/error?code=missing_token');
+  }
 
-  useEffect(() => {
-    const verifyEmail = async () => {
-      if (!token) {
-        setStatus('error');
-        return;
-      }
+  try {
+    const client = await clientPromise;
+    const db = client.db('raska');
 
-      try {
-        const response = await fetch(`/api/verify-email?token=${token}`);
-        const data = await response.json();
-        
-        if (data.success) {
-          setStatus('success');
-        } else {
-          setStatus('error');
+    const user = await db.collection('users').findOne({
+      verificationToken: token,
+      verificationExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      redirect('/auth/error?code=invalid_token');
+    }
+
+    await Promise.all([
+      db.collection('users').updateOne(
+        { _id: user._id },
+        {
+          $set: { emailVerified: new Date() },
+          $unset: { verificationToken: '', verificationExpires: '' },
         }
-      } catch (error) {
-        setStatus('error');
-      }
-    };
+      ),
+      db.collection('verificationLogs').insertOne({
+        userId: user._id,
+        action: 'email_verification',
+        status: 'success',
+        timestamp: new Date()
+      })
+    ]);
 
-    verifyEmail();
-  }, [token]);
-
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="text-center p-6 max-w-md mx-auto">
-        {status === 'loading' && (
-          <>
-            <h1 className="text-2xl font-bold mb-4">Tasdiqlanmoqda...</h1>
-            <p className="text-gray-600">Iltimos, kuting...</p>
-          </>
-        )}
-        {status === 'success' && (
-          <>
-            <h1 className="text-2xl font-bold text-green-600 mb-4">Email Tasdiqlandi!</h1>
-            <p className="text-gray-600">Email manzilingiz muvaffaqiyatli tasdiqlandi.</p>
-          </>
-        )}
-        {status === 'error' && (
-          <>
-            <h1 className="text-2xl font-bold text-red-600 mb-4">Xatolik Yuz Berdi</h1>
-            <p className="text-gray-600">Email tasdiqlash jarayonida xatolik yuz berdi.</p>
-          </>
-        )}
-      </div>
-    </div>
-  );
+    return <VerificationStatus success={true} />;
+  } catch (error) {
+    console.error('Verification error:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      token: token,
+      timestamp: new Date().toISOString()
+    });
+    return <VerificationStatus success={false} />;
+  }
 }
