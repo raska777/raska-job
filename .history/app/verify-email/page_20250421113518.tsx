@@ -150,20 +150,18 @@
 import { redirect } from 'next/navigation';
 import clientPromise from '@/lib/mongodb';
 
-interface VerifyEmailProps {
-  searchParams: {
-    token?: string | string[];
-  };
-}
-
-export default async function VerifyEmail({ searchParams }: VerifyEmailProps) {
+export default async function VerifyEmail({
+  searchParams,
+}: {
+  searchParams: { token?: string | string[] };
+}) {
   const token = Array.isArray(searchParams.token)
     ? searchParams.token[0]
     : searchParams.token;
 
   if (!token) {
     redirect('/');
-    return null; // Add return null after redirect
+    return;
   }
 
   try {
