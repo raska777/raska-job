@@ -107,16 +107,15 @@
 //   }
 // }
 
-'use client'; // Bu direktivani qo'shish kerak
-
-import { useSearchParams } from 'next/navigation';
-import clientPromise from '@/lib/mongodb';
 import { redirect } from 'next/navigation';
+import clientPromise from '@/lib/mongodb';
+import { useSearchParams } from 'next/navigation';
 
 export default async function VerifyEmail() {
-  const searchParams = useSearchParams(); // Client-side searchParams olish
+  const searchParams = useSearchParams(); // Query parametrlarini olish
 
-  const token = searchParams.get('token'); // Tokenni olish
+  // token ni querydan olish
+  const token = searchParams.get('token');
 
   // Agar token bo'lmasa, redirect qilish
   if (!token) {
@@ -144,7 +143,7 @@ export default async function VerifyEmail() {
       );
     }
 
-    // Foydalanuvchini tasdiqlash
+    // Emailni tasdiqlash va yangilash
     await db.collection("users").updateOne(
       { _id: user._id },
       {
