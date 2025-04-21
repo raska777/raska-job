@@ -60,96 +60,22 @@
 //   }
 // }
 
-// import { redirect } from 'next/navigation';
-// import clientPromise from '@/lib/mongodb';
-
-// export default async function VerifyEmail({ searchParams }) {
-//   const token = searchParams.token;
-
-//   if (!token) {
-//     redirect('/');
-//     return;
-//   }
-
-//   try {
-//     const client = await clientPromise;
-//     const db = client.db("raska");
-
-//     const user = await db.collection("users").findOne({
-//       verificationToken: token,
-//       verificationExpires: { $gt: new Date() },
-//     });
-
-//     if (!user) {
-//       return (
-//         <div className="max-w-md mx-auto mt-10 p-6 bg-red-50 rounded-lg">
-//           <h2 className="text-xl font-bold text-red-600">Xatolik</h2>
-//           <p className="mt-2">Tasdiqlash havolasi yaroqsiz yoki muddati tugagan.</p>
-//         </div>
-//       );
-//     }
-
-//     await db.collection("users").updateOne(
-//       { _id: user._id },
-//       {
-//         $set: { emailVerified: true },
-//         $unset: { verificationToken: "", verificationExpires: "" },
-//       }
-//     );
-
-//     return (
-//       <div className="max-w-md mx-auto mt-10 p-6 bg-green-50 rounded-lg">
-//         <h2 className="text-xl font-bold text-green-600">Muvaffaqiyatli tasdiqlandi</h2>
-//         <p className="mt-2">Email manzilingiz muvaffaqiyatli tasdiqlandi.</p>
-//       </div>
-//     );
-//   } catch (error) {
-//     console.error("Email tasdiqlashda xatolik:", error);
-//     return (
-//       <div className="max-w-md mx-auto mt-10 p-6 bg-red-50 rounded-lg">
-//         <h2 className="text-xl font-bold text-red-600">Xatolik</h2>
-//         <p className="mt-2">Email tasdiqlash jarayonida xatolik yuz berdi.</p>
-//       </div>
-//     );
-//   }
-// }
-
 import { redirect } from 'next/navigation';
 import clientPromise from '@/lib/mongodb';
-import { WithId, Document } from 'mongodb';
 
-// User tipini aniqlab olamiz
-interface User extends WithId<Document> {
-  email: string;
-  verificationToken?: string;
-  verificationExpires?: Date;
-  emailVerified?: boolean;
-  _id: any;
-}
-
-// SearchParams tipi
-interface SearchParams {
-  token?: string;
-}
-
-export default async function VerifyEmail({ 
-  searchParams 
-}: { 
-  searchParams: SearchParams 
-}) {
+export default async function VerifyEmail({ searchParams = false }) {
   const token = searchParams.token;
 
   if (!token) {
     redirect('/');
-    return null; // Redirect qilganimizda ham return null qilish yaxshi amaliyot
+    return;
   }
 
   try {
     const client = await clientPromise;
     const db = client.db("raska");
 
-    // Tokenni tekshirish
-    const user = await db.collection<User>("users").findOne({
+    const user = await db.collection("users").findOne({
       verificationToken: token,
       verificationExpires: { $gt: new Date() },
     });
@@ -163,18 +89,11 @@ export default async function VerifyEmail({
       );
     }
 
-    // Emailni tasdiqlash
     await db.collection("users").updateOne(
       { _id: user._id },
       {
-        $set: { 
-          emailVerified: true,
-          updatedAt: new Date() // Yangilangan vaqtni ham qo'shib qo'yamiz
-        },
-        $unset: { 
-          verificationToken: "",
-          verificationExpires: "" 
-        },
+        $set: { emailVerified: true },
+        $unset: { verificationToken: "", verificationExpires: "" },
       }
     );
 
