@@ -1,0 +1,104 @@
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #1f2937; /* gray-800 */
+    text-align: center;
+  }
+  
+  .inputGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151; /* gray-700 */
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .input:focus {
+    border-color: #3b82f6; /* blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* blue focus ring */
+    outline: none;
+  }
+  
+  .readonlyInput {
+    @extend .input;
+    background-color: #f3f4f6; /* gray-100 */
+    cursor: not-allowed;
+  }
+  
+  .hintText {
+    font-size: 0.75rem;
+    color: #6b7280; /* gray-500 */
+    margin-top: 0.25rem;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  
+  .editBtn {
+    background-color: #2563eb; /* blue-600 */
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .editBtn:hover {
+    background-color: #1d4ed8; /* blue-700 */
+  }
+  
+  .cancelBtn {
+    background-color: #9ca3af; /* gray-400 */
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .cancelBtn:hover {
+    background-color: #6b7280; /* gray-500 */
+  }
+  
+  .saveBtn {
+    background-color: #16a34a; /* green-600 */
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .saveBtn:hover {
+    background-color: #15803d; /* green-700 */
+  }
+  
