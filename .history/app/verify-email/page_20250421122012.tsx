@@ -1,17 +1,9 @@
 import { redirect } from 'next/navigation';
 import clientPromise from '@/lib/mongodb';
-import { useSearchParams } from 'next/navigation';
 
-export default async function VerifyEmail() {
-  const searchParams = useSearchParams(); // Query parametrlarini olish
-
-  // token ni querydan olish
-  const token = searchParams.get('token');
-
-  // Agar token bo'lmasa, redirect qilish
-  if (!token) {
+export default async function VerifyEmail({ searchParams }: { searchParams: { token?: string } }) {
+  if (!searchParams.token) {
     redirect('/');
-    return;
   }
 
   try {
@@ -20,11 +12,10 @@ export default async function VerifyEmail() {
 
     // Tokenni tekshirish
     const user = await db.collection("users").findOne({
-      verificationToken: token,
-      verificationExpires: { $gt: new Date() },
+      verificationToken: searchParams.token,
+      verificationExpires: { $gt: new Date() }
     });
 
-    // Agar foydalanuvchi topilmasa
     if (!user) {
       return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-red-50 rounded-lg">
@@ -34,12 +25,12 @@ export default async function VerifyEmail() {
       );
     }
 
-    // Emailni tasdiqlash va yangilash
+    // Emailni tasdiqlash
     await db.collection("users").updateOne(
       { _id: user._id },
-      {
+      { 
         $set: { emailVerified: true },
-        $unset: { verificationToken: "", verificationExpires: "" },
+        $unset: { verificationToken: "", verificationExpires: "" }
       }
     );
 
