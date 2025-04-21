@@ -213,7 +213,6 @@ export default async function VerifyEmailPage({
     : searchParams.token;
 
   if (!token) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
     redirect('/auth/error?code=missing_token');
   }
 
@@ -227,33 +226,20 @@ export default async function VerifyEmailPage({
     });
 
     if (!user) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
       redirect('/auth/error?code=invalid_token');
     }
 
-    await Promise.all([
-      db.collection('users').updateOne(
-        { _id: user._id },
-        {
-          $set: { emailVerified: new Date() },
-          $unset: { verificationToken: '', verificationExpires: '' },
-        }
-      ),
-      db.collection('verificationLogs').insertOne({
-        userId: user._id,
-        action: 'email_verification',
-        status: 'success',
-        timestamp: new Date()
-      })
-    ]);
+    await db.collection('users').updateOne(
+      { _id: user._id },
+      {
+        $set: { emailVerified: new Date() },
+        $unset: { verificationToken: '', verificationExpires: '' },
+      }
+    );
 
     return <VerificationStatus success={true} />;
   } catch (error) {
-    console.error('Verification error:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      token: token,
-      timestamp: new Date().toISOString()
-    });
+    console.error('Verification error:', error);
     return <VerificationStatus success={false} />;
   }
 }
