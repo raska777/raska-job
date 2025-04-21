@@ -39,3 +39,42 @@ export async function POST() {
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+// app/api/verify-email/route.ts
+import { NextResponse } from 'next/server';
+import clientPromise from '@/lib/mongodb';
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get('token');
+
+  if (!token) {
+    return NextResponse.json({ error: 'Token yoq' }, { status: 400 });
+  }
+
+  try {
+    const client = await clientPromise;
+    const db = client.db('raska');
+
+    const user = await db.collection('users').findOne({
+      verificationToken: token,
+      verificationExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: 'Yaroqsiz token' }, { status: 400 });
+    }
+
+    await db.collection('users').updateOne(
+      { _id: user._id },
+      {
+        $set: { emailVerified: new Date() },
+        $unset: { verificationToken: '', verificationExpires: '' },
+      }
+    );
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: 'Server xatosi' }, { status: 500 });
+  }
+}
