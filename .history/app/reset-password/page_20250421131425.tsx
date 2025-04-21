@@ -176,19 +176,19 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import styles from "styles/reset-password.module.css";
+import styles from "styles/reset-password.module.css"; // CSS Modules dan foydalanish tavsiya etiladi
 
 export default function ResetPasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState(null);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setToken(searchParams.get('token'));
+    return setToken(searchParams.get('token'));
   }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
