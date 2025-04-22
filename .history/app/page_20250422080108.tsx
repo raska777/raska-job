@@ -24,6 +24,7 @@ const NotificationBell = dynamic(() => import('./components/NotificationBell'), 
 import 'react-toastify/dist/ReactToastify.css';
 import "styles/global.css";
 import "styles/custom.css";
+import "styles/header.css";
 
 function HomeContent() {
   const { data: session, status } = useSession();

@@ -53,8 +53,8 @@ export async function POST(req: NextRequest) {
 
     // Har bir foydalanuvchiga email yuborish
     for (const user of users) {
-      const subject = `✨ Siz uchun yangi ish e'loni: ${newJob.work_type} - RaskaJob`;
-            const html = `
+      const subject = `🔔 Yangi ish e’loni: ${newJob.work_type}`;
+      const html = `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f9f9f9;">
     <h2 style="color: #333; margin-top: 0;">Assalomu alaykum ${user.name || ''},</h2>
     <p style="color: #555; line-height: 1.6;">Siz uchun ajoyib yangilik! Raska platformasida sizning qiziqishlaringizga mos keladigan yangi ish e'loni paydo bo'ldi:</p>
