@@ -79,3 +79,6 @@ next-env.d.ts
 .vscode-test
 # VSCode test
 .vscode-test
+.env
+.env.local
+.history/
