@@ -1,0 +1,10 @@
+// next-intl.config.ts
+import { IntlConfig } from 'next-intl';
+
+const config: IntlConfig = {
+  locales: ['en', 'ko', 'ru', 'uz'],
+  defaultLocale: 'uz',
+  localePrefix: 'always' // URL har doim tilni o'z ichiga oladi: /en, /ko, ...
+};
+
+export default config;

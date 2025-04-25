@@ -1,0 +1,359 @@
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Job List Container */
+  .jobListContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  /* Results Count */
+  .resultsCount {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .resultsCount::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+  }
+  
+  /* Job Grid */
+  .jobGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Job Card */
+  .jobCard {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+    border: 1px solid #e5e7eb;
+    position: relative;
+  }
+  
+  .jobCard:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+  
+  .jobCardContent {
+    padding: 1.5rem;
+  }
+  
+  .jobTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  
+  .jobLocation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+  }
+  
+  .jobDetailsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .jobDetailsList li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
+  
+  /* Expanded Job Details */
+  .expandedDetails {
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .postedDate {
+    font-size: 0.75rem;
+    color: #9ca3af !important;
+    margin-top: 0.5rem;
+  }
+  
+  /* Toggle Button */
+  .toggleButton {
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    color: #3b82f6;
+    font-weight: 500;
+    font-size: 0.875rem;
+    background-color: transparent;
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .toggleButton:hover {
+    background-color: #f8fafc;
+  }
+  
+  /* No Results */
+  .noResults {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6b7280;
+    animation: pulse 2s infinite;
+  }
+  
+  .noResultsIcon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .noResultsText {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+  
+  .noResultsSubtext {
+    font-size: 0.875rem;
+  }
+  
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  
+  .paginationButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: white;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .paginationButton:hover:not(:disabled) {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+  }
+  
+  .paginationButton.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .paginationButton.active {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  
+  .paginationEllipsis {
+    padding: 0.5rem;
+    color: #6b7280;
+  }
+  
+  /* Loading State */
+  .loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    min-height: 300px;
+  }
+  
+  .loadingSpinner {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid rgba(59, 130, 246, 0.2);
+    border-radius: 50%;
+    border-top-color: #3b82f6;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  /* Error State */
+  .errorContainer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #fee2e2;
+    border-radius: 8px;
+    color: #b91c1c;
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+  
+  .errorMessage {
+    margin-bottom: 1rem;
+  }
+  
+  .retryButton {
+    padding: 0.5rem 1rem;
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .retryButton:hover {
+    background-color: #b91c1c;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .jobGrid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    
+    .pagination {
+      flex-wrap: wrap;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .jobCardContent {
+      padding: 1.25rem;
+    }
+    
+    .jobTitle {
+      font-size: 1.125rem;
+    }
+  }
+  
+
+  /* button icon kodlari*/
+  .actionButtons {
+    position: absolute;
+    bottom: 56px;
+    right: 16px;
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+  }
+  
+  .actionButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+  }
+  
+  .actionButton:hover {
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Icon ranglari */
+  .saveButton {
+    color: #2563eb; /* blue-600 */
+  }
+  
+  .callButton {
+    color: #059669; /* green-600 */
+  }
+  
+  .shareButton {
+    color: #d97706; /* amber-600 */
+  }
+  
+  /* Kirish linki (login xabarda) */
+  .loginLink {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  
+  .loginLink:hover {
+    text-decoration: none;
+    color: #1d4ed8;
+  }
+  /* joblist.module.css fayliga qo'shing yoki yangilang */
+
+.timeAgo {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+.jobHeader {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.jobTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}

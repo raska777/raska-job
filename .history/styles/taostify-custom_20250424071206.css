@@ -1,0 +1,70 @@
+/* toastify-custom.css */
+.Toastify__toast {
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 16px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Toastify__toast--info {
+    background: #2d8cff;
+    color: #fff;
+  }
+  
+  .Toastify__toast--success {
+    background: #28a745;
+    color: #fff;
+  }
+  
+  .Toastify__toast--warning {
+    background: #ffc107;
+    color: #000;
+  }
+  
+  .Toastify__toast--error {
+    background: #dc3545;
+    color: #fff;
+  }
+  
+  .Toastify__progress-bar {
+    height: 4px;
+    border-radius: 2px;
+  }
+  /* styles.module.css */
+
+.callButton {
+    /* Asosiy stil */
+  }
+  
+  .loginRequired {
+    position: relative;
+  }
+  
+  .loginRequired::after {
+    content: "!";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 14px;
+    height: 14px;
+    background-color: var(--error-color);
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }

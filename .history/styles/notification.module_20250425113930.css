@@ -1,0 +1,273 @@
+/* notification.module.css */
+
+/* Base Container */
+.notificationContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Notification Bell Styles */
+.notificationWrapper {
+  position: relative;
+}
+
+.notificationTrigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.notificationTrigger:hover {
+  background: #f9fafb;
+}
+
+.notificationTrigger:active {
+  transform: scale(0.95);
+}
+
+.bellIcon {
+  font-size: 18px;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid var(--bg);
+}
+
+/* Notification Panel */
+.notificationPanel {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.15s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.notificationPanel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #dcfce7;
+}
+
+/* Panel Header */
+.notificationHeader {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notificationTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.notificationClose {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* Panel Content */
+.notificationContent {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.notificationItem {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.4;
+  transition: background 0.2s ease;
+}
+
+.notificationItem:hover {
+  background: #f9f9f9;
+}
+
+.notificationItem:last-child {
+  border-bottom: none;
+}
+
+.notificationMessage {
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.notificationTime {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Empty State */
+.notificationEmpty {
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Panel Footer */
+.notificationFooter {
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.notificationViewAll {
+  color: var(--primary);
+  font-size: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* Subscription Styles */
+.subscriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.subscriptionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 26px;
+  border-radius: 24px;
+  font-weight: 400;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.subscriptionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.subscriptionButton:active {
+  transform: translateY(0);
+}
+
+.subscribed {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.unsubscribed {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.subscriptionButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loadingIndicator {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.subscriptionHint {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  max-width: 200px;
+  margin-top: 4px;
+}
+
+/* Message Styles */
+.errorMessage {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  animation: fadeInOut 3s ease-in-out forwards;
+}
+
+.successMessage {
+  background: #dcfce7;
+  color: #166534;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  animation: fadeInOut 3s ease-in-out forwards;
+}
+
+/* Animations */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Utility Classes */
+.loading {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.loginPrompt {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

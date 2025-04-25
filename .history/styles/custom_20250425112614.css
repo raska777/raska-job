@@ -1,0 +1,382 @@
+/* ===== ROOT VARIABLES ===== */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #3b82f6;
+    --accent-color: #60a5fa;
+    --text-white: #ffffff;
+    --text-light: #f0f9ff;
+    --bg-light: #f8fafc;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== BASE STYLES ===== */
+.raskajob-container {
+    min-height: 100vh;
+    background-color: var(--bg-light);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== ENHANCED ANTIQUE ANIMATED HEADER ===== */
+.raskajob-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 1rem 1.5rem 6rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Antique parchment background with subtle grid */
+.raskajob-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+    opacity: 0.6;
+    z-index: -1;
+    animation: antiqueParchment 40s linear infinite;
+}
+
+/* Antique ink drop animation */
+.raskajob-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(10, 10, 30, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(10, 10, 30, 0.15) 0%, transparent 25%);
+    animation: inkDrops 25s infinite alternate;
+    z-index: -1;
+}
+
+/* Vintage book corner effects */
+.raskajob-header-corner {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, transparent 60%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.2) 70%, transparent 70%);
+    animation: cornerFade 8s infinite alternate;
+    z-index: 0;
+}
+
+.raskajob-header-corner.top-left {
+    top: 0;
+    left: 0;
+}
+
+.raskajob-header-corner.bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+}
+
+/* Antique wax seal animations */
+.raskajob-header-seal {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    border: 2px dashed rgba(255, 215, 0, 0.4);
+    animation: sealPulse 12s infinite, sealRotate 30s linear infinite;
+    z-index: 0;
+}
+
+.raskajob-header-seal.left {
+    top: 30%;
+    left: 10%;
+}
+
+.raskajob-header-seal.right {
+    bottom: 20%;
+    right: 15%;
+}
+
+/* Header content with vintage typography effect */
+.raskajob-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Enhanced navigation with antique effects */
+.raskajob-nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.raska-job-ph{
+    display: flex;
+}
+
+.raskajob-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-white);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.raskajob-profile::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        transparent 45%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 55%
+    );
+    animation: vintageShine 6s infinite linear;
+}
+
+.raskajob-profile:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.raskajob-profile-icon {
+    font-size: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.raskajob-profile p {
+    margin: 0;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* Main title with antique animation */
+.raskajob-main-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--text-white);
+    margin: 2rem 0 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out, textGlow 8s ease-in-out infinite alternate;
+    position: relative;
+}
+
+/* ===== ANTIQUE ANIMATIONS ===== */
+@keyframes antiqueParchment {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 40px 40px, 40px 40px; }
+}
+
+@keyframes inkDrops {
+    0% { opacity: 0.3; transform: scale(1); }
+    25% { opacity: 0.2; transform: scale(1.05); }
+    50% { opacity: 0.25; transform: scale(0.95); }
+    75% { opacity: 0.3; transform: scale(1.02); }
+    100% { opacity: 0.2; transform: scale(1); }
+}
+
+@keyframes cornerFade {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
+
+@keyframes sealPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 0.9; }
+}
+
+@keyframes sealRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes textGlow {
+    0% { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.3), 0 0 5px rgba(255, 255, 255, 0.1); }
+    100% { text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 1px 1px 2px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.2); }
+}
+
+@keyframes vintageShine {
+    0% { transform: translate(-30%, -30%) rotate(0deg); }
+    100% { transform: translate(30%, 30%) rotate(360deg); }
+}
+
+/* ===== SEARCH SECTION (UNCHANGED) ===== */
+.raskajob-search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.raskajob-search-box {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.raskajob-search-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.raskajob-search-select,
+.raskajob-search-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    width: 100%;
+    transition: var(--transition);
+}
+
+.raskajob-search-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.646 6.146a.5.5 0 0 1 .708 0L8 8.793l2.646-2.647a.5.5 0 1 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    cursor: pointer;
+}
+
+.raskajob-search-select:hover {
+    border-color: var(--accent-color);
+}
+
+.raskajob-search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.raskajob-search-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.raskajob-search-button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* ===== MAIN CONTENT (UNCHANGED) ===== */
+.raskajob-main {
+    flex: 1;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: -3rem auto 0;
+    position: relative;
+}
+
+.raskajob-content {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+}
+
+/* ===== EXISTING ANIMATIONS ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (min-width: 640px) {
+    .raskajob-header {
+        padding-bottom: 8rem;
+    }
+    
+    .raskajob-search-box {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .raskajob-search-select {
+        max-width: 200px;
+    }
+    
+    .raskajob-search-button {
+        width: auto;
+    }
+    
+    .raskajob-main-title {
+        font-size: 2.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .raskajob-header {
+        padding-bottom: 10rem;
+    }
+    
+    .raskajob-main {
+        padding: 3rem 1.5rem;
+        margin-top: -4rem;
+    }
+    
+    .raskajob-main-title {
+        font-size: 3rem;
+    }
+}

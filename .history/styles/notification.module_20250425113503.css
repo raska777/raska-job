@@ -1,0 +1,471 @@
+Here's the enhanced NotificationBell component with integrated CSS module styling, combining both the subscription functionality and modern notification panel design:
+
+```tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import styles from './notification.module.css';
+
+export default function NotificationBell() {
+  const { data: session, status } = useSession();
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchSubscriptionStatus = async () => {
+      try {
+        const res = await fetch('/api/user/subscription');
+        if (!res.ok) throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
+
+        const data = await res.json();
+        setIsSubscribed(data.isSubscribed);
+      } catch (err) {
+        console.error('구독 상태 가져오기 실패:', err);
+        setError('구독 상태를 가져오는 중 문제가 발생했습니다.');
+      }
+    };
+
+    if (session?.user) {
+      fetchSubscriptionStatus();
+      fetchNotifications();
+    }
+  }, [session]);
+
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch('/api/user/notifications');
+      if (res.ok) {
+        const data = await res.json();
+        setNotifications(data.notifications);
+      }
+    } catch (err) {
+      console.error('알림 가져오기 실패:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (error || successMsg) {
+      const timer = setTimeout(() => {
+        setError(null);
+        setSuccessMsg(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error, successMsg]);
+
+  const toggleSubscription = async () => {
+    if (!session?.user) return;
+
+    setLoading(true);
+    setError(null);
+    setSuccessMsg(null);
+
+    try {
+      const res = await fetch('/api/user/subscription', {
+        method: 'PATCH',
+      });
+
+      if (!res.ok) throw new Error('서버 오류');
+
+      const data = await res.json();
+      setIsSubscribed(data.isSubscribed);
+
+      setSuccessMsg(
+        data.isSubscribed
+          ? '구독이 성공적으로 완료되었습니다!'
+          : '구독이 취소되었습니다.'
+      );
+    } catch (err) {
+      console.error('구독 토글 오류:', err);
+      setError('작업 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (status === 'loading') return <div className={styles.loading}>로딩 중...</div>;
+  if (!session) return (
+    <div className={styles.loginPrompt}>
+      구독 기능을 이용하려면 로그인해주세요
+    </div>
+  );
+
+  return (
+    <div className={styles.notificationContainer}>
+      {/* Notification Bell with Badge */}
+      <div className={styles.notificationWrapper}>
+        <button
+          className={styles.notificationTrigger}
+          onClick={() => setIsPanelOpen(!isPanelOpen)}
+          aria-label="알림"
+        >
+          <span className={styles.bellIcon}>
+            {isSubscribed ? '🔔' : '🔕'}
+          </span>
+          {notifications.length > 0 && (
+            <span className={styles.notificationBadge}></span>
+          )}
+        </button>
+
+        {/* Notification Panel */}
+        <div className={`${styles.notificationPanel} ${isPanelOpen ? styles.open : ''}`}>
+          <div className={styles.notificationHeader}>
+            <h3 className={styles.notificationTitle}>알림</h3>
+            <button 
+              className={styles.notificationClose}
+              onClick={() => setIsPanelOpen(false)}
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className={styles.notificationContent}>
+            {notifications.length === 0 ? (
+              <div className={styles.notificationEmpty}>
+                새로운 알림이 없습니다
+              </div>
+            ) : (
+              notifications.map((notification) => (
+                <div key={notification.id} className={styles.notificationItem}>
+                  <p className={styles.notificationMessage}>{notification.message}</p>
+                  <time className={styles.notificationTime}>
+                    {new Date(notification.createdAt).toLocaleString()}
+                  </time>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className={styles.notificationFooter}>
+            <button className={styles.notificationViewAll}>
+              모두 보기
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Subscription Button */}
+      <div className={styles.subscriptionContainer}>
+        {error && (
+          <div className={styles.errorMessage}>
+            {error}
+          </div>
+        )}
+        {successMsg && (
+          <div className={styles.successMessage}>
+            {successMsg}
+          </div>
+        )}
+
+        <button
+          onClick={toggleSubscription}
+          disabled={loading}
+          className={`${styles.subscriptionButton} ${
+            isSubscribed ? styles.subscribed : styles.unsubscribed
+          }`}
+        >
+          {loading ? (
+            <span className={styles.loadingIndicator}>⏳</span>
+          ) : isSubscribed ? (
+            <>
+              <span>🔕</span>
+              <span>구독 취소</span>
+            </>
+          ) : (
+            <>
+              <span>🔔</span>
+              <span>구독하기</span>
+            </>
+          )}
+        </button>
+
+        {!isSubscribed && (
+          <p className={styles.subscriptionHint}>
+            새로운 일자리 공고를 이메일로 받아보시려면 구독해주세요
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+And here's the updated CSS module with additional styles for the subscription functionality:
+
+```css
+/* notification.module.css */
+
+/* Base Container */
+.notificationContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Notification Bell Styles */
+.notificationWrapper {
+  position: relative;
+}
+
+.notificationTrigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.notificationTrigger:hover {
+  background: #f9fafb;
+}
+
+.notificationTrigger:active {
+  transform: scale(0.95);
+}
+
+.bellIcon {
+  font-size: 18px;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid var(--bg);
+}
+
+/* Notification Panel */
+.notificationPanel {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.15s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.notificationPanel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Panel Header */
+.notificationHeader {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notificationTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.notificationClose {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* Panel Content */
+.notificationContent {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.notificationItem {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.4;
+  transition: background 0.2s ease;
+}
+
+.notificationItem:hover {
+  background: #f9f9f9;
+}
+
+.notificationItem:last-child {
+  border-bottom: none;
+}
+
+.notificationMessage {
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.notificationTime {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Empty State */
+.notificationEmpty {
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Panel Footer */
+.notificationFooter {
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.notificationViewAll {
+  color: var(--primary);
+  font-size: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* Subscription Styles */
+.subscriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.subscriptionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.subscriptionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.subscriptionButton:active {
+  transform: translateY(0);
+}
+
+.subscribed {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.unsubscribed {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.subscriptionButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loadingIndicator {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.subscriptionHint {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  max-width: 200px;
+  margin-top: 4px;
+}
+
+/* Message Styles */
+.errorMessage {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  animation: fadeInOut 3s ease-in-out forwards;
+}
+
+.successMessage {
+  background: #dcfce7;
+  color: #166534;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  animation: fadeInOut 3s ease-in-out forwards;
+}
+
+/* Animations */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Utility Classes */
+.loading {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.loginPrompt {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

@@ -1,0 +1,12 @@
+{
+    "header": {
+      "title": "ish eloni qoshish",
+      "description": "Obuna bo`lish",
+      "search":"search"
+    },
+    "buttons": {
+      "apply": "qidirish",
+      "save": "Saqlash",
+      "cities": "all cities"
+    }
+  
