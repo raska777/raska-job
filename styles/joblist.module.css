@@ -58,7 +58,8 @@
     animation: fadeIn 0.5s ease-out forwards;
     opacity: 0;
     border: 1px solid #e5e7eb;
-    position: relative;
+    
+    position: relative; 
   }
   
   .jobCard:hover {
@@ -280,49 +281,7 @@
   }
   
 
-  /* button icon kodlari*/
-  .actionButtons {
-    position: absolute;
-    bottom: 56px;
-    right: 16px;
-    display: flex;
-    gap: 12px;
-    z-index: 10;
-  }
-  
-  .actionButton {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: none;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-  }
-  
-  .actionButton:hover {
-    transform: translateY(-2px) scale(1.08);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  }
-  
-  /* Icon ranglari */
-  .saveButton {
-    color: #2563eb; /* blue-600 */
-  }
-  
-  .callButton {
-    color: #059669; /* green-600 */
-  }
-  
-  .shareButton {
-    color: #d97706; /* amber-600 */
-  }
-  
-  /* Kirish linki (login xabarda) */
+
   .loginLink {
     color: #2563eb;
     font-weight: 600;
@@ -357,3 +316,76 @@
   font-size: 1.2rem;
   font-weight: 600;
 }
+.toggleButton {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 9999px; /* capsule style */
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleButton:hover {
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  transform: translateY(-2px);
+}
+
+/*iconchalarim shakarchalarim */
+.saveButton {
+  position: absolute;
+  top: 15px;
+left:16px;
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 15;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.saveButton:hover {
+  transform: scale(1.2);
+  color: #1d4ed8;
+}
+
+.actionButtons {
+  position: absolute;
+  bottom: 70px;
+  right: 25px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  z-index: 5;
+}
+
+.actionButton {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #eff6ff; /* very light blue */
+  border: 1px solid #dbeafe; /* soft border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3b82f6; /* blue-500 */
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.actionButton:hover {
+  background: #bfdbfe; /* darker blue */
+  color: #1d4ed8;
+  transform: scale(1.1);
+}
+
+
+

@@ -114,6 +114,7 @@ import NotificationBell from "../components/NotificationBell";
 import SettingsForm from "../components/SettingForm";
 import Image from "next/image";
 import styles from './profile.module.css';
+import { FiArrowLeftCircle } from "react-icons/fi";
 
 export default function ProfilePage() {
   const { data: session } = useSession();
@@ -123,12 +124,10 @@ export default function ProfilePage() {
   return (
     <div className={styles.profileContainer}>
       {/* 뒤로 가기 버튼 */}
-      <button
-        onClick={() => router.back()}
-        className={styles.backButton}
-      >
-        🔙 뒤로 가기
-      </button>
+      <button onClick={() => router.push('/')} className={styles.backButton}>
+          <FiArrowLeftCircle size={24} /> Orqaga
+        </button>
+
 
       {session ? (
         <div>
@@ -172,6 +171,11 @@ export default function ProfilePage() {
             >
               내 공고
             </Link>
+            <Link
+              href="/saved-jobs"
+              className={`${styles.actionButton} ${styles.primaryButton}`}
+            >
+saqlangan            </Link>
 
             {/* 설정 버튼 */}
             <button

@@ -1,379 +1,507 @@
 
+// 'use client';
 
-// "use client";
-// import { useState } from "react";
-// import { useSession } from "next-auth/react"; 
-// import "styles/postjob.css";
+// import { useState, useRef, useEffect } from 'react';
+// import { useSession } from 'next-auth/react';
+// import 'styles/postjob.css';
+// // import { Session } from 'inspector';
 
 // interface FormData {
 //   work_type: string;
 //   work_days: string;
 //   work_hours: string;
+//   custom_work_hours?: string;
 //   salary: string;
+//   salary_type: string;
 //   language: string;
-//   visa_type: string;
+//   visa_type: string[];
 //   contact: string;
 //   location: string;
 // }
 
+// const visaOptions = [
+//   '무관', 'E-9', 'E-7', 'D-10', 'H-2', 'F-2', 'F-4', 'F-5', 'F-6',
+//   'G-1', 'C-3', 'D-2', 'D-4', 'E-1', 'E-2', 'E-5', 'E-6', 'F-1', 'H-1', 'J-1', 'K-1'
+// ];
+
+// const cities = [
+//   '서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종',
+//   '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도',
+//   '경상북도', '경상남도', '제주도'
+// ];
+
 // export default function PostJob() {
+//   const { data: session } = useSession();
+
 //   const [form, setForm] = useState<FormData>({
-//     work_type: "",
-//     work_days: "",
-//     work_hours: "",
-//     salary: "",
-//     language: "",
-//     visa_type: "",
-//     contact: "",
-//     location: "",
+//     work_type: '',
+//     work_days: '',
+//     work_hours: '',
+//     salary: '',
+//     salary_type: '월급',
+//     language: '',
+//     visa_type: [],
+//     contact: '',
+//     location: ''
 //   });
 
-//   const { data: session } = useSession();
 //   const [isFormVisible, setIsFormVisible] = useState(false);
-//   const [error, setError] = useState("");
+//   const [error, setError] = useState('');
+//   const [successMessage, setSuccessMessage] = useState('');
+//   // const [isVisaDropdownOpen, setIsVisaDropdownOpen] = useState(false); // ❌ Agar visa dropdown ishlatilmasa, O'CHIRAMIZ  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-//   if (!session) {
-//     return (
-//       <main className="post-job-container">
-//         <p className="login-prompt">
-//           Elon berish uchun iltimos, avval&nbsp;
-//           <a href="/login" className="login-link">
-//             login
-//           </a>&nbsp;qiling.
-//         </p>
-//       </main>
-//     );
-//   }
+//   const visaDropdownRef = useRef<HTMLDivElement>(null);
 
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
+//   useEffect(() => {
+//     function handleClickOutside(event: MouseEvent) {
+//       if (visaDropdownRef.current && !visaDropdownRef.current.contains(event.target as Node)) {
+//         setIsVisaDropdownOpen(false);
+//       }
+//     }
+//     document.addEventListener('mousedown', handleClickOutside);
+//     return () => document.removeEventListener('mousedown', handleClickOutside);
+//   }, []);
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+//     const { name, value, type } = e.target;
+//     if (name === 'visa_type' && type === 'checkbox') {
+//       const updatedVisas = form.visa_type.includes(value)
+//         ? form.visa_type.filter(v => v !== value)
+//         : [...form.visa_type, value];
+//       setForm({ ...form, visa_type: updatedVisas });
+//     } else {
+//       setForm({ ...form, [name]: value });
+//     }
 //   };
 
 //   const handleSubmit = async (e: React.FormEvent) => {
 //     e.preventDefault();
 
-//     const cleanedForm = Object.fromEntries(
-//       Object.entries(form).map(([key, value]) => [key, value.trim()])
-//     );
+//     const cleanedForm = {
+//       ...form,
+//       salary: `${form.salary} ${form.salary_type}`,
+//       work_hours: form.work_hours === '직접입력' ? form.custom_work_hours : form.work_hours,
+//     };
 
-//     const isEmpty = Object.values(cleanedForm).some((value) => value === "");
-//     if (isEmpty) {
-//       setError("Iltimos, barcha maydonlarni to'ldiring!");
+//     if (Object.values(cleanedForm).some(v => v === '' || v === undefined || (Array.isArray(v) && v.length === 0))) {
+//       setError('모든 항목을 입력해주세요!');
 //       return;
 //     }
 
 //     const phoneRegex = /^01[0|1]-?\d{3,4}-?\d{4}$/;
-//     if (!phoneRegex.test(cleanedForm.contact)) {
-//       setError(
-//         "Iltimos, to'g'ri Koreya raqam kiriting! (01012345678 yoki 010-1234-5678)"
-//       );
+//     if (!phoneRegex.test(form.contact)) {
+//       setError('정확한 전화번호를 입력하세요! (예: 010-1234-5678)');
 //       return;
 //     }
 
-//     setError("");
+//     setError('');
+//     setIsFormSubmitted(true);
+//     setSuccessMessage('✅ 잠시만 기다려주세요...');
 
-//     const response = await fetch("/api/post", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
+//     const response = await fetch('/api/post', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
 //       body: JSON.stringify({
 //         ...cleanedForm,
-//         creator: session?.user?.id,
+//         creator: session?.user?.id, // Will be undefined if session or user is null
 //       }),
 //     });
 
-//     const responseData = await response.json();
-
-//     // Log response to diagnose the issue
-//     console.log("Response status:", response.status);
-//     console.log("Response data:", responseData);
-
 //     if (response.ok) {
-//       alert("Ish eloni MongoDB ga saqlandi! ✅");
-//       setForm({
-//         work_type: "",
-//         work_days: "",
-//         work_hours: "",
-//         salary: "",
-//         language: "",
-//         visa_type: "",
-//         contact: "",
-//         location: "",
-//       });
-//       setIsFormVisible(false);
+//       setTimeout(() => {
+//         setSuccessMessage('✅ 공고가 성공적으로 등록되었습니다!');
+//         setTimeout(() => {
+//           setIsFormVisible(false);
+//           setSuccessMessage('');
+//           setIsFormSubmitted(false);
+//           setForm({
+//             work_type: '',
+//             work_days: '',
+//             work_hours: '',
+//             salary: '',
+//             salary_type: '월급',
+//             language: '',
+//             visa_type: [],
+//             contact: '',
+//             location: ''
+//           });
+//         }, 2000);
+//       }, 2000);
 //     } else {
-//       alert(`Xatolik! Saqlanmadi! ❌ ${responseData.error}`);
+//       setError('공고 등록 실패했습니다 ❌');
+//       setIsFormSubmitted(false);
 //     }
 //   };
 
-//   const handleButtonClick = () => {
-//     setIsFormVisible(true);
-//   };
-
-//   const handleCancel = () => {
-//     setIsFormVisible(false);
-//     setForm({
-//       work_type: "",
-//       work_days: "",
-//       work_hours: "",
-//       salary: "",
-//       language: "",
-//       visa_type: "",
-//       contact: "",
-//       location: "",
-//     });
-//     setError("");
-//   };
-
-//   const fields: Array<{ label: string; name: keyof FormData; placeholder: string }> = [
-//     { label: "Ish turi", name: "work_type", placeholder: "Ish turi (to'liq yoki qisman)" },
-//     { label: "Ish kunlari", name: "work_days", placeholder: "Dushanbadan Jumagacha" },
-//     { label: "Ish soatlari", name: "work_hours", placeholder: "9:00 - 18:00" },
-//     { label: "Maosh", name: "salary", placeholder: "Maosh (raqamda)" },
-//     { label: "Til", name: "language", placeholder: "Ingliz tili, koreys tili" },
-//     { label: "Viza turi", name: "visa_type", placeholder: "Ish vizasi (E-9, D-10 va h.k.)" },
-//     { label: "Telefon raqam", name: "contact", placeholder: "01012345678 yoki 010-1234-5678" },
-//     { label: "Shahar", name: "location", placeholder: "Shahar (masalan, Seul)" },
-//   ];
+//   if (!session) {
+//     return (
+//       <main className="post-job-container">
+//         <p className="login-prompt">
+//           공고를 올리려면 <a href="/login" className="login-link">로그인</a> 해주세요.
+//         </p>
+//       </main>
+//     );
+//   }
 
 //   return (
 //     <main className="post-job-container">
-//       <h2 className="form-title">Ish eloni qo'shish</h2>
+//       <h2 className="form-title">구인 공고 등록</h2>
 
-//       {!isFormVisible && session && (
-//         <button
-//           onClick={handleButtonClick}
-//           className="upload-btn"
-//         >
-//           Elon yuklash
+//       {!isFormVisible && (
+//         <button onClick={() => setIsFormVisible(true)} className="upload-btn">
+//           공고 작성
 //         </button>
 //       )}
 
 //       {isFormVisible && (
-//         <form onSubmit={handleSubmit} className="job-form">
-//           {error && <p className="error-message">{error}</p>}
+//         <>
+//           {!setIsFormSubmitted ? (
+//             <form onSubmit={handleSubmit} className="job-form">
+//               {error && <p className="error-message">{error}</p>}
 
-//           {fields.map((field) => (
-//             <div className="form-group" key={field.name}>
-//               <label className="form-label">{field.label}</label>
-//               <input
-//                 type="text"
-//                 name={field.name}
-//                 placeholder={field.placeholder}
-//                 value={form[field.name]}
-//                 onChange={handleChange}
-//                 className="form-input"
-//               />
-//             </div>
-//           ))}
+//               <div className="form-group">
+//                 <label className="form-label">근무 형태</label>
+//                 <input type="text" name="work_type" className="form-input" value={form.work_type} onChange={handleChange} placeholder="예: 정규직" />
+//               </div>
 
-//           <div className="button-group">
-//             <button
-//               type="submit"
-//               className="submit-btn"
-//             >
-//               Yuborish
-//             </button>
-//             <button
-//               type="button"
-//               onClick={handleCancel}
-//               className="cancel-btn"
-//             >
-//               Bekor qilish
-//             </button>
-//           </div>
-//         </form>
+//               <div className="form-group">
+//                 <label className="form-label">근무 요일</label>
+//                 <input type="text" name="work_days" className="form-input" value={form.work_days} onChange={handleChange} placeholder="예: 월-금" />
+//               </div>
+
+//               <div className="form-group">
+//                 <label className="form-label">근무 시간</label>
+//                 <select name="work_hours" className="form-input" value={form.work_hours} onChange={handleChange}>
+//                   <option value="">선택하세요</option>
+//                   <option value="주간 (09:00-18:00)">주간 (09:00-18:00)</option>
+//                   <option value="야간 (22:00-06:00)">야간 (22:00-06:00)</option>
+//                   <option value="2교대">2교대</option>
+//                   <option value="3교대">3교대</option>
+//                   <option value="직접입력">직접입력</option>
+//                 </select>
+//                 {form.work_hours === '직접입력' && (
+//                   <input type="text" name="custom_work_hours" className="form-input" value={form.custom_work_hours || ''} onChange={handleChange} placeholder="08:00 ~ 17:00" />
+//                 )}
+//               </div>
+
+//               <div className="form-group">
+//                 <label className="form-label">급여</label>
+//                 <div className="salary-group">
+//                   <input type="text" name="salary" className="form-input" value={form.salary} onChange={handleChange} placeholder="금액 입력" />
+//                   <select name="salary_type" className="form-input" value={form.salary_type} onChange={handleChange}>
+//                     <option value="월급">월급</option>
+//                     <option value="일급">일급</option>
+//                     <option value="시급">시급</option>
+//                   </select>
+//                 </div>
+//               </div>
+
+//               <div className="form-group">
+//                 <label className="form-label">언어</label>
+//                 <input type="text" name="language" className="form-input" value={form.language} onChange={handleChange} placeholder="예: 한국어" />
+//               </div>
+
+//               <div className="form-group">
+//                 <label className="form-label">연락처</label>
+//                 <input type="text" name="contact" className="form-input" value={form.contact} onChange={handleChange} placeholder="010-1234-5678" />
+//               </div>
+
+//               <div className="form-group">
+//                 <label className="form-label">지역</label>
+//                 <select name="location" className="form-input" value={form.location} onChange={handleChange}>
+//                   <option value="">선택하세요</option>
+//                   {cities.map(city => <option key={city} value={city}>{city}</option>)}
+//                 </select>
+//               </div>
+
+//               <div className="button-group">
+//                 <button type="submit" className="submit-btn">등록</button>
+//                 <button type="button" className="cancel-btn" onClick={() => setIsFormVisible(false)}>취소</button>
+//               </div>
+//             </form>
+//           ) : (
+//             <p className="success-message">{successMessage}</p>
+//           )}
+//         </>
 //       )}
 //     </main>
 //   );
 // }
+// function setIsVisaDropdownOpen(arg0: boolean) {
+//   throw new Error('Function not implemented.');
+// }
+
+// function setIsFormSubmitted(arg0: boolean) {
+//   throw new Error('Function not implemented.');
+// }
 
 
-"use client";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import "styles/postjob.css";
+'use client';
+
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import 'styles/postjob.css';
 
 interface FormData {
   work_type: string;
   work_days: string;
   work_hours: string;
+  custom_work_hours?: string;
   salary: string;
+  salary_type: string;
   language: string;
-  visa_type: string;
+  visa_type: string[];
   contact: string;
   location: string;
 }
 
+const cities = [
+  '서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종',
+  '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도',
+  '경상북도', '경상남도', '제주도'
+];
+
 export default function PostJob() {
+  const { data: session } = useSession();
+
   const [form, setForm] = useState<FormData>({
-    work_type: "",
-    work_days: "",
-    work_hours: "",
-    salary: "",
-    language: "",
-    visa_type: "",
-    contact: "",
-    location: "",
+    work_type: '',
+    work_days: '',
+    work_hours: '',
+    salary: '',
+    salary_type: '월급',
+    language: '',
+    visa_type: [],
+    contact: '',
+    location: ''
   });
 
-  const { data: session } = useSession();
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   if (!session) {
     return (
       <main className="post-job-container">
         <p className="login-prompt">
-          공고를 올리시려면 먼저&nbsp;
-          <a href="/login" className="login-link">
-            로그인
-          </a>&nbsp;해주세요.
+          공고를 올리려면 <a href="/login" className="login-link">로그인</a> 해주세요.
         </p>
       </main>
     );
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm(prevForm => ({ ...prevForm, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const cleanedForm = Object.fromEntries(
-      Object.entries(form).map(([key, value]) => [key, value.trim()])
-    );
+    const cleanedForm = {
+      ...form,
+      salary: `${form.salary} ${form.salary_type}`,
+      work_hours: form.work_hours === '직접입력' ? form.custom_work_hours : form.work_hours,
+    };
 
-    const isEmpty = Object.values(cleanedForm).some((value) => value === "");
-    if (isEmpty) {
-      setError("모든 항목을 입력해주세요!");
+    if (Object.values(cleanedForm).some(v => v === '' || v === undefined || (Array.isArray(v) && v.length === 0))) {
+      setError('모든 항목을 입력해주세요!');
       return;
     }
 
     const phoneRegex = /^01[0|1]-?\d{3,4}-?\d{4}$/;
-    if (!phoneRegex.test(cleanedForm.contact)) {
-      setError(
-        "정확한 한국 전화번호를 입력해주세요! (예: 01012345678 또는 010-1234-5678)"
-      );
+    if (!phoneRegex.test(form.contact)) {
+      setError('정확한 전화번호를 입력하세요! (예: 010-1234-5678)');
       return;
     }
 
-    setError("");
+    setError('');
+    setIsFormSubmitted(true);
+    setSuccessMessage('✅ 잠시만 기다려주세요...');
 
-    const response = await fetch("/api/post", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await fetch('/api/post', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...cleanedForm,
-        creator: session?.user?.id,
+        creator: session.user?.id,
       }),
     });
 
-    const responseData = await response.json();
-
-    console.log("Response status:", response.status);
-    console.log("Response data:", responseData);
-
     if (response.ok) {
-      alert("구인 공고가 성공적으로 등록되었습니다! ✅");
-      setForm({
-        work_type: "",
-        work_days: "",
-        work_hours: "",
-        salary: "",
-        language: "",
-        visa_type: "",
-        contact: "",
-        location: "",
-      });
-      setIsFormVisible(false);
+      setTimeout(() => {
+        setSuccessMessage('✅ 공고가 성공적으로 등록되었습니다!');
+        setTimeout(() => {
+          setIsFormVisible(false);
+          setIsFormSubmitted(false);
+          setSuccessMessage('');
+          setForm({
+            work_type: '',
+            work_days: '',
+            work_hours: '',
+            salary: '',
+            salary_type: '월급',
+            language: '',
+            visa_type: [],
+            contact: '',
+            location: ''
+          });
+        }, 2000);
+      }, 2000);
     } else {
-      alert(`오류 발생! 등록 실패 ❌ ${responseData.error}`);
+      setError('공고 등록 실패했습니다 ❌');
+      setIsFormSubmitted(false);
     }
   };
-
-  const handleButtonClick = () => {
-    setIsFormVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsFormVisible(false);
-    setForm({
-      work_type: "",
-      work_days: "",
-      work_hours: "",
-      salary: "",
-      language: "",
-      visa_type: "",
-      contact: "",
-      location: "",
-    });
-    setError("");
-  };
-
-  const fields: Array<{ label: string; name: keyof FormData; placeholder: string }> = [
-    { label: "근무 형태", name: "work_type", placeholder: "예: 정규직, 파트타임" },
-    { label: "근무 요일", name: "work_days", placeholder: "예: 월요일 ~ 금요일" },
-    { label: "근무 시간", name: "work_hours", placeholder: "예: 9:00 - 18:00" },
-    { label: "급여", name: "salary", placeholder: "숫자만 입력 (예: 200만원)" },
-    { label: "언어", name: "language", placeholder: "예: 한국어, 영어 가능자" },
-    { label: "비자 종류", name: "visa_type", placeholder: "예: E-9, D-10 등" },
-    { label: "연락처", name: "contact", placeholder: "01012345678 또는 010-1234-5678" },
-    { label: "지역", name: "location", placeholder: "예: 서울, 인천" },
-  ];
 
   return (
     <main className="post-job-container">
       <h2 className="form-title">구인 공고 등록</h2>
 
-      {!isFormVisible && session && (
-        <button
-          onClick={handleButtonClick}
-          className="upload-btn"
-        >
-          공고 작성하기
+      {!isFormVisible && (
+        <button onClick={() => setIsFormVisible(true)} className="upload-btn">
+          공고 작성
         </button>
       )}
 
-      {isFormVisible && (
-        <form onSubmit={handleSubmit} className="job-form">
-          {error && <p className="error-message">{error}</p>}
+{isFormVisible && (
+  <>
+    {!isFormSubmitted ? (
+      <form onSubmit={handleSubmit} className="job-form">
+        {error && <p className="error-message">{error}</p>}
 
-          {fields.map((field) => (
-            <div className="form-group" key={field.name}>
-              <label className="form-label">{field.label}</label>
-              <input
-                type="text"
-                name={field.name}
-                placeholder={field.placeholder}
-                value={form[field.name]}
-                onChange={handleChange}
-                className="form-input"
-              />
-            </div>
-          ))}
+        <div className="form-group">
+          <label className="form-label">근무 형태</label>
+          <input
+            type="text"
+            name="work_type"
+            value={form.work_type}
+            onChange={handleChange}
+            className="form-input"
+            placeholder="예: 정규직"
+          />
+        </div>
 
-          <div className="button-group">
-            <button
-              type="submit"
-              className="submit-btn"
+        <div className="form-group">
+          <label className="form-label">근무 요일</label>
+          <input
+            type="text"
+            name="work_days"
+            value={form.work_days}
+            onChange={handleChange}
+            className="form-input"
+            placeholder="예: 월-금"
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">근무 시간</label>
+          <select
+            name="work_hours"
+            value={form.work_hours}
+            onChange={handleChange}
+            className="form-input"
+          >
+            <option value="">선택하세요</option>
+            <option value="주간 (09:00-18:00)">주간 (09:00-18:00)</option>
+            <option value="야간 (22:00-06:00)">야간 (22:00-06:00)</option>
+            <option value="2교대">2교대</option>
+            <option value="3교대">3교대</option>
+            <option value="직접입력">직접입력</option>
+          </select>
+          {form.work_hours === '직접입력' && (
+            <input
+              type="text"
+              name="custom_work_hours"
+              value={form.custom_work_hours || ''}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="08:00 ~ 17:00"
+            />
+          )}
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">급여</label>
+          <div className="salary-group">
+            <input
+              type="text"
+              name="salary"
+              value={form.salary}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="금액 입력"
+            />
+            <select
+              name="salary_type"
+              value={form.salary_type}
+              onChange={handleChange}
+              className="form-input"
             >
-              등록하기
-            </button>
-            <button
-              type="button"
-              onClick={handleCancel}
-              className="cancel-btn"
-            >
-              취소
-            </button>
+              <option value="월급">월급</option>
+              <option value="일급">일급</option>
+              <option value="시급">시급</option>
+            </select>
           </div>
-        </form>
-      )}
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">언어</label>
+          <input
+            type="text"
+            name="language"
+            value={form.language}
+            onChange={handleChange}
+            className="form-input"
+            placeholder="예: 한국어"
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">연락처</label>
+          <input
+            type="text"
+            name="contact"
+            value={form.contact}
+            onChange={handleChange}
+            className="form-input"
+            placeholder="010-1234-5678"
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">지역</label>
+          <select
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            className="form-input"
+          >
+            <option value="">선택하세요</option>
+            {cities.map(city => (
+              <option key={city} value={city}>{city}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="button-group">
+          <button type="submit" className="submit-btn">등록</button>
+          <button
+            type="button"
+            className="cancel-btn"
+            onClick={() => setIsFormVisible(false)}
+          >
+            취소
+          </button>
+        </div>
+      </form>
+    ) : (
+      <p className="success-message">{successMessage}</p>
+    )}
+  </>
+)}
+
     </main>
   );
 }

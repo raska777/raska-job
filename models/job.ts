@@ -1,29 +1,44 @@
-import { Schema, model, models } from 'mongoose';
+// import { Schema, model, models, Document } from 'mongoose';
 
-const JobSchema = new Schema(
-  {
-    work_type: String,
-    work_days: String,
-    work_hours: String,
-    salary: String,
-    language: String,
-    visa_type: String,
-    contact: String,
-    creator: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+// // Yangi tipni aniqlash
+// interface IJob extends Document {
+//   jobname: string;
+//   location: string;
+//   work_type: string;
+//   work_hours: string;
+//   salary: string;
+//   language: string;
+//   visa_type: string;
+//   contact: string;
+//   work_days?: string;
+//   posted_date?: string;
+//   createdAt?: string;
+// }
 
-// Agar allaqachon model bo‘lsa, undan foydalanamiz
-const Job = models.Job || model('Job', JobSchema);
+// // Job schema
+// const JobSchema = new Schema<IJob>(
+//   {
+//     jobname: String,
+//     location: String,
+//     work_type: String,
+//     work_hours: String,
+//     salary: String,
+//     language: String,
+//     visa_type: String,
+//     contact: String,
+//     work_days: String,
+//     posted_date: String,
+//     createdAt: {
+//       type: Date,
+//       default: Date.now,
+//     },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
 
-export default Job;
+// // Agar model allaqachon mavjud bo‘lsa, undan foydalanamiz
+// const Job = models.Job || model<IJob>('Job', JobSchema);
+
+// export default Job;
