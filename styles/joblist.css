@@ -297,27 +297,4 @@
       font-size: 1.125rem;
     }
   }
-  /* joblist.module.css fayliga qo'shing yoki yangilang */
-
-.timeAgo {
-  display: block;
-  font-size: 0.75rem;
-  color: #666;
-  background-color: #f0f0f0;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  margin-bottom: 0.5rem;
-  align-self: flex-start;
-}
-
-.jobHeader {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.jobTitle {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
+  

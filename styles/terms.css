@@ -1,0 +1,39 @@
+/* styles/terms.css */
+
+.terms-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+  .terms-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #1565c0;
+  }
+  
+  .terms-section {
+    margin-bottom: 30px;
+  }
+  
+  .terms-section h2 {
+    font-size: 24px;
+    color: #1e88e5;
+    margin-bottom: 10px;
+  }
+  
+  .terms-section p,
+  .terms-section ul {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+  }
+  
+  .terms-section ul {
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+  
