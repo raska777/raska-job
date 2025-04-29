@@ -1,137 +1,226 @@
+/* profile.module.css */
+
 .container {
-    max-width: 600px;
-    margin: auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  
-  .title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-align: center;
-    color: #1f2937;
-  }
-  
-  .inputGroup {
-    margin-bottom: 1.5rem;
-  }
-  
-  .label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #374151;
-  }
-  
-  .input,
-  .readonlyInput {
-    width: 100%;
-    padding: 0.6rem 0.9rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    background-color: #f9fafb;
-  }
-  
-  .input:disabled {
-    background-color: #f3f4f6;
-    color: #6b7280;
-  }
-  
-  .readonlyInput {
-    background-color: #f3f4f6;
-    color: #6b7280;
-    cursor: not-allowed;
-  }
-  
-  .hintText {
-    font-size: 0.85rem;
-    color: #6b7280;
-    margin-top: 0.4rem;
-  }
-  
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-  
-  .editBtn,
-  .cancelBtn,
-  .saveBtn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .editBtn {
-    background-color: #3b82f6;
-    color: white;
-  }
-  
-  .editBtn:hover {
-    background-color: #2563eb;
-  }
-  
-  .cancelBtn {
-    background-color: #e5e7eb;
-    color: #374151;
-  }
-  
-  .cancelBtn:hover {
-    background-color: #d1d5db;
-  }
-  
-  .saveBtn {
-    background-color: #10b981;
-    color: white;
-  }
-  
-  .saveBtn:hover {
-    background-color: #059669;
-  }
-  
-  .metaInfo {
-    margin-bottom: 2rem;
-    background-color: #f9fafb;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    font-size: 0.95rem;
-    color: #374151;
-    line-height: 1.6;
-  }
-  
-  .verified {
-    color: #16a34a;
-    font-weight: 600;
-  }
-  
-  .notVerified {
-    color: #dc2626;
-    font-weight: 600;
-  }
-  
-  .verifyBtn {
-    margin-left: 1rem;
-    padding: 0.4rem 0.8rem;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 0.4rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .verifyBtn:hover {
-    background-color: #2563eb;
-  }
-  
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.infoGroup {
+  background: #f8f9fa;
+  padding: 1.25rem;
+  border-radius: 10px;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.infoItem:last-child {
+  margin-bottom: 0;
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: #555;
+  min-width: 100px;
+}
+
+.infoValue {
+  color: #222;
+}
+
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.inputLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.disabled {
+  background: #f5f5f5;
+  color: #777;
+}
+
+/* Status indicators */
+.verified {
+  color: #10b981;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.notVerified {
+  color: #ef4444;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.verificationContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sentNotice {
+  color: #3b82f6;
+  font-size: 0.8rem;
+}
+
+/* Buttons */
+
+
+.editBtn, .saveBtn, .cancelBtn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.editBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+}
+
+.editBtn:hover {
+  background: #4338ca;
+}
+
+.saveBtn {
+  background: #10b981;
+  color: white;
+  border: none;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: #0d9c6e;
+}
+
+.saveBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  background: transparent;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.cancelBtn:hover {
+  background: #f5f5f5;
+}
+
+.verifyBtn {
+  padding: 0.4rem 0.8rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.verifyBtn:hover {
+  background: #2563eb;
+}
+
+.editActions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+/* Auth provider */
+.authProvider {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.inputHint {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 0.4rem;
+}
+
+/* Loading states */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(79, 70, 229, 0.1);
+  border-radius: 50%;
+  border-top-color: #4f46e5;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.authMessage {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}

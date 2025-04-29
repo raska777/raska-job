@@ -6,7 +6,7 @@ import { sendWelcomeEmail } from "@/lib/email"; // 💌 임포트 완료
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = await req.json();
+    const { name, email, password, agreedToTerms } = await req.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       password: hashedPassword,
       createdAt: new Date(),
       updatedAt: new Date(),
-      agreedToTerms: true,
+      agreedToTerms: agreedToTerms || false, // 🔵 Dynamic qilish      
       emailVerified: false
     });
 

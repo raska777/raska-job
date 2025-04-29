@@ -54,7 +54,7 @@
 .notificationPanel {
   position: absolute;
   top: 80px;
-  right: 25;
+  right: 0;
   width: 320px;
   max-height: 400px;
   background: var(--bg);

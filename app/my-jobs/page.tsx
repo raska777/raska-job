@@ -108,7 +108,7 @@ export default function MyJobsPage() {
 
   return (
     <main className={styles.myJobsContainer}>
-      <button onClick={() => router.push('/')} className={styles.backButton}>
+      <button onClick={() => router.push('/profile')} className={styles.backButton}>
           <FiArrowLeftCircle size={24} /> Orqaga
         </button>
 
