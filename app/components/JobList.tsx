@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { FiShare2, FiPhone } from 'react-icons/fi';
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import { FiClock, FiDollarSign, FiGlobe, FiCalendar, FiUser, FiMapPin } from 'react-icons/fi';
+import { FiClock, FiDollarSign,  FiCalendar, FiUser, FiMapPin } from 'react-icons/fi';
 
 import { toast } from 'react-toastify';
 import Link from 'next/link';
@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 interface Job {
   _id: string;
+  work_name: string;
   work_type: string;
   location: string;
   work_hours: string;
@@ -64,6 +65,7 @@ const JobList = ({ selectedCity, searchQuery, toggleExpandedJob, expandedJob }: 
         const data = await res.json();
         const validatedJobs = data.jobs.map((job: any) => ({
           _id: job._id,
+          work_name: job.work_name || '알 수 없음',
           work_type: job.work_type || '알 수 없음',
           location: job.location || '알 수 없음',
           work_hours: job.work_hours || '합의된',
@@ -263,7 +265,8 @@ const JobList = ({ selectedCity, searchQuery, toggleExpandedJob, expandedJob }: 
                       {formatTimeAgo(job.createdAt)}
                     </span>
                     <h3 className={styles.jobTitle}>{job.work_type}</h3>
-                  
+                    <br />
+<p > {job.work_name}</p>
                   </div>
 
                   <div className={styles.jobLocation}>
@@ -273,7 +276,6 @@ const JobList = ({ selectedCity, searchQuery, toggleExpandedJob, expandedJob }: 
                   <ul className={styles.jobDetailsList}>
                     <li><FiClock size={16} color="#3b82f6" /> 근무 시간: {job.work_hours}</li>
                     <li><FiDollarSign size={16} color="#10b981" /> 급여: {job.salary}</li>
-                    <li><FiGlobe size={16} color="#8b5cf6" /> 언어: {job.language}</li>
                     <li>
                       <FiUser size={16} color="#f59e0b" /> 외국인: 
                       {job.accepts_foreigners ? (

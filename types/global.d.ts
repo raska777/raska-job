@@ -5,6 +5,11 @@ import type { MongoClient } from "mongodb";
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
+
+  interface Window {
+    recaptchaVerifier: any;
+    confirmationResult: any;
+  }
 }
 
 declare module "next-auth" {
@@ -16,9 +21,10 @@ declare module "next-auth" {
       image?: string | null;
     };
   }
-  declare module 'next-intl' {
-    function useTranslations(namespace?: string): (key: string) => string;
-  }
+}
+
+declare module 'next-intl' {
+  function useTranslations(namespace?: string): (key: string) => string;
 }
 
 export {};
