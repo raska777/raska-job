@@ -204,6 +204,244 @@
 //   );
 // }
 
+// 'use client';
+
+// import { useSession } from 'next-auth/react';
+// import { useState, useEffect } from 'react';
+// import styles from 'styles/settingform.module.css';
+
+// export default function SettingsForm() {
+//   const { data: session, status } = useSession();
+//   const [editMode, setEditMode] = useState(false);
+//   const [isGoogleUser, setIsGoogleUser] = useState(false);
+//   const [loading, setLoading] = useState(true);
+//   const [emailVerificationSent, setEmailVerificationSent] = useState(false);
+//   const [isUpdating, setIsUpdating] = useState(false);
+
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     password: '',
+//     isSubscribed: false,
+//     isEmailVerified: false,
+//     createdAt: '',
+//   });
+
+//   useEffect(() => {
+//     if (session?.user) {
+//       setLoading(true);
+//       fetch('/api/user-info')
+//         .then(async (res) => {
+//           if (!res.ok) throw new Error('Failed to load user info');
+//           return await res.json();
+//         })
+//         .then((data) => {
+//           setIsGoogleUser(data.provider === 'google');
+//           setFormData({
+//             name: data.name || session.user.name || '',
+//             email: session.user.email || '',
+//             password: '',
+//             isSubscribed: data.isSubscribed || false,
+//             isEmailVerified: data.isEmailVerified || false,
+//             createdAt: data.createdAt || '',
+//           });
+//         })
+//         .catch((err) => {
+//           console.error("Error fetching user info:", err);
+//           setFormData({
+//             name: session.user.name || '',
+//             email: session.user.email || '',
+//             password: '',
+//             isSubscribed: false,
+//             isEmailVerified: false,
+//             createdAt: '',
+//           });
+//         })
+//         .finally(() => setLoading(false));
+//     }
+//   }, [session]);
+
+//   const handleUpdate = async () => {
+//     setIsUpdating(true);
+//     try {
+//       const res = await fetch('/api/settings', {
+//         method: 'PATCH',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//           name: formData.name,
+//           ...(!isGoogleUser && { password: formData.password }),
+//           isSubscribed: formData.isSubscribed,
+//         }),
+//       });
+
+//       const result = await res.json();
+//       if (res.ok) {
+//         setEditMode(false);
+//         // Optimistic UI update without full reload
+//         setFormData(prev => ({ ...prev, password: '' }));
+//       } else {
+//         throw new Error(result.error || 'Update failed');
+//       }
+//     } catch (error) {
+//       console.error("Update error:", error);
+//     } finally {
+//       setIsUpdating(false);
+//     }
+//   };
+
+//   const handleVerifyEmail = async () => {
+//     try {
+//       const res = await fetch('/api/auth/verify-email', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//       });
+
+//       if (res.ok) {
+//         setEmailVerificationSent(true);
+//       } else {
+//         const error = await res.json();
+//         throw new Error(error.message || 'Email send failed');
+//       }
+//     } catch (error) {
+//       console.error("Email verification error:", error);
+//     }
+//   };
+
+//   if (status === 'loading' || loading) {
+//     return (
+//       <div className={styles.loadingContainer}>
+//         <div className={styles.spinner}></div>
+//         <p>Loading...</p>
+//       </div>
+//     );
+//   }
+
+//   if (!session) {
+//     return (
+//       <div className={styles.authMessage}>
+//         <p>Please sign in to view settings</p>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className={styles.container}>
+//       <header className={styles.header}>
+//         <h2 className={styles.title}>Account Settings</h2>
+//         {!editMode ? (
+//           <button 
+//             className={styles.editBtn}
+//             onClick={() => setEditMode(true)}
+//             aria-label="Edit settings"
+//           >
+//             Edit
+//           </button>
+//         ) : (
+//           <div className={styles.editActions}>
+//             <button 
+//               className={styles.cancelBtn}
+//               onClick={() => setEditMode(false)}
+//               aria-label="Cancel editing"
+//             >
+//               Cancel
+//             </button>
+//             <button 
+//               className={styles.saveBtn}
+//               onClick={handleUpdate}
+//               disabled={isUpdating}
+//               aria-label="Save changes"
+//             >
+//               {isUpdating ? 'Saving...' : 'Save'}
+//             </button>
+//           </div>
+//         )}
+//       </header>
+
+//       <div className={styles.formSection}>
+//         <div className={styles.infoGroup}>
+//           <div className={styles.infoItem}>
+//             <span className={styles.infoLabel}>Joined:</span>
+//             <span className={styles.infoValue}>
+//               {formData.createdAt ? new Date(formData.createdAt).toLocaleDateString('ko-KR') : 'N/A'}
+//             </span>
+//           </div>
+          
+//           <div className={styles.infoItem}>
+//             <span className={styles.infoLabel}>Email Status:</span>
+//             {formData.isEmailVerified ? (
+//               <span className={styles.verified}>
+//                 <span className={styles.statusIcon}>✓</span> Verified
+//               </span>
+//             ) : (
+//               <div className={styles.verificationContainer}>
+//                 <span className={styles.notVerified}>
+//                   <span className={styles.statusIcon}>!</span> Not Verified
+//                 </span>
+//                 {!emailVerificationSent ? (
+//                   <button 
+//                     className={styles.verifyBtn}
+//                     onClick={handleVerifyEmail}
+//                   >
+//                     Verify Email
+//                   </button>
+//                 ) : (
+//                   <span className={styles.sentNotice}>
+//                     Verification sent
+//                   </span>
+//                 )}
+//               </div>
+//             )}
+//           </div>
+//         </div>
+
+//         <div className={styles.formGroup}>
+//           <label className={styles.inputLabel}>Name</label>
+//           <input
+//             type="text"
+//             className={`${styles.inputField} ${!editMode ? styles.disabled : ''}`}
+//             value={formData.name}
+//             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+//             disabled={!editMode}
+//           />
+//         </div>
+
+//         <div className={styles.formGroup}>
+//           <label className={styles.inputLabel}>Email</label>
+//           <input
+//             type="email"
+//             className={`${styles.inputField} ${styles.readOnly}`}
+//             value={formData.email}
+//             readOnly
+//           />
+//           {isGoogleUser && (
+//             <p className={styles.authProvider}>
+//               <span className={styles.providerIcon}>Google account</span> 
+//             </p>
+//           )}
+//         </div>
+
+//         {!isGoogleUser && (
+//           <div className={styles.formGroup}>
+//             <label className={styles.inputLabel}>New Password</label>
+//             <input
+//               type="password"
+//               className={`${styles.inputField} ${!editMode ? styles.disabled : ''}`}
+//               value={formData.password}
+//               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+//               disabled={!editMode}
+//               placeholder={editMode ? "Leave blank to keep current" : ""}
+//             />
+//             {editMode && (
+//               <p className={styles.inputHint}>
+//                 Only enter if you want to change your password
+//               </p>
+//             )}
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -232,7 +470,7 @@ export default function SettingsForm() {
       setLoading(true);
       fetch('/api/user-info')
         .then(async (res) => {
-          if (!res.ok) throw new Error('Failed to load user info');
+          if (!res.ok) throw new Error('사용자 정보를 불러오지 못했습니다');
           return await res.json();
         })
         .then((data) => {
@@ -247,7 +485,7 @@ export default function SettingsForm() {
           });
         })
         .catch((err) => {
-          console.error("Error fetching user info:", err);
+          console.error("사용자 정보 불러오기 오류:", err);
           setFormData({
             name: session.user.name || '',
             email: session.user.email || '',
@@ -277,13 +515,12 @@ export default function SettingsForm() {
       const result = await res.json();
       if (res.ok) {
         setEditMode(false);
-        // Optimistic UI update without full reload
         setFormData(prev => ({ ...prev, password: '' }));
       } else {
-        throw new Error(result.error || 'Update failed');
+        throw new Error(result.error || '업데이트 실패');
       }
     } catch (error) {
-      console.error("Update error:", error);
+      console.error("업데이트 오류:", error);
     } finally {
       setIsUpdating(false);
     }
@@ -300,10 +537,10 @@ export default function SettingsForm() {
         setEmailVerificationSent(true);
       } else {
         const error = await res.json();
-        throw new Error(error.message || 'Email send failed');
+        throw new Error(error.message || '이메일 전송 실패');
       }
     } catch (error) {
-      console.error("Email verification error:", error);
+      console.error("이메일 인증 오류:", error);
     }
   };
 
@@ -311,7 +548,7 @@ export default function SettingsForm() {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.spinner}></div>
-        <p>Loading...</p>
+        <p>로딩 중...</p>
       </div>
     );
   }
@@ -319,7 +556,7 @@ export default function SettingsForm() {
   if (!session) {
     return (
       <div className={styles.authMessage}>
-        <p>Please sign in to view settings</p>
+        <p>설정을 보려면 로그인해 주세요</p>
       </div>
     );
   }
@@ -327,31 +564,31 @@ export default function SettingsForm() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h2 className={styles.title}>Account Settings</h2>
+        <h2 className={styles.title}>계정 설정</h2>
         {!editMode ? (
           <button 
             className={styles.editBtn}
             onClick={() => setEditMode(true)}
-            aria-label="Edit settings"
+            aria-label="설정 편집"
           >
-            Edit
+            편집
           </button>
         ) : (
           <div className={styles.editActions}>
             <button 
               className={styles.cancelBtn}
               onClick={() => setEditMode(false)}
-              aria-label="Cancel editing"
+              aria-label="편집 취소"
             >
-              Cancel
+              취소
             </button>
             <button 
               className={styles.saveBtn}
               onClick={handleUpdate}
               disabled={isUpdating}
-              aria-label="Save changes"
+              aria-label="변경 사항 저장"
             >
-              {isUpdating ? 'Saving...' : 'Save'}
+              {isUpdating ? '저장 중...' : '저장'}
             </button>
           </div>
         )}
@@ -360,33 +597,33 @@ export default function SettingsForm() {
       <div className={styles.formSection}>
         <div className={styles.infoGroup}>
           <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Joined:</span>
+            <span className={styles.infoLabel}>가입일:</span>
             <span className={styles.infoValue}>
               {formData.createdAt ? new Date(formData.createdAt).toLocaleDateString('ko-KR') : 'N/A'}
             </span>
           </div>
           
           <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Email Status:</span>
+            <span className={styles.infoLabel}>이메일 상태:</span>
             {formData.isEmailVerified ? (
               <span className={styles.verified}>
-                <span className={styles.statusIcon}>✓</span> Verified
+                <span className={styles.statusIcon}>✓</span> 인증됨
               </span>
             ) : (
               <div className={styles.verificationContainer}>
                 <span className={styles.notVerified}>
-                  <span className={styles.statusIcon}>!</span> Not Verified
+                  <span className={styles.statusIcon}>!</span> 인증되지 않음
                 </span>
                 {!emailVerificationSent ? (
                   <button 
                     className={styles.verifyBtn}
                     onClick={handleVerifyEmail}
                   >
-                    Verify Email
+                    이메일 인증
                   </button>
                 ) : (
                   <span className={styles.sentNotice}>
-                    Verification sent
+                    인증 메일 전송됨
                   </span>
                 )}
               </div>
@@ -395,7 +632,7 @@ export default function SettingsForm() {
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.inputLabel}>Name</label>
+          <label className={styles.inputLabel}>이름</label>
           <input
             type="text"
             className={`${styles.inputField} ${!editMode ? styles.disabled : ''}`}
@@ -406,7 +643,7 @@ export default function SettingsForm() {
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.inputLabel}>Email</label>
+          <label className={styles.inputLabel}>이메일</label>
           <input
             type="email"
             className={`${styles.inputField} ${styles.readOnly}`}
@@ -415,25 +652,25 @@ export default function SettingsForm() {
           />
           {isGoogleUser && (
             <p className={styles.authProvider}>
-              <span className={styles.providerIcon}>Google account</span> 
+              <span className={styles.providerIcon}>Google 계정</span> 
             </p>
           )}
         </div>
 
         {!isGoogleUser && (
           <div className={styles.formGroup}>
-            <label className={styles.inputLabel}>New Password</label>
+            <label className={styles.inputLabel}>새 비밀번호</label>
             <input
               type="password"
               className={`${styles.inputField} ${!editMode ? styles.disabled : ''}`}
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               disabled={!editMode}
-              placeholder={editMode ? "Leave blank to keep current" : ""}
+              placeholder={editMode ? "현재 비밀번호를 유지하려면 비워두세요" : ""}
             />
             {editMode && (
               <p className={styles.inputHint}>
-                Only enter if you want to change your password
+                비밀번호를 변경하려는 경우에만 입력하세요
               </p>
             )}
           </div>

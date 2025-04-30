@@ -167,48 +167,73 @@
   }
   
   /* Pagination */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-  }
-  
+/* Pagination container */
+.paginationButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+/* Base button styles */
+.paginationButton button {
+  padding: 8px 12px;
+  min-width: 36px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: white;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover state */
+.paginationButton button:hover:not(:disabled) {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+  color: #2d3748;
+}
+
+/* Active page button */
+.paginationButton button.activePage {
+  background-color: #3182ce;
+  border-color: #3182ce;
+  color: white;
+}
+
+/* Disabled buttons */
+.paginationButton button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Previous/Next buttons */
+.paginationButton button:first-child,
+.paginationButton button:last-child {
+  padding: 8px 16px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
   .paginationButton {
-    padding: 0.5rem 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    background-color: white;
-    color: #4b5563;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    min-width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 4px;
   }
   
-  .paginationButton:hover:not(:disabled) {
-    background-color: #f3f4f6;
-    border-color: #d1d5db;
+  .paginationButton button {
+    min-width: 32px;
+    padding: 6px 8px;
+    font-size: 13px;
   }
   
-  .paginationButton.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  .paginationButton button:first-child,
+  .paginationButton button:last-child {
+    padding: 6px 12px;
   }
-  
-  .paginationButton.active {
-    background-color: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-  }
-  
-  .paginationEllipsis {
-    padding: 0.5rem;
-    color: #6b7280;
-  }
+}
   
   /* Loading State */
   .loadingContainer {

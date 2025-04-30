@@ -68,13 +68,10 @@ function HomeContent() {
                 <div className="profile-section flex items-center gap-4 bg-blue-600 dark:bg-blue-800 px-4 py-2 rounded-full">
   <NotificationBell />
   
-  <div className="profile-link flex items-center gap-2">
-    <Link 
-      href="/profile" 
-      className="p-1 hover:bg-blue-500 dark:hover:bg-blue-600 rounded-full transition-colors"
-    >
-<FaUser className="text-gray-300 dark:text-gray-400 text-lg group-hover:text-blue-500 transition-colors" />    </Link>
-    
+  <div>
+  <Link href="/profile" >
+  <FaUser className="text-white opacity-80 hover:opacity-100 hover:text-blue-300 transition-all duration-300" />  
+</Link>
   </div>
 </div>
                 

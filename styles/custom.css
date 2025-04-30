@@ -9,7 +9,7 @@
   
   /* Header Styles */
   .raskajob-header {
-    background: linear-gradient(135deg, #4f6df5 0%, #3a56d5 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #3a56d5 100%);
     color: white;
     padding-bottom: 2rem;
     position: relative;
@@ -107,7 +107,7 @@
   
   .raskajob-select-wrapper .select-icon {
     position: absolute;
-    left: 12px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
     color: #6b7280;
@@ -116,7 +116,8 @@
   
   .city-select {
     width: 100%;
-    padding: 0.5rem 1rem 0.75rem 2.5rem;
+    padding: 0.5rem 1rem 0.75rem 3rem;
+
     border: 1px solid #e5e7eb;
     color: #6b7280;
     border-radius: 6px;
@@ -136,6 +137,7 @@
     border: 1px solid #e5e7eb;
     border-radius: 6px;
     font-size: 0.95rem;
+    color:#27282a;
     transition: border-color 0.2s;
   }
   
@@ -274,4 +276,5 @@
       flex-direction: column;
       gap: 0.5rem;
     }
-  }
+  } 
+  

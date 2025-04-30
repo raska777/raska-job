@@ -1,4 +1,182 @@
 
+// 'use client';
+
+// import { useSession, signOut } from "next-auth/react";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
+// import { useState, Suspense } from "react";
+// import dynamic from 'next/dynamic';
+// import Image from "next/image";
+// import styles from './profile.module.css';
+// import {  FiPlus, FiSettings, FiLogOut, FiBriefcase, FiBookmark, FiUser, FiMail, FiEdit, FiArrowLeftCircle } from "react-icons/fi";
+// import NotificationBell from "../components/NotificationBell";
+// import '@/styles/global.css';
+// // Dinamik yuklash
+// const SettingsForm = dynamic(() => import("../components/SettingForm"), {
+//   loading: () => <div className={styles.loading}>Yuklanmoqda...</div>,
+//   ssr: false, // SSR ni o'chirib qo'yamiz (shart emas)
+// });
+
+// export default function ProfilePage() {
+//   const { data: session, status } = useSession();
+//   const [activeTab, setActiveTab] = useState('profile');
+//   const [showSettings, setShowSettings] = useState(false);
+//   const router = useRouter();
+
+//   if (status === 'loading') {
+//     return (
+//       <div className={styles.loadingContainer}>
+//         <div className={styles.spinner}></div>
+//       </div>
+//     );
+//   }
+
+//   if (!session) {
+//     return (
+//       <div className={styles.notSignedIn}>
+//         <h2>Profilga kirish</h2>
+//         <p>Profilni ko'rish uchun tizimga kiring</p>
+//         <Link href="/auth/signin" className={styles.signInButton}>
+//           Kirish
+//         </Link>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className={styles.profilePage}>
+//       {/* Orqaga qaytish tugmasi */}
+//       <button onClick={() => router.push('/')} className={styles.backButton}>
+//           <FiArrowLeftCircle size={24} /> Orqaga
+//         </button>
+//         <NotificationBell/>
+
+
+//       {/* Profil header */}
+//       <div className={styles.profileHeader}>
+        
+//         <div className={styles.avatarContainer}>
+//           {session.user?.image ? (
+//             <Image
+//               src={session.user.image}
+//               alt="Profil rasmi"
+//               width={120}
+//               height={120}
+//               className={styles.avatar}
+//             />
+//           ) : (
+//             <div className={styles.avatarPlaceholder}>
+              
+//               <FiUser size={50} />
+//             </div>
+//           )}
+//           <button className={styles.editAvatar}>
+//             <FiEdit size={16} />
+//           </button>
+
+//         </div>
+          
+//         <div className={styles.userInfo}>
+//           <h1>{session.user?.name || 'Foydalanuvchi'}</h1>
+//           <p className={styles.email}>
+//             <FiMail size={16} /> {session.user?.email}
+//           </p>
+//           <p className={styles.joinedDate}>A'zo: 2023 yil 15 may</p>
+//         </div>
+//       </div>  
+
+
+//       {/* Navigatsiya */}
+//       <nav className={styles.navTabs}>
+//         <button
+//           className={`${styles.tab} ${activeTab === 'profile' ? styles.active : ''}`}
+//           onClick={() => setActiveTab('profile')}
+//         >
+//           Mening profilim
+//         </button>
+
+//         <Link
+//           href="/my-jobs"
+//           className={`${styles.tab} ${activeTab === 'saved-jobs' ? styles.active : ''}`}
+//         >
+//           mening elonlarim</Link>
+//         <Link
+//           href="/saved-jobs"
+//           className={`${styles.tab} ${activeTab === 'saved-jobs' ? styles.active : ''}`}
+//         >
+//           Saqlangan ishlar
+//         </Link>
+//       </nav>
+
+//       {/* Kontent */}
+//       <div className={styles.content}>
+//         {activeTab === 'profile' && (
+//           <div className={styles.profileContent}>
+           
+
+//             <div className={styles.actions}>
+//               <Link href="/post" className={styles.primaryButton}>
+//                 <FiPlus /> Yangi e'lon
+//               </Link>
+//               <button
+//                 onClick={() => setShowSettings(true)}
+//                 className={styles.secondaryButton}
+//               >
+//                 <FiSettings /> Sozlamalar
+//               </button>
+//             </div>
+//           </div>
+//         )}
+
+//         {activeTab === 'jobs' && (
+//           <div className={styles.jobsContent}>
+//             <h2><FiBriefcase /> Mening e'lonlarim</h2>
+//             <div className={styles.jobList}>
+//               <p>Hozircha e'lonlar mavjud emas</p>
+//             </div>
+//           </div>
+//         )}
+
+//         {activeTab === 'saved' && (
+//           <div className={styles.savedContent}>
+//             <h2><FiBookmark /> Saqlanganlar</h2>
+//             <div className={styles.savedList}>
+//               <p>Saqlangan e'lonlar mavjud emas</p>
+//             </div>
+//           </div>
+//         )}
+//       </div>
+
+//       {/* Sozlamalar modali */}
+//       {showSettings && (
+//         <div className={styles.settingsModal}>
+//           <div className={styles.modalContent}>
+//             <div className={styles.modalHeader}>
+//               <h2>Profil sozlamalari</h2>
+//               <button
+//                 onClick={() => setShowSettings(false)}
+//                 className={styles.closeButton}
+//               >
+//                 &times;
+//               </button>
+//             </div>
+//             <Suspense fallback={<div className={styles.loading}>Yuklanmoqda...</div>}>
+//               <SettingsForm />
+//             </Suspense>
+//             <div className={styles.modalFooter}>
+//               <button
+//                 onClick={() => signOut({ callbackUrl: '/' })}
+//                 className={styles.logoutButton}
+//               >
+//                 <FiLogOut /> Profildan chiqish
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 'use client';
 
 import { useSession, signOut } from "next-auth/react";
@@ -11,10 +189,11 @@ import styles from './profile.module.css';
 import {  FiPlus, FiSettings, FiLogOut, FiBriefcase, FiBookmark, FiUser, FiMail, FiEdit, FiArrowLeftCircle } from "react-icons/fi";
 import NotificationBell from "../components/NotificationBell";
 import '@/styles/global.css';
-// Dinamik yuklash
+
+// 동적 로딩 (Dinamik yuklash)
 const SettingsForm = dynamic(() => import("../components/SettingForm"), {
-  loading: () => <div className={styles.loading}>Yuklanmoqda...</div>,
-  ssr: false, // SSR ni o'chirib qo'yamiz (shart emas)
+  loading: () => <div className={styles.loading}>로드 중...</div>,
+  ssr: false,
 });
 
 export default function ProfilePage() {
@@ -34,10 +213,10 @@ export default function ProfilePage() {
   if (!session) {
     return (
       <div className={styles.notSignedIn}>
-        <h2>Profilga kirish</h2>
-        <p>Profilni ko'rish uchun tizimga kiring</p>
+        <h2>프로필 접근</h2>
+        <p>프로필을 보려면 로그인하세요</p>
         <Link href="/auth/signin" className={styles.signInButton}>
-          Kirish
+          로그인
         </Link>
       </div>
     );
@@ -45,85 +224,77 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.profilePage}>
-      {/* Orqaga qaytish tugmasi */}
+      {/* 뒤로 가기 버튼 (Orqaga qaytish tugmasi) */}
       <button onClick={() => router.push('/')} className={styles.backButton}>
-          <FiArrowLeftCircle size={24} /> Orqaga
+          <FiArrowLeftCircle size={24} /> 뒤로
         </button>
         <NotificationBell/>
 
-
-      {/* Profil header */}
+      {/* 프로필 헤더 (Profil header) */}
       <div className={styles.profileHeader}>
-        
         <div className={styles.avatarContainer}>
           {session.user?.image ? (
             <Image
               src={session.user.image}
-              alt="Profil rasmi"
+              alt="프로필 사진"
               width={120}
               height={120}
               className={styles.avatar}
             />
           ) : (
             <div className={styles.avatarPlaceholder}>
-              
               <FiUser size={50} />
             </div>
           )}
           <button className={styles.editAvatar}>
             <FiEdit size={16} />
           </button>
-
         </div>
           
         <div className={styles.userInfo}>
-          <h1>{session.user?.name || 'Foydalanuvchi'}</h1>
+          <h1>{session.user?.name || '사용자'}</h1>
           <p className={styles.email}>
             <FiMail size={16} /> {session.user?.email}
           </p>
-          <p className={styles.joinedDate}>A'zo: 2023 yil 15 may</p>
+          <p className={styles.joinedDate}>가입일: 2023년 5월 15일</p>
         </div>
       </div>  
-            <NotificationBell/>
 
-
-      {/* Navigatsiya */}
+      {/* 내비게이션 (Navigatsiya) */}
       <nav className={styles.navTabs}>
         <button
           className={`${styles.tab} ${activeTab === 'profile' ? styles.active : ''}`}
           onClick={() => setActiveTab('profile')}
         >
-          Mening profilim
+          내 프로필
         </button>
 
         <Link
           href="/my-jobs"
           className={`${styles.tab} ${activeTab === 'saved-jobs' ? styles.active : ''}`}
         >
-          mening elonlarim</Link>
+          내 공고</Link>
         <Link
           href="/saved-jobs"
           className={`${styles.tab} ${activeTab === 'saved-jobs' ? styles.active : ''}`}
         >
-          Saqlangan ishlar
+          저장된 공고
         </Link>
       </nav>
 
-      {/* Kontent */}
+      {/* 콘텐츠 (Kontent) */}
       <div className={styles.content}>
         {activeTab === 'profile' && (
           <div className={styles.profileContent}>
-           
-
             <div className={styles.actions}>
               <Link href="/post" className={styles.primaryButton}>
-                <FiPlus /> Yangi e'lon
+                <FiPlus /> 새 공고
               </Link>
               <button
                 onClick={() => setShowSettings(true)}
                 className={styles.secondaryButton}
               >
-                <FiSettings /> Sozlamalar
+                <FiSettings /> 설정
               </button>
             </div>
           </div>
@@ -131,29 +302,29 @@ export default function ProfilePage() {
 
         {activeTab === 'jobs' && (
           <div className={styles.jobsContent}>
-            <h2><FiBriefcase /> Mening e'lonlarim</h2>
+            <h2><FiBriefcase /> 내 공고</h2>
             <div className={styles.jobList}>
-              <p>Hozircha e'lonlar mavjud emas</p>
+              <p>아직 공고가 없습니다</p>
             </div>
           </div>
         )}
 
         {activeTab === 'saved' && (
           <div className={styles.savedContent}>
-            <h2><FiBookmark /> Saqlanganlar</h2>
+            <h2><FiBookmark /> 저장된 공고</h2>
             <div className={styles.savedList}>
-              <p>Saqlangan e'lonlar mavjud emas</p>
+              <p>저장된 공고가 없습니다</p>
             </div>
           </div>
         )}
       </div>
 
-      {/* Sozlamalar modali */}
+      {/* 설정 모달 (Sozlamalar modali) */}
       {showSettings && (
         <div className={styles.settingsModal}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
-              <h2>Profil sozlamalari</h2>
+              <h2>프로필 설정</h2>
               <button
                 onClick={() => setShowSettings(false)}
                 className={styles.closeButton}
@@ -161,7 +332,7 @@ export default function ProfilePage() {
                 &times;
               </button>
             </div>
-            <Suspense fallback={<div className={styles.loading}>Yuklanmoqda...</div>}>
+            <Suspense fallback={<div className={styles.loading}>로드 중...</div>}>
               <SettingsForm />
             </Suspense>
             <div className={styles.modalFooter}>
@@ -169,7 +340,7 @@ export default function ProfilePage() {
                 onClick={() => signOut({ callbackUrl: '/' })}
                 className={styles.logoutButton}
               >
-                <FiLogOut /> Profildan chiqish
+                <FiLogOut /> 로그아웃
               </button>
             </div>
           </div>
