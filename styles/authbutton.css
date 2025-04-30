@@ -164,7 +164,7 @@
 
 @media (max-width: 480px) {
     .raskajob-auth-container {
-        gap: 1rem;
+        gap: 1.3rem;
     }
     
     .raskajob-auth-button {
