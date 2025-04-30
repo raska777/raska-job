@@ -10,8 +10,8 @@ import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { KOREAN_CITIES } from '@/lib/cities';
-import { FaUser,  FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
-
+import { FaUser, FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
+import 'styles/welcomeBanner.css'
 
 
 const PostJob = dynamic(() => import('@/app/components/PostJob'), { ssr: false });
@@ -41,7 +41,7 @@ function HomeContent() {
     if (selectedCity) params.set('location', selectedCity);
     router.push(`/search?${params.toString()}`);
   };
-  
+
 
   if (status === 'loading') {
     return (
@@ -64,58 +64,70 @@ function HomeContent() {
           <div className="raskajob-nav flex justify-end p-4">
             {session ? (
               <div className="raska-job-ph">
-                
+
                 <div className="profile-section flex items-center gap-4 bg-blue-600 dark:bg-blue-800 px-4 py-2 rounded-full">
-  <NotificationBell />
-  
-  <div>
-  <Link href="/profile" >
-  <FaUser className="text-white opacity-80 hover:opacity-100 hover:text-blue-300 transition-all duration-300" />  
-</Link>
-  </div>
-</div>
-                
+                  <NotificationBell />
+
+                  <div>
+                    <Link href="/profile" >
+                      <FaUser className="text-white opacity-80 hover:opacity-100 hover:text-blue-300 transition-all duration-300" />
+                    </Link>
+                  </div>
+                </div>
+
               </div>
             ) : (
-              <AuthButtons />
+              <>
+                <div className="welcome-container">
+                  <div className="welcome-banner">
+                    <p className="welcome-message">
+                      환영합니다! (Hush kelibsiz!) <br />
+                      Raska Job 서비스가 곧 출시됩니다! (Tez orada sayt ishga tushadi)
+                    </p>
+                  </div>
+                </div>
+                
+                <AuthButtons />
+
+              </>
             )}
           </div>
 
-        <div className="raskajob-search-container p-4">
-  <div className="raskajob-search-box flex flex-col md:flex-row gap-2 max-w-4xl mx-auto">
-    <div className="raskajob-select-wrapper">
-      <FaMapMarkerAlt className="select-icon" />
-      <select
-        className="city-select"
-        value={selectedCity}
-        onChange={(e) => setSelectedCity(e.target.value)}
-      >
-        <option value="">Barcha shaharlar</option>
-        {KOREAN_CITIES.map(city => (
-          <option key={city.value} value={city.value}>
-            {city.label} ({city.value})
-          </option>
-        ))}
-      </select>
-    </div>
+          <div className="raskajob-search-container p-4">
+            <div className="raskajob-search-box flex flex-col md:flex-row gap-2 max-w-4xl mx-auto">
+              <div className="raskajob-select-wrapper">
+                <FaMapMarkerAlt className="select-icon" />
+                <select
+                  className="city-select"
+                  value={selectedCity}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                >
+                  <option value="">모든 도시</option>
+                  {KOREAN_CITIES.map(city => (
+                    <option key={city.value} value={city.value}>
+                      {city.label} ({city.value})
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-    <input
-      type="text"
-      placeholder="직업명을 입력하세요..."
-      className="raskajob-search-input flex-grow p-2 rounded"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-    />
+              <input
+                type="text"
+                placeholder="직업명을 입력하세요..."
+                className="raskajob-search-input flex-grow p-2 rounded"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              />
 
-    <button
-      className="raskajob-search-button bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
-      onClick={handleSearch}
-    >
-      <FaSearch /> 검색
-    </button>
-  </div>
-</div>
+              <button
+                className="raskajob-search-button bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+                onClick={handleSearch}
+              >
+                <FaSearch /> 검색
+              </button>
+            </div>
+          </div>
           <h1 className="raskajob-main-title text-center text-3xl font-bold text-white my-8">
             🛠 RaskaJob
           </h1>
