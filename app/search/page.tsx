@@ -1,19 +1,73 @@
 
+
+
 // 'use client';
 
 // import { useSearchParams, useRouter } from 'next/navigation';
 // import { useState, Suspense } from 'react';
 // import dynamic from 'next/dynamic';
+// import { FiSearch, FiMapPin, FiArrowLeftCircle } from 'react-icons/fi';
+// import "styles/searchPage.css"
 
-// // SSR bo'lmagan holda JobList komponentini dinamik yuklash
-// const JobList = dynamic(() => import('../components/JobList'), { 
+// // Koreyscha tarjimalar
+// const translations = {
+//   back: "뒤로",
+//   allJobs: "전체 채용 공고",
+//   allCities: "모든 도시",
+//   searchPlaceholder: "직업 제목 또는 키워드...",
+//   search: "검색",
+//   loadingJobs: "채용 공고를 불러오는 중...",
+//   loadingParams: "검색 매개변수를 불러오는 중..."
+// };
+
+// // Koreya shaharlari
+// const KOREAN_CITIES = [
+//   { value: "서울", label: "Seoul" },
+//     { value: "부산", label: "Busan" },
+//     { value: "인천", label: "Incheon" },
+//     { value: "대구", label: "Daegu" },
+//     { value: "대전", label: "Daejeon" },
+//     { value: "광주", label: "Gwangju" },
+//     { value: "수원", label: "Suwon" },
+//     { value: "울산", label: "Ulsan" },
+//     { value: "창원", label: "Changwon" },
+//     { value: "경주", label: "Gyeongju" },
+//     { value: "전주", label: "Jeonju" },
+//     { value: "제주", label: "Jeju" },
+//     { value: "포항", label: "Pohang" },
+//     { value: "청주", label: "Cheongju" },
+//     { value: "안동", label: "Andong" },
+//     { value: "원주", label: "Wonju" },
+//     { value: "강릉", label: "Gangneung" },
+//     { value: "익산", label: "Iksan" },
+//     { value: "목포", label: "Mokpo" },
+//     { value: "속초", label: "Sokcho" },
+//     { value: "춘천", label: "Chuncheon" },
+//     { value: "김해", label: "Gimhae" },
+//     { value: "의정부", label: "Uijeongbu" },
+//     { value: "부천", label: "Bucheon" },
+//     { value: "양산", label: "Yangsan" }
+// ];
+
+// const JobList = dynamic(() => import('@/app/components/JobList'), {
 //   ssr: false,
-//   loading: () => <div className="text-center py-8">🔄 로딩 중...</div>
+//   loading: () => (
+//     <div className="loading-spinner">
+//       <div className="spinner"></div>
+//       <p>{translations.loadingJobs}</p>
+//     </div>
+//   )
 // });
+
 
 // export default function SearchPage() {
 //   return (
-//     <Suspense fallback={<div className="text-center py-8">🔍 검색 매개변수를 불러오는 중...</div>}>
+//     <Suspense fallback={
+//       <div className="page-loading">
+//         <div className="spinner"></div>
+//         <p>{translations.loadingParams}</p>
+//       </div>
+//     }>
 //       <SearchPageContent />
 //     </Suspense>
 //   );
@@ -21,61 +75,153 @@
 
 // function SearchPageContent() {
 //   const searchParams = useSearchParams();
-//   const title = searchParams.get('title') || '';
-//   const location = searchParams.get('location') || '';
 //   const router = useRouter();
 
+//   const search = searchParams.get('search') || '';
+//   const location = searchParams.get('location') || '';
+
+//   const [searchTerm, setSearchTerm] = useState(search);
+//   const [selectedCity, setSelectedCity] = useState(location);
 //   const [expandedJob, setExpandedJob] = useState<string | null>(null);
 
 //   const toggleExpandedJob = (jobId: string) => {
 //     setExpandedJob(prev => (prev === jobId ? null : jobId));
 //   };
 
+//   const handleSearch = () => {
+//     const params = new URLSearchParams();
+//     if (searchTerm) params.set('search', searchTerm);
+//     if (selectedCity) params.set('location', selectedCity);
+//     router.push(`/search?${params.toString()}`);
+//   };
+  
+
 //   return (
-//     <main className="p-4 max-w-6xl mx-auto">
-//       {/* Orqaga qaytish tugmasi */}
-//       <button
-//         onClick={() => router.back()}
-//         className="mb-4 inline-flex items-center gap-2 bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
-//       >
-//         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-//           <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-//         </svg>
-//         뒤로가기
-//       </button>
-      
-//       <h1 className="text-2xl font-bold mb-6">
-//         {title || location ? (
-//           `🔍 "${title}"에 대한 ${location ? location + ' 지역의 ' : '전체 지역의 '}검색 결과`
-//         ) : (
-//           '🧾 전체 구직 공고'
-//         )}
-//       </h1>
-      
-//       <div className="bg-white rounded-lg shadow-md p-4">
-//         <JobList 
-//           selectedCity={location} 
-//           searchQuery={title} 
-//           toggleExpandedJob={toggleExpandedJob} 
-//           expandedJob={expandedJob} 
-//         />
+//     <div className="search-page-container px-4 py-6 max-w-6xl mx-auto">
+//       {/* Header */}
+//       <header className="search-header mb-4 flex items-center gap-4">
+//         <button onClick={() => router.back()} className="back-button flex items-center gap-2 text-gray-700">
+//           <FiArrowLeftCircle size={24} />
+//           {translations.back}
+//         </button>
+
+//         <h1 className="text-xl font-semibold">
+//           {search || location ? (
+//             <span className="flex items-center gap-2">
+//               <FiSearch />
+//               "{search}" {location && `• ${location}`}
+//             </span>
+//           ) : (
+//             <span className="flex items-center gap-2">
+//               <FiMapPin />
+//               {translations.allJobs}
+//             </span>
+//           )}
+//         </h1>
+//       </header>
+
+//       {/* Qidiruv paneli */}
+//       <div className="search-panel mb-6">
+//         <div className="flex flex-col md:flex-row gap-3">
+//           <select
+//             className="city-select border p-2 rounded w-full md:w-1/3"
+//             value={selectedCity}
+//             onChange={(e) => setSelectedCity(e.target.value)}
+//           >
+//             <option value="">{translations.allCities}</option>
+//             {KOREAN_CITIES.map(city => (
+//               <option key={city.value} value={city.value}>
+//                 {city.label}
+//               </option>
+//             ))}
+//           </select>
+
+//           <input
+//             type="text"
+//             placeholder={translations.searchPlaceholder}
+//             className="search-input border p-2 rounded flex-grow"
+//             value={searchTerm}
+//             onChange={(e) => setSearchTerm(e.target.value)}
+//             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+//           />
+
+//           <button
+//             className="search-button bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+//             onClick={handleSearch}
+//           >
+//             <FiSearch size={18} className="inline mr-1" />
+//             {translations.search}
+//           </button>
+//         </div>
 //       </div>
-//     </main>
+
+//       {/* Natijalar */}
+//       <main className="search-results">
+//         <JobList
+//           selectedCity={selectedCity}
+//           searchQuery={searchTerm}
+//           toggleExpandedJob={toggleExpandedJob}
+//           expandedJob={expandedJob}
+//         />
+//       </main>
+//     </div>
 //   );
 // }
-
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import { FiSearch, FiMapPin, FiArrowLeftCircle } from 'react-icons/fi';
+import "styles/searchPage.css";
 
-// SSR bo'lmagan holda JobList komponentini dinamik yuklash
-const JobList = dynamic(() => import('../components/JobList'), { 
+// Korean translations
+const translations = {
+  back: "뒤로",
+  allJobs: "전체 채용 공고",
+  allCities: "모든 도시",
+  searchPlaceholder: "직업 제목 또는 키워드...",
+  search: "검색",
+  loadingJobs: "채용 공고를 불러오는 중...",
+  loadingParams: "검색 매개변수를 불러오는 중..."
+};
+
+// Korean cities data
+const KOREAN_CITIES = [
+  { value: "서울", label: "Seoul" },
+  { value: "부산", label: "Busan" },
+  { value: "인천", label: "Incheon" },
+  { value: "대구", label: "Daegu" },
+  { value: "대전", label: "Daejeon" },
+  { value: "광주", label: "Gwangju" },
+  { value: "수원", label: "Suwon" },
+  { value: "울산", label: "Ulsan" },
+  { value: "창원", label: "Changwon" },
+  { value: "경주", label: "Gyeongju" },
+  { value: "전주", label: "Jeonju" },
+  { value: "제주", label: "Jeju" },
+  { value: "포항", label: "Pohang" },
+  { value: "청주", label: "Cheongju" },
+  { value: "안동", label: "Andong" },
+  { value: "원주", label: "Wonju" },
+  { value: "강릉", label: "Gangneung" },
+  { value: "익산", label: "Iksan" },
+  { value: "목포", label: "Mokpo" },
+  { value: "속초", label: "Sokcho" },
+  { value: "춘천", label: "Chuncheon" },
+  { value: "김해", label: "Gimhae" },
+  { value: "의정부", label: "Uijeongbu" },
+  { value: "부천", label: "Bucheon" },
+  { value: "양산", label: "Yangsan" }
+];
+
+// Dynamically load JobList component
+const JobList = dynamic(() => import('@/app/components/JobList'), {
   ssr: false,
   loading: () => (
-    <div className="flex justify-center items-center py-12">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    <div className="loading-spinner">
+      <div className="spinner"></div>
+      <p>{translations.loadingJobs}</p>
     </div>
   )
 });
@@ -83,14 +229,9 @@ const JobList = dynamic(() => import('../components/JobList'), {
 export default function SearchPage() {
   return (
     <Suspense fallback={
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-pulse text-xl text-gray-600 flex items-center gap-2">
-          <svg className="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          검색 매개변수를 불러오는 중...
-        </div>
+      <div className="page-loading">
+        <div className="spinner"></div>
+        <p>{translations.loadingParams}</p>
       </div>
     }>
       <SearchPageContent />
@@ -100,60 +241,110 @@ export default function SearchPage() {
 
 function SearchPageContent() {
   const searchParams = useSearchParams();
-  const title = searchParams.get('title') || '';
-  const location = searchParams.get('location') || '';
   const router = useRouter();
 
+  const search = searchParams.get('search') || '';
+  const location = searchParams.get('location') || '';
+
+  const [searchTerm, setSearchTerm] = useState(search);
+  const [selectedCity, setSelectedCity] = useState(location);
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
 
   const toggleExpandedJob = (jobId: string) => {
     setExpandedJob(prev => (prev === jobId ? null : jobId));
   };
 
+  const handleSearch = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    const params = new URLSearchParams();
+    if (searchTerm) params.set('search', searchTerm);
+    if (selectedCity) params.set('location', selectedCity);
+    router.push(`/search?${params.toString()}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
-    <main className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Orqaga qaytish tugmasi */}
-      <button
-        onClick={() => router.back()}
-        className="mb-6 inline-flex items-center gap-2 bg-white text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-sm border border-gray-200 hover:shadow-md"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-        </svg>
-        뒤로가기
-      </button>
-      
-      <div className="mb-8 animate-fade-in">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          {title || location ? (
-            <>
-              <span className="text-blue-500">🔍</span> "{title}"에 대한 {location ? <span className="text-blue-500">{location}</span> + ' 지역의 ' : '전체 지역의 '}검색 결과
-            </>
+    <div className="search-page-container">
+      {/* Header Section */}
+      <header className="search-header">
+        <button 
+          onClick={() => router.push('/')} 
+          className="back-button"
+          aria-label="Go back"
+        >
+          <FiArrowLeftCircle size={24} />
+          {translations.back}
+        </button>
+
+        <h1>
+          {search || location ? (
+            <span className="flex items-center gap-2">
+              <FiSearch />
+              "{search}" {location && <span className="text-blue-500">• {location}</span>}
+            </span>
           ) : (
-            <>
-              <span className="text-blue-500">🧾</span> 전체 구직 공고
-            </>
+            <span className="flex items-center gap-2">
+              <FiMapPin />
+              {translations.allJobs}
+            </span>
           )}
         </h1>
-        <p className="text-gray-500">
-          {title || location ? (
-            `총 ${/* You can add dynamic count here */ '0'}개의 공고가 발견되었습니다`
-          ) : (
-            '현재 등록된 모든 구직 공고를 확인하세요'
-          )}
-        </p>
+      </header>
+
+      {/* Search Form */}
+      <div className="search-panel">
+        <form onSubmit={handleSearch}>
+          <div className="flex flex-col md:flex-row gap-3">
+            <select
+              className="city-select"
+              value={selectedCity}
+              onChange={(e) => setSelectedCity(e.target.value)}
+              aria-label="Select city"
+            >
+              <option value="">{translations.allCities}</option>
+              {KOREAN_CITIES.map(city => (
+                <option key={city.value} value={city.value}>
+                  {city.label}
+                </option>
+              ))}
+            </select>
+
+            <input
+              type="text"
+              placeholder={translations.searchPlaceholder}
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+              aria-label="Search jobs"
+            />
+
+            <button
+              type="submit"
+              className="search-button"
+              aria-label="Search"
+            >
+              <FiSearch size={18} className="inline" />
+              {translations.search}
+            </button>
+          </div>
+        </form>
       </div>
-      
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-        <div className="p-6 sm:p-8">
-          <JobList 
-            selectedCity={location} 
-            searchQuery={title} 
-            toggleExpandedJob={toggleExpandedJob} 
-            expandedJob={expandedJob} 
-          />
-        </div>
-      </div>
-    </main>
+
+      {/* Results Section */}
+      <main className="search-results">
+        <JobList
+          selectedCity={selectedCity}
+          searchQuery={searchTerm}
+          toggleExpandedJob={toggleExpandedJob}
+          expandedJob={expandedJob}
+        />
+      </main>
+    </div>
   );
 }

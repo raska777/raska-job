@@ -81,6 +81,8 @@
   font-size: 1rem;
   cursor: pointer;
   margin-bottom: 2rem;
+  margin-top: -1.2rem;
+  margin-left: -1.2rem;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: all 0.3s;
@@ -190,8 +192,8 @@
 }
 
 .tab.active {
-  color: #069fc9;
-  border-bottom-color: #1498e5;
+  color: #4c99af;
+  border-bottom-color: #4CAF50;
   font-weight: 500;
 }
 

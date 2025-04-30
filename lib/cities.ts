@@ -1,0 +1,28 @@
+export const KOREAN_CITIES = [
+    { value: "서울", label: "Seoul" },
+    { value: "부산", label: "Busan" },
+    { value: "인천", label: "Incheon" },
+    { value: "대구", label: "Daegu" },
+    { value: "대전", label: "Daejeon" },
+    { value: "광주", label: "Gwangju" },
+    { value: "수원", label: "Suwon" },
+    { value: "울산", label: "Ulsan" },
+    { value: "창원", label: "Changwon" },
+    { value: "경주", label: "Gyeongju" },
+    { value: "전주", label: "Jeonju" },
+    { value: "제주", label: "Jeju" },
+    { value: "포항", label: "Pohang" },
+    { value: "청주", label: "Cheongju" },
+    { value: "안동", label: "Andong" },
+    { value: "원주", label: "Wonju" },
+    { value: "강릉", label: "Gangneung" },
+    { value: "익산", label: "Iksan" },
+    { value: "목포", label: "Mokpo" },
+    { value: "속초", label: "Sokcho" },
+    { value: "춘천", label: "Chuncheon" },
+    { value: "김해", label: "Gimhae" },
+    { value: "의정부", label: "Uijeongbu" },
+    { value: "부천", label: "Bucheon" },
+    { value: "양산", label: "Yangsan" }
+  ];
+  

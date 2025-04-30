@@ -234,7 +234,7 @@ export async function POST(req: NextRequest) {
          <p>감사합니다,<br/>라스카 플랫폼</p>
         </div>
        `;
-       
+
       try {
         await sendEmail(user.email, subject, html);
       } catch (emailErr) {
@@ -257,6 +257,49 @@ export async function POST(req: NextRequest) {
 }
 
 // GET method (Get all job postings)
+// export async function GET(req: NextRequest) {
+//   try {
+//     const { searchParams } = new URL(req.url);
+//     const page = parseInt(searchParams.get('page') || '1');
+//     const limit = parseInt(searchParams.get('limit') || '10');
+//     const location = searchParams.get('location');
+//     const workType = searchParams.get('work_type');
+//     const acceptsForeigners = searchParams.get('accepts_foreigners');
+
+//     const client = await clientPromise;
+//     const db = client.db("raska");
+
+//     // Build query filters
+//     const query: any = { isActive: true };
+//     if (location) query.location = location;
+//     if (workType) query.work_type = workType;
+//     if (acceptsForeigners) query.accepts_foreigners = acceptsForeigners === 'true';
+
+//     const jobs = await db
+//       .collection("jobs")
+//       .find(query)
+//       .sort({ createdAt: -1 })
+//       .skip((page - 1) * limit)
+//       .limit(limit)
+//       .toArray();
+
+//     const totalJobs = await db.collection("jobs").countDocuments(query);
+
+//     return NextResponse.json({
+//       jobs,
+//       pagination: {
+//         currentPage: page,
+//         totalPages: Math.ceil(totalJobs / limit),
+//         totalJobs
+//       }
+//     }, { status: 200 });
+//   } catch (error) {
+//     console.error("GET /api/post 오류:", error);
+//     return NextResponse.json({ error: "데이터를 가져오는 중 오류 발생!" }, { status: 500 });
+//   }
+// }
+
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -265,15 +308,26 @@ export async function GET(req: NextRequest) {
     const location = searchParams.get('location');
     const workType = searchParams.get('work_type');
     const acceptsForeigners = searchParams.get('accepts_foreigners');
+    const search = searchParams.get('search'); // 🔍 yangi qo‘shildi
 
     const client = await clientPromise;
     const db = client.db("raska");
 
     // Build query filters
     const query: any = { isActive: true };
+
     if (location) query.location = location;
     if (workType) query.work_type = workType;
     if (acceptsForeigners) query.accepts_foreigners = acceptsForeigners === 'true';
+
+    // 🔍 Qidiruv: work_name yoki work_type ichida bo‘lishi kerak
+    if (search) {
+      const regex = new RegExp(search, 'i'); // ignore case
+      query.$or = [
+        { work_name: { $regex: regex } },
+        { work_type: { $regex: regex } }
+      ];
+    }
 
     const jobs = await db
       .collection("jobs")

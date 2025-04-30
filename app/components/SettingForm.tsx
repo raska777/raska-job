@@ -415,7 +415,7 @@ export default function SettingsForm() {
           />
           {isGoogleUser && (
             <p className={styles.authProvider}>
-              <span className={styles.providerIcon}>G</span> Google account
+              <span className={styles.providerIcon}>Google account</span> 
             </p>
           )}
         </div>
