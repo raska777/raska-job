@@ -106,15 +106,18 @@
   }
   
   .raskajob-select-wrapper .select-icon {
+    display: flex;
     position: absolute;
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
     color: #6b7280;
     font-size: 0.9rem;
+    z-index: 10;
   }
   
   .city-select {
+    position: relative;
     width: 100%;
     padding: 0.5rem 1rem 0.75rem 3rem;
 
@@ -125,6 +128,7 @@
     appearance: none;
     transition: border-color 0.2s;
   }
+  
   
   .city-select:focus {
     outline: none;

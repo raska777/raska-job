@@ -345,26 +345,37 @@
   outline: none;
   border-color: #4a6bff;
 }
-
 .passwordContainer {
   position: relative;
   width: 100%;
 }
 
+.input {
+  padding: 14px 40px 14px 14px; /* Add right padding for eye icon */
+  width: 100%; /* Ensure full width */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
 .togglePassword {
   position: absolute;
-  right: 2px;
+  right: 14px; /* Increased from 2px for better spacing */
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   color: #666;
-  font-size: 12px;
+  padding: 0; /* Remove any default padding */
+  width: 24px; /* Fixed width */
+  height: 24px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .eyeIcon {
   font-size: 18px;
+  width: 100%; /* Ensure icon fills container */
 }
 
 .error {
