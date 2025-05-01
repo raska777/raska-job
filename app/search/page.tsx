@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { FiSearch, FiMapPin, FiArrowLeftCircle } from 'react-icons/fi';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import "styles/searchPage.css";
@@ -181,7 +180,7 @@ function SearchPageContent() {
           expandedJob={expandedJob}
         />
       </main>
-      <ToastContainer position="top-center" autoClose={3000} />
+      
     </div>
   );
 }

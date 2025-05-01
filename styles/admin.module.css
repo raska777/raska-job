@@ -1,55 +1,275 @@
-/* styles/admin-dashboard.css */
-
-.admin-container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.container {
+    max-width: 1400px;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   }
   
-  .admin-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #1e293b;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .title {
+    color: #2d3748;
+    font-size: 1.75rem;
+    margin: 0;
+  }
+  
+  .userInfo {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
     text-align: center;
   }
   
-  .admin-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-    padding: 2rem;
-    margin-top: 1.5rem;
-    text-align: center;
-    transition: transform 0.2s ease;
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
   
-  .admin-card:hover {
-    transform: translateY(-2px);
+  .statCard {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
   
-  .admin-button {
-    background-color: #dc2626;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+  .statIcon {
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    background: #f0f7ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .statContent h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.9rem;
+    color: #4a5568;
+  }
+  
+  .statValue {
+    margin: 0;
+    font-size: 1.5rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
+    color: #1a202c;
   }
   
-  .admin-button:hover {
-    background-color: #b91c1c;
+  .recentActivity {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
   
-  .admin-message {
-    margin-top: 1rem;
+  .recentSection {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recentSection h3 {
+    margin-top: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #2d3748;
+  }
+  
+  .userList, .jobList {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .userItem {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #edf2f7;
+    align-items: center;
+  }
+  
+  .userAvatar {
+    width: 40px;
+    height: 40px;
+    background: #4299e1;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .userDetails {
+    flex: 1;
+  }
+  
+  .userDetails p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+  }
+  
+  .userMeta {
+    color: #718096;
+    font-size: 0.75rem;
+  }
+  
+  .jobItem {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #edf2f7;
+  }
+  
+  .jobType {
+    display: inline-block;
+    background: #e2e8f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .jobDetails h4 {
+    margin: 0 0 0.3rem 0;
     font-size: 0.95rem;
-    color: #0f172a;
-    font-weight: 500;
   }
   
+  .jobDetails p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+  }
+  
+  .jobMeta {
+    color: #718096;
+    font-size: 0.75rem;
+  }
+  
+  .jobActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .smallButton {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  
+  .adminActions {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .adminActions h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .actionButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .actionResults {
+    min-height: 2rem;
+  }
+  
+  /* Button styles */
+  .button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .button:hover {
+    opacity: 0.9;
+  }
+  
+  .button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .deleteButton {
+    composes: button;
+    background: #ef4444;
+    color: white;
+  }
+  
+  .secondaryButton {
+    composes: button;
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .warningButton {
+    composes: button;
+    background: #f59e0b;
+    color: #1e293b;
+  }
+  
+  .primaryButton {
+    composes: button;
+    background: #10b981;
+    color: white;
+  }
+  
+  .refreshButton {
+    composes: button;
+    background: #6366f1;
+    color: white;
+    padding: 0.5rem 1rem;
+  }
+  
+  .result {
+    margin: 0.5rem 0 0 0;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .error {
+    color: #dc2626;
+  }
+  
+  @media (max-width: 768px) {
+    .recentActivity {
+      grid-template-columns: 1fr;
+    }
+    
+    .actionButtons {
+      flex-direction: column;
+    }
+  }
