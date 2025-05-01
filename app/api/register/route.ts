@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import bcrypt from "bcryptjs";
-import { sendWelcomeEmail } from "@/lib/email"; // 💌 임포트 완료
+import { sendWelcomeEmail } from "@/lib/email"; 
 
 export async function POST(req: Request) {
   try {

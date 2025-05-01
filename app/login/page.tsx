@@ -36,18 +36,26 @@ export default function LoginPage() {
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     setError('');
-
+  
     try {
       const result = await signIn('credentials', {
         redirect: false,
         email: data.email,
         password: data.password,
       });
-
+  
       if (result?.error) {
         setError('이메일 또는 비밀번호가 올바르지 않습니다.');
       } else if (result?.ok) {
-        router.push('/');
+        // Role aniqlash uchun sessiyani olib kelamiz
+        const res = await fetch('/api/auth/session');
+        const session = await res.json();
+  
+        if (session?.user?.role === 'admin') {
+          router.push('/admin');
+        } else {
+          router.push('/');
+        }
       }
     } catch (err) {
       console.error('Login error:', err);
@@ -56,6 +64,7 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
+  
 
   const handleGoogleSignIn = async () => {
     try {

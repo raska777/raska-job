@@ -55,12 +55,15 @@
 .raskajob-login-button {
     background: linear-gradient(135deg, #4f6df5 0%, #3a56d5 100%);
     color: white;
+    width: 100px;
 }
 
 /* Sign Up Button */
 .raskajob-signup-button {
     background: white;
     color: #4f6df5;
+    width: 100px;
+
 }
 
 /* Logout Button */
@@ -152,12 +155,23 @@
 
 /* Responsive Adjustments - Always Horizontal */
 @media (max-width: 768px) {
-    .raskajob-auth-container {
+    /* .raskajob-auth-container {
         gap: 0.85rem;
         position: absolute;
-        top: 425px;
-    }
-    
+        top: 435px;
+        left: 25%;
+    } */
+    .raskajob-auth-container {
+    gap: 0.85rem;
+    position: absolute;
+    top: 435px;
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for exact center */
+    width: auto; /* Let content determine width */
+    display: flex;
+    justify-content: center; /* Center buttons within container */
+    z-index: 10;
+}
     .raskajob-auth-button {
         padding: 0.5rem 1rem;
         font-size: 0.85rem;
@@ -166,7 +180,7 @@
 
 @media (max-width: 480px) {
     .raskajob-auth-container {
-        gap: 1.4rem;
+        gap: 0.8rem;
     }
     
     .raskajob-auth-button {
