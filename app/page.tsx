@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { KOREAN_CITIES } from '@/lib/cities';
-import { FaUser, FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaUser, FaSearch} from 'react-icons/fa';
 import 'styles/welcomeBanner.css'
 
 
