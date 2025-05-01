@@ -96,7 +96,6 @@ function HomeContent() {
           <div className="raskajob-search-container p-4">
             <div className="raskajob-search-box flex flex-col md:flex-row gap-2 max-w-4xl mx-auto">
               <div className="raskajob-select-wrapper">
-                <FaMapMarkerAlt className="select-icon" />
                 <select
                   className="city-select"
                   value={selectedCity}

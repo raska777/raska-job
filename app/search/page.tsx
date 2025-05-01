@@ -1,172 +1,4 @@
 
-
-
-// 'use client';
-
-// import { useSearchParams, useRouter } from 'next/navigation';
-// import { useState, Suspense } from 'react';
-// import dynamic from 'next/dynamic';
-// import { FiSearch, FiMapPin, FiArrowLeftCircle } from 'react-icons/fi';
-// import "styles/searchPage.css"
-
-// // Koreyscha tarjimalar
-// const translations = {
-//   back: "뒤로",
-//   allJobs: "전체 채용 공고",
-//   allCities: "모든 도시",
-//   searchPlaceholder: "직업 제목 또는 키워드...",
-//   search: "검색",
-//   loadingJobs: "채용 공고를 불러오는 중...",
-//   loadingParams: "검색 매개변수를 불러오는 중..."
-// };
-
-// // Koreya shaharlari
-// const KOREAN_CITIES = [
-//   { value: "서울", label: "Seoul" },
-//     { value: "부산", label: "Busan" },
-//     { value: "인천", label: "Incheon" },
-//     { value: "대구", label: "Daegu" },
-//     { value: "대전", label: "Daejeon" },
-//     { value: "광주", label: "Gwangju" },
-//     { value: "수원", label: "Suwon" },
-//     { value: "울산", label: "Ulsan" },
-//     { value: "창원", label: "Changwon" },
-//     { value: "경주", label: "Gyeongju" },
-//     { value: "전주", label: "Jeonju" },
-//     { value: "제주", label: "Jeju" },
-//     { value: "포항", label: "Pohang" },
-//     { value: "청주", label: "Cheongju" },
-//     { value: "안동", label: "Andong" },
-//     { value: "원주", label: "Wonju" },
-//     { value: "강릉", label: "Gangneung" },
-//     { value: "익산", label: "Iksan" },
-//     { value: "목포", label: "Mokpo" },
-//     { value: "속초", label: "Sokcho" },
-//     { value: "춘천", label: "Chuncheon" },
-//     { value: "김해", label: "Gimhae" },
-//     { value: "의정부", label: "Uijeongbu" },
-//     { value: "부천", label: "Bucheon" },
-//     { value: "양산", label: "Yangsan" }
-// ];
-
-// const JobList = dynamic(() => import('@/app/components/JobList'), {
-//   ssr: false,
-//   loading: () => (
-//     <div className="loading-spinner">
-//       <div className="spinner"></div>
-//       <p>{translations.loadingJobs}</p>
-//     </div>
-//   )
-// });
-
-
-// export default function SearchPage() {
-//   return (
-//     <Suspense fallback={
-//       <div className="page-loading">
-//         <div className="spinner"></div>
-//         <p>{translations.loadingParams}</p>
-//       </div>
-//     }>
-//       <SearchPageContent />
-//     </Suspense>
-//   );
-// }
-
-// function SearchPageContent() {
-//   const searchParams = useSearchParams();
-//   const router = useRouter();
-
-//   const search = searchParams.get('search') || '';
-//   const location = searchParams.get('location') || '';
-
-//   const [searchTerm, setSearchTerm] = useState(search);
-//   const [selectedCity, setSelectedCity] = useState(location);
-//   const [expandedJob, setExpandedJob] = useState<string | null>(null);
-
-//   const toggleExpandedJob = (jobId: string) => {
-//     setExpandedJob(prev => (prev === jobId ? null : jobId));
-//   };
-
-//   const handleSearch = () => {
-//     const params = new URLSearchParams();
-//     if (searchTerm) params.set('search', searchTerm);
-//     if (selectedCity) params.set('location', selectedCity);
-//     router.push(`/search?${params.toString()}`);
-//   };
-  
-
-//   return (
-//     <div className="search-page-container px-4 py-6 max-w-6xl mx-auto">
-//       {/* Header */}
-//       <header className="search-header mb-4 flex items-center gap-4">
-//         <button onClick={() => router.back()} className="back-button flex items-center gap-2 text-gray-700">
-//           <FiArrowLeftCircle size={24} />
-//           {translations.back}
-//         </button>
-
-//         <h1 className="text-xl font-semibold">
-//           {search || location ? (
-//             <span className="flex items-center gap-2">
-//               <FiSearch />
-//               "{search}" {location && `• ${location}`}
-//             </span>
-//           ) : (
-//             <span className="flex items-center gap-2">
-//               <FiMapPin />
-//               {translations.allJobs}
-//             </span>
-//           )}
-//         </h1>
-//       </header>
-
-//       {/* Qidiruv paneli */}
-//       <div className="search-panel mb-6">
-//         <div className="flex flex-col md:flex-row gap-3">
-//           <select
-//             className="city-select border p-2 rounded w-full md:w-1/3"
-//             value={selectedCity}
-//             onChange={(e) => setSelectedCity(e.target.value)}
-//           >
-//             <option value="">{translations.allCities}</option>
-//             {KOREAN_CITIES.map(city => (
-//               <option key={city.value} value={city.value}>
-//                 {city.label}
-//               </option>
-//             ))}
-//           </select>
-
-//           <input
-//             type="text"
-//             placeholder={translations.searchPlaceholder}
-//             className="search-input border p-2 rounded flex-grow"
-//             value={searchTerm}
-//             onChange={(e) => setSearchTerm(e.target.value)}
-//             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-//           />
-
-//           <button
-//             className="search-button bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-//             onClick={handleSearch}
-//           >
-//             <FiSearch size={18} className="inline mr-1" />
-//             {translations.search}
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Natijalar */}
-//       <main className="search-results">
-//         <JobList
-//           selectedCity={selectedCity}
-//           searchQuery={searchTerm}
-//           toggleExpandedJob={toggleExpandedJob}
-//           expandedJob={expandedJob}
-//         />
-//       </main>
-//     </div>
-//   );
-// }
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -174,6 +6,7 @@ import { useState, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { FiSearch, FiMapPin, FiArrowLeftCircle } from 'react-icons/fi';
 import "styles/searchPage.css";
+
 
 // Korean translations
 const translations = {
@@ -272,29 +105,29 @@ function SearchPageContent() {
     <div className="search-page-container">
       {/* Header Section */}
       <header className="search-header">
-        <button 
-          onClick={() => router.push('/')} 
-          className="back-button"
-          aria-label="Go back"
-        >
-          <FiArrowLeftCircle size={24} />
-          {translations.back}
-        </button>
+      <button 
+        onClick={() => router.push('/')} 
+        className="back-button"
+        aria-label="Go back"
+      >
+        <FiArrowLeftCircle size={24} />
+        {translations.back}
+      </button>
 
-        <h1>
-          {search || location ? (
-            <span className="flex items-center gap-2">
-              <FiSearch />
-              "{search}" {location && <span className="text-blue-500">• {location}</span>}
-            </span>
-          ) : (
-            <span className="flex items-center gap-2">
-              <FiMapPin />
-              {translations.allJobs}
-            </span>
-          )}
-        </h1>
-      </header>
+      <h1 className="search-title">
+        {search || location ? (
+          <span className="title-content">
+            <FiSearch className="title-icon" />
+            "{search}" {location && <span className="location-text">• {location}</span>}
+          </span>
+        ) : (
+          <span className="title-content">
+            <FiMapPin className="title-icon" />
+            {translations.allJobs}
+          </span>
+        )}
+      </h1>
+    </header>
 
       {/* Search Form */}
       <div className="search-panel">
