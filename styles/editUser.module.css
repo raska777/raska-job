@@ -1,0 +1,274 @@
+/* admin.module.css */
+
+/* Modal asosiy stillari */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .modalContent {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+    from { transform: translateY(-20px); }
+    to { transform: translateY(0); }
+  }
+  
+  /* Modal sarlavhasi */
+  .modalHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+  }
+  
+  .modalHeader h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1a365d;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #718096;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+  }
+  
+  .closeButton:hover {
+    color: #e53e3e;
+  }
+  
+  .closeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Tablar kontayneri */
+  .tabContainer {
+    display: flex;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .tabButton {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #718096;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  
+  .tabButton:hover:not(:disabled) {
+    color: #2d3748;
+    background-color: #f7fafc;
+  }
+  
+  .tabButton.activeTab {
+    color: #4299e1;
+    border-bottom-color: #4299e1;
+  }
+  
+  .tabButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Kontent qismi */
+  .userInfo,
+  .subscriptionTab,
+  .dangerZone {
+    padding: 1.5rem;
+  }
+  
+  /* Foydalanuvchi ma'lumotlari */
+  .infoRow {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  
+  .infoLabel {
+    font-weight: 500;
+    color: #4a5568;
+    width: 150px;
+    flex-shrink: 0;
+  }
+  
+  .infoValue {
+    color: #2d3748;
+    word-break: break-word;
+  }
+  
+  /* Obuna bo'limi */
+  .subscriptionStatus {
+    margin-bottom: 1.5rem;
+  }
+  
+  .subscribed {
+    color: #38a169;
+    font-weight: 500;
+  }
+  
+  .unsubscribed {
+    color: #e53e3e;
+    font-weight: 500;
+  }
+  
+  .subscriptionDate {
+    color: #718096;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  
+  .subscriptionActions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .subscribeButton,
+  .unsubscribeButton {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .subscribeButton {
+    background-color: #38a169;
+    color: white;
+  }
+  
+  .subscribeButton:hover:not(:disabled) {
+    background-color: #2f855a;
+  }
+  
+  .unsubscribeButton {
+    background-color: #e53e3e;
+    color: white;
+  }
+  
+  .unsubscribeButton:hover:not(:disabled) {
+    background-color: #c53030;
+  }
+  
+  .subscribeButton:disabled,
+  .unsubscribeButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Xavfli zona */
+  .dangerZone {
+    text-align: center;
+  }
+  
+  .dangerZone h3 {
+    color: #e53e3e;
+    margin-bottom: 1.5rem;
+  }
+  
+  .deleteButton {
+    padding: 0.75rem 1.5rem;
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 1rem;
+  }
+  
+  .deleteButton:hover:not(:disabled) {
+    background-color: #c53030;
+  }
+  
+  .deleteButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .warningText {
+    color: #718096;
+    font-size: 0.875rem;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  /* Modal footer */
+  .modalFooter {
+    padding: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .secondaryButton {
+    padding: 0.75rem 1.5rem;
+    background-color: #edf2f7;
+    color: #4a5568;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .secondaryButton:hover:not(:disabled) {
+    background-color: #e2e8f0;
+  }
+  
+  .secondaryButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Yuklash holati */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .loadingSpinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 0.5rem;
+  }

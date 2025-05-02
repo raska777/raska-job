@@ -1,275 +1,782 @@
+/* Admin Dashboard Styles */
 .container {
     max-width: 1400px;
-    margin: 1rem auto;
-    padding: 1.5rem;
-    background: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    color: #333;
+    background-color: #f8fafc;
+    min-height: 100vh;
   }
   
+  /* Header Styles */
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
   }
   
   .title {
-    color: #2d3748;
-    font-size: 1.75rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a365d;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
   
+  .refreshButton {
+    background-color: #4299e1;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .refreshButton:hover {
+    background-color: #3182ce;
+  }
+  
+  .refreshButton:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+  }
+  
+  .refreshButton.small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+  }
+  
+  /* User Info */
   .userInfo {
-    background: #f8fafc;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    border-left: 4px solid #4299e1;
   }
   
+  .userInfo p {
+    margin: 0.5rem 0;
+    color: #4a5568;
+  }
+  
+  .userInfo strong {
+    color: #2d3748;
+  }
+  
+  /* Stats Grid */
   .statsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
   
   .statCard {
-    background: white;
-    border-radius: 0.5rem;
-    padding: 1.25rem;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .statCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .statIcon {
-    font-size: 1.5rem;
-    width: 50px;
-    height: 50px;
-    background: #f0f7ff;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #ebf8ff;
+    color: #3182ce;
   }
   
   .statContent h3 {
-    margin: 0 0 0.25rem 0;
-    font-size: 0.9rem;
-    color: #4a5568;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #718096;
+    margin: 0 0 0.5rem 0;
   }
   
   .statValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2d3748;
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1a202c;
   }
   
+  /* Recent Activity Sections */
   .recentActivity {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .recentActivity {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   
   .recentSection {
-    background: white;
-    border-radius: 0.5rem;
-    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
   }
   
   .recentSection h3 {
-    margin-top: 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e2e8f0;
+    font-size: 1.25rem;
+    font-weight: 600;
     color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #edf2f7;
   }
   
-  .userList, .jobList {
-    max-height: 400px;
+  /* User List Styles */
+  .userList {
+    max-height: 600px;
     overflow-y: auto;
   }
   
   .userItem {
     display: flex;
-    gap: 1rem;
-    padding: 0.75rem 0;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
     border-bottom: 1px solid #edf2f7;
-    align-items: center;
+  }
+  
+  .userItem:last-child {
+    border-bottom: none;
+  }
+  
+  .userAvatarContainer {
+    position: relative;
   }
   
   .userAvatar {
-    width: 40px;
-    height: 40px;
-    background: #4299e1;
-    color: white;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    background-color: #4299e1;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 1.25rem;
+    position: relative;
+  }
+  
+  .statusIndicator {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    bottom: 0;
+    right: 0;
+    border: 2px solid white;
+  }
+  
+  .statusIndicator.subscribed {
+    background-color: #48bb78;
+  }
+  
+  .statusIndicator.unsubscribed {
+    background-color: #e53e3e;
+  }
+  
+  .adminBadge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #f6ad55;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
   }
   
   .userDetails {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   
-  .userDetails p {
-    margin: 0.2rem 0;
-    font-size: 0.85rem;
+  .userMainInfo {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .userName {
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 0.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .userEmail {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #718096;
+  }
+  
+  .userEmail a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .userEmail a:hover {
+    text-decoration: underline;
+    color: #4299e1;
   }
   
   .userMeta {
-    color: #718096;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+  
+  .userRoleBadge {
     font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    background-color: #ebf8ff;
+    color: #3182ce;
+    white-space: nowrap;
+  }
+  
+  .userJoinDate {
+    font-size: 0.75rem;
+    color: #a0aec0;
+  }
+  
+  .userActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  
+  .subscriptionStatus {
+    font-size: 0.875rem;
+  }
+  
+  .statusText {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .statusText.active {
+    color: #48bb78;
+  }
+  
+  .statusText.inactive {
+    color: #e53e3e;
+  }
+  
+  .statusDot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  
+  .statusText.active .statusDot {
+    background-color: #48bb78;
+  }
+  
+  .statusText.inactive .statusDot {
+    background-color: #e53e3e;
+  }
+  
+  .actionButtons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .actionButton {
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  
+  .actionButton svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .editButton {
+    background-color: #ebf8ff;
+    color: #3182ce;
+  }
+  
+  .editButton:hover {
+    background-color: #bee3f8;
+  }
+  
+  .subscribeButton {
+    background-color: #f0fff4;
+    color: #38a169;
+  }
+  
+  .subscribeButton:hover {
+    background-color: #c6f6d5;
+  }
+  
+  .unsubscribeButton {
+    background-color: #fff5f5;
+    color: #e53e3e;
+  }
+  
+  .unsubscribeButton:hover {
+    background-color: #fed7d7;
+  }
+  
+  /* Job List Styles */
+  .jobList {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .searchInput {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
   }
   
   .jobItem {
-    padding: 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 0;
     border-bottom: 1px solid #edf2f7;
+    gap: 0.75rem;
+  }
+  
+  .jobItem:last-child {
+    border-bottom: none;
   }
   
   .jobType {
-    display: inline-block;
-    background: #e2e8f0;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.25rem;
     font-size: 0.75rem;
-    margin-bottom: 0.3rem;
+    font-weight: 600;
+    color: white;
+    background-color: #4299e1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    align-self: flex-start;
   }
   
   .jobDetails h4 {
-    margin: 0 0 0.3rem 0;
-    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 0.25rem 0;
   }
   
   .jobDetails p {
-    margin: 0.2rem 0;
-    font-size: 0.85rem;
+    margin: 0.25rem 0;
+    color: #4a5568;
+    font-size: 0.875rem;
   }
   
   .jobMeta {
-    color: #718096;
     font-size: 0.75rem;
+    color: #a0aec0;
   }
   
   .jobActions {
     display: flex;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    flex-wrap: wrap;
   }
   
   .smallButton {
-    padding: 0.25rem 0.5rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
     font-size: 0.75rem;
-    border: none;
-    border-radius: 0.25rem;
+    font-weight: 500;
     cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
   }
   
+  .smallButton:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  
+  /* No Data States */
+  .noUsers, .noData {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #718096;
+  }
+  
+  .noDataIllustration {
+    margin-bottom: 1rem;
+    color: #cbd5e0;
+  }
+  
+  .noDataTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0.5rem 0;
+  }
+  
+  .noDataDescription {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Admin Actions Section */
   .adminActions {
-    background: white;
-    border-radius: 0.5rem;
-    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 2rem;
   }
   
   .adminActions h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
   
   .actionButtons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
   
-  .actionResults {
-    min-height: 2rem;
-  }
-  
-  /* Button styles */
-  .button {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
+  .primaryButton, .secondaryButton, .deleteButton, .warningButton {
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .button:hover {
-    opacity: 0.9;
-  }
-  
-  .button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  .deleteButton {
-    composes: button;
-    background: #ef4444;
-    color: white;
-  }
-  
-  .secondaryButton {
-    composes: button;
-    background: #3b82f6;
-    color: white;
-  }
-  
-  .warningButton {
-    composes: button;
-    background: #f59e0b;
-    color: #1e293b;
+    border: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
   
   .primaryButton {
-    composes: button;
-    background: #10b981;
+    background-color: #4299e1;
     color: white;
   }
   
-  .refreshButton {
-    composes: button;
-    background: #6366f1;
-    color: white;
-    padding: 0.5rem 1rem;
+  .primaryButton:hover {
+    background-color: #3182ce;
+  }
+  
+  .secondaryButton {
+    background-color: #edf2f7;
+    color: #4a5568;
+  }
+  
+  .secondaryButton:hover {
+    background-color: #e2e8f0;
+  }
+  
+  .deleteButton {
+    background-color: #feb2b2;
+    color: #c53030;
+  }
+  
+  .deleteButton:hover {
+    background-color: #fc8181;
+  }
+  
+  .warningButton {
+    background-color: #feebc8;
+    color: #b7791f;
+  }
+  
+  .warningButton:hover {
+    background-color: #fbd38d;
+  }
+  
+  .actionResults {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   
   .result {
-    margin: 0.5rem 0 0 0;
-    padding: 0.5rem;
-    background: #f8f9fa;
-    border-radius: 0.25rem;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin: 0;
   }
   
+  /* Verification Badges */
+  .verifiedBadge {
+    color: #48bb78;
+    font-size: 0.875rem;
+  }
+  
+  .unverifiedBadge {
+    color: #e53e3e;
+    font-size: 0.875rem;
+  }
+  
+  /* Loading and Error States */
   .loading, .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
     text-align: center;
     padding: 2rem;
-    font-size: 1.1rem;
+  }
+  
+  .loading {
+    font-size: 1.25rem;
+    color: #4a5568;
   }
   
   .error {
-    color: #dc2626;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 2rem auto;
   }
   
+  .error h2 {
+    color: #e53e3e;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .error p {
+    margin: 0.5rem 0;
+    color: #4a5568;
+  }
+  
+  .error strong {
+    color: #2d3748;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  /* Modal Backdrop (for EditJobModal and UserManagementModal) */
+  .modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  
+  .modalContent {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalFadeIn 0.3s ease-out;
+  }
+  
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .modalHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modalTitle {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+  }
+  
+  .modalCloseButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #718096;
+    padding: 0.25rem;
+  }
+  
+  .modalCloseButton:hover {
+    color: #e53e3e;
+  }
+  
+  .modalBody {
+    padding: 1.5rem;
+  }
+  
+  .modalFooter {
+    padding: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  /* Form Elements */
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .formLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #4a5568;
+  }
+  
+  .formControl {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .formControl:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+  
+  .formSelect {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+  
+  .checkboxContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkboxInput {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+  
+  /* Responsive Adjustments */
   @media (max-width: 768px) {
-    .recentActivity {
-      grid-template-columns: 1fr;
+    .container {
+      padding: 1rem;
+    }
+    
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
     }
     
     .actionButtons {
+      grid-template-columns: 1fr;
+    }
+    
+    .userMainInfo {
       flex-direction: column;
+    }
+    
+    .userMeta {
+      align-items: flex-start;
+    }
+    
+    .userActions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .actionButtons {
+      flex-wrap: wrap;
     }
   }
