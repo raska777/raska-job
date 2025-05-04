@@ -61,12 +61,12 @@ const JobList = ({
   const [totalJobs, setTotalJobs] = useState(0);
   const searchParams = useSearchParams();
 
- // eslint-disable-next-line react-hooks/exhaustive-deps
+
 useEffect(() => {
   if (onLoaded) {
-    setTimeout(onLoaded, 500);
+    onLoaded(); // darhol chaqirilsin
   }
-}, []);
+}, [onLoaded]);
 
   
   
