@@ -1,10 +1,10 @@
 // app/api/admin/subscribe-all/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH() {
   try {
     const session = await getServerSession(authOptions);
 

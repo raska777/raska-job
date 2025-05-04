@@ -5,11 +5,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 // Helper function to sanitize update data (remove _id)
-function sanitizeUpdateData(body: Record<string, unknown>) {
-  const { _id, ...updateData } = body;
-  console.log("id:", _id); // Just for debugging, remove in production
-  return updateData;
-}
 
 // PUT request: Update job listing
 export async function PUT(req: NextRequest) {

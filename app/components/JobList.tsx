@@ -63,12 +63,13 @@ const JobList = ({
 
   useEffect(() => {
     if (onLoaded) {
-      const timer = setTimeout(() => {
-        onLoaded(); // DOM haqiqiy chizilgan bo‘lishi kerak
-      }, 500); // kechikishni oshiring
+      const timer = setTimeout(() => onLoaded(), 500);
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  
   
   
 useEffect(() => {
