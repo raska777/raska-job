@@ -5,6 +5,7 @@ const nextConfig = {
   },
   env: {
     MONGODB_URI: process.env.MONGODB_URI, // MongoDB URI (agar kerak bo'lsa)
+    ADMIN_ROUTE: process.env.ADMIN_ROUTE,
   },
   typescript: {
     ignoreBuildErrors: true,

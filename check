@@ -1,0 +1,49 @@
+🛡 Xavfsizlik Tekshiruvi Rejasi
+🔐 1. Authentication (Tizimga kirish)
+
+next-auth orqali login qilishda tokenlar (session) xavfsiz ishlatilayaptimi?
+
+Foydalanuvchi role qiymati server tarafda tekshiriladimi (masalan, admin panelda)?
+
+Foydalanuvchi ma’lumotlari (parollar) hashlanganmi? (bcrypt orqali?)
+
+    Brute-force hujumlariga qarshi cheklovlar (masalan, login urinishlari soni) mavjudmi?
+
+🔒 2. Authorization (Ruxsat nazorati)
+
+Admin panelga faqat role: 'admin' foydalanuvchilar kira oladimi?
+
+API route'larda session tekshiruvi va role nazorati borligini tasdiqlaymizmi?
+
+    Foydalanuvchi boshqa user'ning yoki e'lonning ID'si bilan ish bajara olmayaptimi?
+
+🧪 3. Input Validation
+
+Formlar (post job, register, login) zod, yup yoki boshqa validatsiya kutubxonalari bilan tekshirilayaptimi?
+
+Backend (API route) da ham req.body validatsiyasi borligini tekshiramiz.
+
+    XSS (Cross-site Scripting) ga qarshi har qanday innerHTML ishlatilmasligiga ishonch hosil qilamiz.
+
+🛠 4. MongoDB so‘rovlar
+
+ObjectId() ishlatish orqali soxta ID kiritilishi oldini olayapmizmi?
+
+Update/Delete amallari faqat aniqlangan huquqli foydalanuvchilargagina ruxsat etilganmi?
+
+    Mass update/delete amallar tasodifan emas, faqat tasdiq bilan bajariladimi?
+
+🌐 5. Network-level xavfsizlik
+
+HTTPS orqali ishlayaptimi? (Vercel bu bo‘yicha yaxshi qo‘llab-quvvatlaydi)
+
+Cookie'lar httpOnly, secure, sameSite=strict qilib qo‘yilganmi?
+
+    CORS sozlamalari faqat kerakli domenlarga ruxsat beryaptimi?
+
+💾 6. Ma’lumotlar bazasi va fayllar
+
+Nozik ma’lumotlar (.env fayl, tokenlar) public papkada emasmi?
+
+    MongoDB ulanish URI faqat backendda ishlatilayaptimi?
+

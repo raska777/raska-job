@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import EditJobModal from 'app/components/EditJobModal';
 import { toast } from 'react-toastify';
 import UserManagementModal from 'app/components/EditUserModal'; // <- Qo'shildi
+import UserAvatar from '../components/UserAvatar';
 
 interface User {
     profileCompleted: any;
@@ -252,32 +253,28 @@ export default function AdminPageClient() {
         job.location.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleSubscriptionToggle = async (userId: string, subscribe: boolean) => {
-        try {
-            const res = await fetch(`/api/admin/users/${userId}/subscription`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ subscribe }),
-            });
+   // handleSubscriptionToggle funksiyasini yangilash
+const handleSubscriptionToggle = async (userId: string, subscribe: boolean) => {
+  try {
+    const res = await fetch(`/api/admin/users/${userId}/subscription`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscribe }),
+    });
 
-            let data;
-            try {
-                data = await res.json(); // ✅ JSON sifatida parse qilishga urinamiz
-            } catch (err) {
-                console.log("user id topilmadi", err)
-                const text = await res.text(); // ❌ Agar JSON bo‘lmasa, oddiy matn sifatida o‘qiymiz
-                throw new Error(`Noto‘g‘ri javob: ${text}`);
-            }
-
-            if (!res.ok) throw new Error(data.error || 'Xatolik yuz berdi');
-
-            toast.success(data.message || '✅ Holat yangilandi');
-            await fetchData(); // 🔄 yangilash
-        } catch (error) {
-            console.error("Obuna yangilash xatolik:", error);
-            toast.error((error as Error).message || 'Obuna holatini yangilashda xatolik');
-        }
-    };
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || 'Failed to update subscription');
+    }
+    
+    // Ma'lumotlarni qayta yuklash
+    await fetchData();
+    toast.success(`Obuna muvaffaqiyatli ${subscribe ? "yoqildi" : "o'chirildi"}`);
+    
+  } catch (err) {
+    toast.error(err instanceof Error ? err.message : 'Xatolik yuz berdi');
+  }
+};
 
     
       
@@ -348,7 +345,7 @@ export default function AdminPageClient() {
             </div>
 
             {/* Recent Activity Sections */}
-            <div className={styles.recentActivity}>
+            {/* <div className={styles.recentActivity}>
                 <div className={styles.recentSection}>
                     <h3>Yangi qo'shilgan foydalanuvchilar ({stats.newUsers.length})</h3>
                     <div className={styles.userList}>
@@ -560,7 +557,183 @@ export default function AdminPageClient() {
                         )}
                     </div>
                 </div>
+            </div> */}
+   <div className={styles.recentActivity}>
+  <div className={styles.recentSection}>
+    <h3>Yangi qo'shilgan foydalanuvchilar ({stats.newUsers.length})</h3>
+    <div className={styles.userList}>
+      {stats.newUsers.length > 0 ? (
+        stats.newUsers.map(user => (
+          <div key={user._id} className={styles.userItem}>
+            <UserAvatar user={{
+              name: user.name,
+              email: user.email,
+              isSubscribed: user.isSubscribed,
+              role: user.role
+            }} />
+
+            <div className={styles.userDetails}>
+              <div className={styles.userMainInfo}>
+                <div>
+                  <h3 className={styles.userName}>
+                    {user.name || 'Nomaʼlum foydalanuvchi'}
+                    {user.profileCompleted ? (
+                      <span className={styles.verifiedBadge} title="Tasdiqlangan profil">✓</span>
+                    ) : (
+                      <span className={styles.unverifiedBadge} title="Profil to'liq to'ldirilmagan">!</span>
+                    )}
+                  </h3>
+                  <p className={styles.userEmail}>
+                    <a href={`mailto:${user.email}`}>{user.email}</a>
+                  </p>
+                </div>
+
+                <div className={styles.userMeta}>
+                  <span className={styles.userRoleBadge}>
+                    {user.role === 'admin' ? '👑 Admin' : 
+                     user.role === 'employer' ? '💼 Ish beruvchi' : '👤 Foydalanuvchi'}
+                  </span>
+                  <span className={styles.userJoinDate}>
+                    📅 {new Date(user.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+
+              <div className={styles.userActions}>
+                <div className={styles.subscriptionStatus}>
+                  <span className={`${styles.statusText} ${user.isSubscribed ? styles.active : styles.inactive}`}>
+                    {user.isSubscribed ? (
+                      <>
+                        <span className={styles.statusDot}></span>
+                        Obuna aktiv
+                      </>
+                    ) : (
+                      <>
+                        <span className={styles.statusDot}></span>
+                        Obuna yopiq
+                      </>
+                    )}
+                  </span>
+                </div>
+
+                <div className={styles.actionButtons}>
+                  <button
+                    onClick={() => setEditingUser(user)}
+                    className={`${styles.actionButton} ${styles.editButton}`}
+                    title="Foydalanuvchini tahrirlash"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    Tahrirlash
+                  </button>
+
+                  <button
+                    onClick={() => handleSubscriptionToggle(user._id, !user.isSubscribed)}
+                    className={`${styles.actionButton} ${
+                      user.isSubscribed ? styles.unsubscribeButton : styles.subscribeButton
+                    }`}
+                    title={user.isSubscribed ? "Obunani bekor qilish" : "Obunaga qo'shish"}
+                  >
+                    {user.isSubscribed ? (
+                      <>
+                        <span className={styles.statusDot}></span>
+                        Obunani o'chirish
+                      </>
+                    ) : (
+                      <>
+                        <span className={styles.statusDot}></span>
+                        Obunani yoqish
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
+        ))
+      ) : (
+        <div className={styles.noUsers}>
+          <div className={styles.noDataIllustration}>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="18" y1="8" x2="23" y2="13"></line>
+              <line x1="23" y1="8" x2="18" y2="13"></line>
+            </svg>
+          </div>
+          <h3 className={styles.noDataTitle}>Yangi foydalanuvchilar mavjud emas</h3>
+          <p className={styles.noDataDescription}>Yaqin orada yangi ro'yxatdan o'tgan foydalanuvchilar shu yerda ko'rinadi</p>
+          <button 
+            onClick={fetchData} 
+            className={`${styles.refreshButton} ${styles.small}`}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M23 4v6h-6"></path>
+              <path d="M1 20v-6h6"></path>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Yangilash
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {/* E'lonlar qismi o‘zgarmagan — kerak bo‘lsa alohida tozalayman */}
+  <div className={styles.recentSection}>
+    <h3>Yangi joylangan e'lonlar ({stats.recentJobs.length})</h3>
+    <input
+      type="text"
+      placeholder="🔍 E'lon nomi yoki joylashuv"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className={styles.searchInput}
+    />
+    <div className={styles.jobList}>
+      {filteredJobs.length > 0 ? (
+        filteredJobs.map(job => (
+          <div key={job._id} className={styles.jobItem}>
+            <div className={styles.jobType}>{job.work_type}</div>
+            <div className={styles.jobDetails}>
+              <h4>{job.work_name}</h4>
+              <p>{job.location} | {job.salary}</p>
+              <p className={styles.jobMeta}>
+                {new Date(job.createdAt).toLocaleString()} |
+                {job.accepts_foreigners ? ' 🌍 Chet elliklar uchun' : ''}
+              </p>
+            </div>
+            <div className={styles.jobActions}>
+              <button
+                onClick={() => handleJobAction(job._id, 'approve')}
+                className={styles.smallButton}
+              >
+                ✅ Tasdiqlash
+              </button>
+              <button
+                onClick={() => handleJobAction(job._id, 'edit')}
+                className={styles.smallButton}
+              >
+                ✏️ Tahrirlash
+              </button>
+              <button
+                onClick={() => handleJobAction(job._id, 'delete')}
+                className={styles.smallButton}
+              >
+                ❌ O'chirish
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className={styles.noData}>
+          {searchTerm ? 'Qidiruv boʻyicha hech narsa topilmadi' : 'Yangi eʼlonlar mavjud emas'}
+        </p>
+      )}
+    </div>
+  </div>
+</div>
 
             {/* Admin Actions */}
             <div className={styles.adminActions}>

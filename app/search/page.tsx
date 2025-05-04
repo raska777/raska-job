@@ -80,7 +80,12 @@ function SearchPageContent() {
 
   const search = searchParams.get('search') || '';
   const location = searchParams.get('location') || '';
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+  
   const [searchTerm, setSearchTerm] = useState(search);
   const [selectedCity, setSelectedCity] = useState(location);
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
@@ -173,12 +178,15 @@ function SearchPageContent() {
 
       {/* Results Section */}
       <main className="search-results">
-        <JobList
-          selectedCity={selectedCity}
-          searchQuery={searchTerm}
-          toggleExpandedJob={toggleExpandedJob}
-          expandedJob={expandedJob}
-        />
+      <JobList
+  selectedCity={selectedCity}
+  searchQuery={searchTerm}
+  toggleExpandedJob={toggleExpandedJob}
+  expandedJob={expandedJob}
+  currentPage={currentPage} // ✅ qo‘shiladi
+  onPageChange={handlePageChange} // ✅ qo‘shiladi
+/>
+
       </main>
       
     </div>

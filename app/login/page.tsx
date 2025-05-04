@@ -48,7 +48,10 @@ export default function LoginPage() {
         setError('이메일 또는 비밀번호가 올바르지 않습니다.');
       } else if (result?.ok) {
         // Role aniqlash uchun sessiyani olib kelamiz
-        const res = await fetch('/api/auth/session');
+        const res = await fetch('/api/auth/session', {
+          credentials: 'include'
+        });
+        
         const session = await res.json();
   
         if (session?.user?.role === 'admin') {
@@ -59,7 +62,7 @@ export default function LoginPage() {
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError('시스템 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      setError('이메일 또는 비밀번호가 올바르지 않습니다.');
     } finally {
       setIsLoading(false);
     }
@@ -70,7 +73,10 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       setError('');
-      await signIn('google', { callbackUrl: '/' });
+  
+     
+  
+      await signIn('google', { callbackUrl: '/redirect-after-google' });
     } catch (err) {
       console.error('Google sign in error:', err);
       setError('Google 로그인 중 오류가 발생했습니다.');
@@ -78,6 +84,7 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <main className={styles.container}>

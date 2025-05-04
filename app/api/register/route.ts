@@ -1,8 +1,7 @@
-
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import bcrypt from "bcryptjs";
-import { sendWelcomeEmail } from "@/lib/email"; 
+import { sendWelcomeEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -15,10 +14,19 @@ export async function POST(req: Request) {
       );
     }
 
+    if (!agreedToTerms) {
+      return NextResponse.json(
+        { error: "이용약관에 동의해야 합니다." },
+        { status: 400 }
+      );
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
     const client = await clientPromise;
     const db = client.db("raska");
 
-    const existingUser = await db.collection("users").findOne({ email });
+    const existingUser = await db.collection("users").findOne({ email: normalizedEmail });
     if (existingUser) {
       return NextResponse.json(
         { error: "이 이메일은 이미 등록되어 있습니다!" },
@@ -29,29 +37,31 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await db.collection("users").insertOne({
-      name,
-      email,
+      name: name.trim(),
+      email: normalizedEmail,
       password: hashedPassword,
       createdAt: new Date(),
       updatedAt: new Date(),
-      agreedToTerms: agreedToTerms || false, // 🔵 Dynamic qilish      
-      emailVerified: false
+      agreedToTerms: true,
+      emailVerified: false,
+      role: "user",
+      provider: "credentials",
+      isSubscribed: false,
     });
 
-    // 💌 환영 이메일 전송
-    await sendWelcomeEmail(email, name);
+    await sendWelcomeEmail(normalizedEmail, name);
 
     return NextResponse.json(
-      { 
-        message: "회원가입이 성공적으로 완료되었습니다!", 
-        userId: result.insertedId 
+      {
+        message: "회원가입이 성공적으로 완료되었습니다!",
+        userId: result.insertedId,
       },
       { status: 201 }
     );
   } catch (error) {
     console.error("회원가입 POST 오류:", error);
     return NextResponse.json(
-      { error: "서버 오류 발생!" }, 
+      { error: "서버 오류 발생!" },
       { status: 500 }
     );
   }

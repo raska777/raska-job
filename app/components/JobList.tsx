@@ -1,9 +1,11 @@
 
-
+// app/components/JobList.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+
 import { FiShare2, FiPhone } from 'react-icons/fi';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { FiClock, FiDollarSign, FiCalendar, FiUser, FiMapPin } from 'react-icons/fi';
@@ -31,17 +33,24 @@ interface Job {
 interface JobListProps {
   selectedCity: string;
   searchQuery: string;
-  searchCategory?: string;
+  searchCategory?: string; // 👈 bu qo‘shiladi
+  currentPage: number;
+  onPageChange: (page: number) => void;
   toggleExpandedJob: (jobId: string) => void;
   expandedJob: string | null;
+  onLoaded?: () => void;
 }
+
+
 
 const JobList = ({
   selectedCity,
   searchQuery,
   searchCategory = 'all',
   toggleExpandedJob,
-  expandedJob
+  expandedJob,
+  onLoaded,
+
 }: JobListProps) => {
   const { data: session } = useSession();
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -50,7 +59,25 @@ const JobList = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalJobs, setTotalJobs] = useState(0);
+  const searchParams = useSearchParams();
 
+  useEffect(() => {
+    if (onLoaded) {
+      const timer = setTimeout(() => {
+        onLoaded(); // DOM haqiqiy chizilgan bo‘lishi kerak
+      }, 500); // kechikishni oshiring
+      return () => clearTimeout(timer);
+    }
+  }, []);
+  
+  
+useEffect(() => {
+  const pageParam = searchParams.get('page');
+  if (pageParam) {
+    const page = parseInt(pageParam);
+    if (!isNaN(page)) setCurrentPage(page);
+  }
+}, [searchParams]);
   const jobsPerPage = 12;
 
   useEffect(() => {
@@ -92,12 +119,17 @@ const JobList = ({
         setError('구인 정보를 불러오지 못했습니다. 나중에 다시 시도해 주세요.');
       } finally {
         setIsLoading(false);
+        if (onLoaded) setTimeout(() => onLoaded(), 0);
       }
     };
 
     fetchJobs();
   }, [currentPage, selectedCity, searchQuery, searchCategory]);
+
+
+  
   useEffect(() => {
+    
     const fetchSavedJobs = async () => {
       if (!session) {
         const localSaved = localStorage.getItem('savedJobs');
@@ -249,11 +281,9 @@ const JobList = ({
           jobs.map((job, index) => {
             const isSaved = savedJobs.includes(job._id);
             return (
-              <div
-                key={job._id}
-                id={job._id}
-                className={styles.jobCard}
-                style={{ animationDelay: `${index * 0.1}s` }}
+              <div key={job._id} id={`id_${job._id}`} className={styles.jobCard}
+
+              style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <button
                   className={styles.saveButton}
@@ -334,7 +364,7 @@ const JobList = ({
                     onClick={() => toggleExpandedJob(job._id)}
                     className={styles.toggleButton}
                   >
-                    {expandedJob === job._id ? '간략히 보기' : '자세히 보기'}
+                    {expandedJob === job._id ? '접기' : '자세히 보기'}
                   </button>
                 </div>
               </div>
@@ -401,3 +431,5 @@ const JobList = ({
 };
 
 export default JobList;
+
+

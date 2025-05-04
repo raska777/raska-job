@@ -17,7 +17,6 @@ export async function GET() {
     const users = await db.collection('users')
       .find()
       .sort({ createdAt: -1 })
-      .limit(5)
       .toArray();
 
     return NextResponse.json(users);
