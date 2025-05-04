@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiShare2, FiPhone, FiClock, FiDollarSign, FiUser, FiMapPin, FiCalendar, FiTrash2, FiArrowLeftCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import styles from 'styles/savedjobs.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
@@ -179,7 +182,7 @@ export default function SavedJobsPage() {
               key={jobId}
               className={styles.jobCard}
               style={{ animationDelay: `${index * 0.1}s` }}
-            >
+            >      <ToastContainer position="top-right" autoClose={3000} />
               <div className={styles.jobCardContent}>
                 <div className={styles.jobHeader}>
                   <span className={styles.timeAgo}>
@@ -278,6 +281,7 @@ className={styles.viewButton}
           <Link href="/" className={styles.returnHome}>
             홈페이지로 돌아가기
           </Link>
+
         </div>
       )}
 
@@ -296,6 +300,7 @@ className={styles.viewButton}
           )}
         </div>
       )}
+
     </div>
   );
 }

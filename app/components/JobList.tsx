@@ -61,13 +61,13 @@ const JobList = ({
   const [totalJobs, setTotalJobs] = useState(0);
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (onLoaded) {
-      const timer = setTimeout(() => onLoaded(), 500);
-      return () => clearTimeout(timer);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
+  if (onLoaded) {
+    setTimeout(onLoaded, 500);
+  }
+}, []);
+
   
   
   
