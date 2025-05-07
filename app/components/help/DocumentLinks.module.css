@@ -7,11 +7,55 @@
     margin-top: 1.5rem;
   }
   
+  /* Kategoriyalar uchun yangi stil */
+  .categoryTabs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  
+  .categoryTabs::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  
+  .categoryTab {
+    background-color: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  
+  .categoryTab:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .activeCategory {
+    background-color: #1d4ed8;
+    color: white;
+    border-color: #1d4ed8;
+  }
+  
+  /* Visa tablari uchun yangi stil */
   .visaTabs {
     display: flex;
     gap: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .visaTabs::-webkit-scrollbar {
+    display: none;
   }
   
   .tab {
@@ -23,6 +67,8 @@
     font-size: 0.875rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   
   .tab:hover {
@@ -78,6 +124,11 @@
   }
   
   @media (max-width: 480px) {
+    .categoryTab {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+    }
+  
     .tab {
       font-size: 0.75rem;
       padding: 0.3rem 0.8rem;
@@ -95,4 +146,3 @@
       font-size: 0.8rem;
     }
   }
-  
