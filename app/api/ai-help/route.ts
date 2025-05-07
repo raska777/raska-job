@@ -203,8 +203,8 @@ async function getAIResponse(question: string, systemPrompt: string): Promise<st
           { role: 'system', content: systemPrompt },
           { role: 'user', content: question }
         ],
-        temperature: 0.5,           // More factual, less creative
-        max_tokens: 500,            // Reasonable length to avoid timeout
+        temperature: 0.2,           // More factual, less creative
+        max_tokens: 600,            // Reasonable length to avoid timeout
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
