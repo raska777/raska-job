@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
     `;
 
     const chat = await openai.chat.completions.create({
-      model: 'gpt-4', // Using more capable model
+      model: 'gpt-3.5-turbo', // Using more capable model
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
