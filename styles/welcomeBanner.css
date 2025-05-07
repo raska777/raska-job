@@ -114,4 +114,41 @@
         gradient 12s ease infinite,
         subtle-pulse 6s ease infinite;
     }
+  }.raskajob-tabs {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: white;
+    padding-left: 0.2rem;
+    border-bottom: 1px solid #e5e7eb; /* Tailwind border-gray-200 */
+    scrollbar-width: thin;
   }
+  
+  .raskajob-tabs::-webkit-scrollbar {
+    height: 6px;
+  }
+  .raskajob-tabs::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* Tailwind slate-300 */
+    border-radius: 4px;
+  }
+  
+  .raskajob-tab-button {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: small;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: #6b7280; /* Tailwind text-gray-500 */
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .raskajob-tab-button.active {
+    color: #2563eb; /* Tailwind text-blue-600 */
+    border-bottom-color: #2563eb;
+  }
+  

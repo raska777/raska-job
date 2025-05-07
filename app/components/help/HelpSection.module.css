@@ -5,7 +5,7 @@
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    background-color: #2563eb;
+    background-color: #3283cf;
     color: white;
     border: none;
     border-radius: 50px;
@@ -17,10 +17,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     transition: all 0.3s ease;
+    opacity: 0.7;
   }
   
   .floatingButton:hover {
-    background-color: #1d4ed8;
+    background-color: #2a6aa1;
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   }

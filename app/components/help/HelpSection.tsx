@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import AIChat from './AIChat';
-import DocumentLinks from './DocumentLinks';
+// import DocumentLinks from '../DocumentLinks';
 import VisaInfo from './VisaInfo';
 import EmergencyContacts from './EmergencyContacts';
 import styles from './HelpSection.module.css';
@@ -12,7 +12,6 @@ import {
   FaChevronDown, 
   
   FaComment,
-  FaFileAlt,
   FaPassport,
   FaExclamationTriangle,
   FaCompass
@@ -20,7 +19,6 @@ import {
 
 const TAB_OPTIONS = [
   { id: 'chat', label: 'AI Yordam', icon: <FaComment /> },
-  { id: 'docs', label: 'Hujjatlar', icon: <FaFileAlt /> },
   { id: 'visa', label: 'Viza', icon: <FaPassport /> },
   { id: 'emergency', label: 'Favqulodda', icon: <FaExclamationTriangle /> }
 ];
@@ -130,7 +128,7 @@ export default function HelpSection() {
         {/* Kontent maydoni */}
         <div className={styles.content}>
           {activeTab === 'chat' && <AIChat compact={isMobile} />}
-          {activeTab === 'docs' && <DocumentLinks />}
+          {/* {activeTab === 'docs' && <DocumentLinks />} */}
           {activeTab === 'visa' && <VisaInfo />}
           {activeTab === 'emergency' && <EmergencyContacts />}
         </div>
