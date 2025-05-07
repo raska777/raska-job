@@ -196,26 +196,27 @@ Boshqa mavzular bo'yicha faqat rasmiy manbalarga tayaning:
 }
 
 async function getAIResponse(question: string, systemPrompt: string): Promise<string> {
-  try {
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: question }
-      ],
-      temperature: 0.7,
-      max_tokens: 1000,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    });
-
-    return completion.choices[0]?.message?.content?.trim() || '';
-  } catch (error) {
-    console.error('OpenAI API xatosi:', error);
-    throw new Error('AI javobini olishda xato yuz berdi');
+    try {
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4', // ✅ recommended stable model
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: question }
+        ],
+        temperature: 0.5,           // More factual, less creative
+        max_tokens: 700,            // Reasonable length to avoid timeout
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+  
+      return completion.choices[0]?.message?.content?.trim() || '';
+    } catch (error) {
+      console.error('OpenAI API xatosi:', error);
+      throw new Error('AI javobini olishda xato yuz berdi');
+    }
   }
-}
+  
 
 function formatResponse(response: string, topic: AllowedTopic, keywords: string[]): string {
   // Add Korean terms for keywords
