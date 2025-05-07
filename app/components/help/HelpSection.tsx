@@ -10,8 +10,7 @@ import {
   FaQuestionCircle, 
   FaTimes, 
   FaChevronDown, 
-  FaPhone, 
-  FaGlobe,
+  
   FaComment,
   FaFileAlt,
   FaPassport,
@@ -136,19 +135,7 @@ export default function HelpSection() {
           {activeTab === 'emergency' && <EmergencyContacts />}
         </div>
 
-        {/* Footer qismi */}
-        <div className={styles.footer}>
-          <div className={styles.contactItem}>
-            <FaPhone className={styles.contactIcon} />
-            <a href="tel:1345" className={styles.contactLink}>1345 (Immigratsiya)</a>
-          </div>
-          <div className={styles.contactItem}>
-            <FaGlobe className={styles.contactIcon} />
-            <a href="https://www.hikorea.go.kr" target="_blank" rel="noopener" className={styles.contactLink}>
-              HiKorea vebsayti
-            </a>
-          </div>
-        </div>
+
       </div>
     </>
   );

@@ -28,13 +28,13 @@ export default function AIChat({ compact = false, initialMessages = [] }: AIChat
   const [error, setError] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [suggestedFollowups, setSuggestedFollowups] = useState<string[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const controllerRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-    
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-
-  // Save message history
+  // Xabarlar tarixini saqlash
   useEffect(() => {
     const savedMessages = localStorage.getItem('aiChatMessages');
     if (savedMessages) {
@@ -46,28 +46,31 @@ export default function AIChat({ compact = false, initialMessages = [] }: AIChat
     localStorage.setItem('aiChatMessages', JSON.stringify(messages));
   }, [messages]);
 
-  // Auto-resize textarea and scroll to bottom
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [input, messages]);
-  
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-  
+  // Textarea va scrollni boshqarish
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
     scrollToBottom();
-  }, [input, messages, scrollToBottom]);
-  
+  }, [input, messages]);
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  // Scroll holatini kuzatish
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      setIsScrolled(container.scrollTop > 10);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSubmit = async () => {
     if (!input.trim()) {
@@ -196,7 +199,10 @@ export default function AIChat({ compact = false, initialMessages = [] }: AIChat
           questions={[]} 
         />
 
-        <div className={styles.messagesContainer}>
+        <div 
+          ref={messagesContainerRef}
+          className={styles.messagesContainer}
+        >
           {messages.length === 0 && (
             <div className={styles.welcomeMessage}>
               <h4>Immigratsiya boʻyicha yordamchi AI</h4>
@@ -274,7 +280,7 @@ export default function AIChat({ compact = false, initialMessages = [] }: AIChat
           <div ref={messagesEndRef} />
         </div>
 
-        <div className={styles.inputContainer}>
+        <div className={`${styles.inputContainer} ${isScrolled ? styles.scrolled : ''}`}>
           <div className={styles.inputGroup}>
             <textarea
               ref={textareaRef}
