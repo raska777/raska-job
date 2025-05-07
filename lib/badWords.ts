@@ -13,7 +13,7 @@ export const badWord ={
       "onaginayni", "onaginagni", "am-yalar", "a-m","beshkabir","dirrachit","mastrubate","yasama","yasamaqotoq",
       "rezinkaam","rezinka-am","yasama-qotoq","ot-bashara","eshshakmiyya","shaakniki","otniki","ottiki","ottiqutag`i",
       "qutoqcha","temirtashoq","tushoqcha","tashoqcha","nasbosgan","nas","oziga","qutagi","toshagim","toshag`im","qotag`im",
-      "qotagim","amim","boshiga"
+      "qotagim","amim","boshiga","jinni","ahmoq","axmoq","maraz",'galvars',"yomon","tupoy","galdir","garang","eshshak","tushuk"
     ],
     "en": [
       "fuck", "shit", "bitch", "asshole", "dick", "bastard", "motherfucker", "cunt", "piss", "damn", 

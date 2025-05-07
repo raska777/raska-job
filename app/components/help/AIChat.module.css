@@ -1,0 +1,401 @@
+
+/* components/Help/AIChat.module.css - Fully Responsive & Complete */
+
+.chatContainer {
+    --primary: #4361ee;
+    --primary-light: #e6f0ff;
+    --primary-dark: #3a56d4;
+    --text-primary: #2b2d42;
+    --text-secondary: #4a4e69;
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --border-light: #e9ecef;
+    --error-bg: #fff5f5;
+    --error-text: #dc3545;
+    --success-bg: #f0fff4;
+    --success-text: #28a745;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+  
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  
+  .compact {
+    border-radius: 0;
+    height: 100dvh;
+    max-width: 100%;
+  }
+  
+  .chatWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .header h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.25rem;
+  }
+  
+  .messagesContainer {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0.25rem 0;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--bg-light);
+  }
+  
+  .messagesContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .messagesContainer::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: var(--radius-sm);
+  }
+  
+  .welcomeMessage {
+    margin: 0.5rem 0;
+    text-align: center;
+    padding: 0.75rem;
+    color: var(--text-secondary);
+  }
+  
+  .welcomeMessage h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+  }
+  
+  .welcomeMessage p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .messageGroup {
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .questionBubble,
+  .answerBubble {
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--radius-lg);
+    max-width: 85%;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .questionBubble {
+    align-self: flex-end;
+    background-color: var(--primary);
+    color: white;
+    margin-left: auto;
+    margin-bottom: 0.4rem;
+  }
+  
+  .answerBubble {
+    align-self: flex-start;
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    margin-right: auto;
+    border: 1px solid var(--border-light);
+  }
+  
+  .messageContent {
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.5;
+  }
+  
+  .messageActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+    justify-content: flex-end;
+  }
+  
+  .actionButton {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    font-size: 0.9rem;
+  }
+  
+  .actionButton:hover {
+    color: var(--primary);
+    background-color: var(--primary-light);
+  }
+  
+  .activeLike {
+    color: var(--success-text);
+  }
+  
+  .activeDislike {
+    color: var(--error-text);
+  }
+  
+  .typingIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0.4rem 0;
+  }
+  
+  .typingDots {
+    display: flex;
+    gap: 0.25rem;
+  }
+  
+  .typingDots span {
+    animation: bounce 1.4s infinite ease-in-out;
+    animation-delay: calc(var(--delay) * 0.16s);
+  }
+  
+  .typingDots span:nth-child(1) { --delay: 1; }
+  .typingDots span:nth-child(2) { --delay: 2; }
+  .typingDots span:nth-child(3) { --delay: 3; }
+  
+  .followupQuestions {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border-light);
+  }
+  
+  .followupQuestions h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  .followupGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .followupButton {
+    padding: 0.5rem 0.75rem;
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .followupButton:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  
+  .inputContainer {
+    background: var(--bg-white);
+    position: sticky;
+    bottom: 0;
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--border-light);
+    z-index: 10;
+  }
+  
+  .inputGroup {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+  
+  .textarea {
+    flex: 1;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.9rem;
+    resize: none;
+    min-height: 50px;
+    max-height: 150px;
+    font-family: inherit;
+    line-height: 1.5;
+    transition: var(--transition);
+  }
+  
+  .textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
+  }
+  
+  .buttonGroup {
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-end;
+  }
+  
+  .primaryButton,
+  .secondaryButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    transition: var(--transition);
+  }
+  
+  .primaryButton {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .primaryButton:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .primaryButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .secondaryButton {
+    background-color: var(--bg-light);
+    color: var(--text-secondary);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .secondaryButton:hover {
+    background-color: var(--border-light);
+  }
+  
+  .suggestionHint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding-left: 0.25rem;
+  }
+  
+  .clearButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.85rem;
+  }
+  
+  .clearButton:hover {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border-color: var(--error-text);
+  }
+  
+  .errorBox {
+    padding: 0.6rem 0.9rem;
+    margin-top: 0.4rem;
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+  }
+  
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-5px); }
+  }
+  
+  @media (max-width: 768px) {
+    .chatContainer {
+      border-radius: 0;
+      height: 100dvh;
+    }
+  
+    .messagesContainer {
+      padding: 0.2rem 0;
+    }
+  
+    .questionBubble,
+    .answerBubble {
+      max-width: 90%;
+      padding: 0.5rem 0.8rem;
+    }
+  
+    .inputGroup {
+      flex-direction: row;
+      gap: 0.4rem;
+    }
+  
+    .textarea {
+      min-height: 45px;
+      padding: 0.5rem 0.8rem;
+    }
+  
+    .primaryButton,
+    .secondaryButton {
+      width: 34px;
+      height: 34px;
+    }
+  
+    .followupGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
