@@ -198,7 +198,7 @@ Boshqa mavzular bo'yicha faqat rasmiy manbalarga tayaning:
 async function getAIResponse(question: string, systemPrompt: string): Promise<string> {
     try {
       const completion = await openai.chat.completions.create({
-        model: 'gpt-4', // ✅ recommended stable model
+        model: 'gpt-3.5-turbo', // ✅ recommended stable model
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: question }
