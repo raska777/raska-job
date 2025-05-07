@@ -164,7 +164,7 @@
     .raskajob-auth-container {
     gap: 0.85rem;
     position: absolute;
-    top: 255px;
+    top: 300px;
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust for exact center */
     width: auto; /* Let content determine width */

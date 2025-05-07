@@ -303,9 +303,10 @@
   
   /* Search Container */
   .search-container {
-    width: 90%;
+    width: 94%;
     margin: 0 auto;
     max-width: 800px;
+    margin-top: 50px;
   }
   
   .search-container .search-box {
