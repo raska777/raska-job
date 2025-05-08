@@ -1,246 +1,14 @@
 
 
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import { useSession } from "next-auth/react";
-// import Link from "next/link";
-// import styles from 'styles/my-jobs.module.css';
-// import { useRouter } from "next/navigation";
-// import { FiArrowLeftCircle } from "react-icons/fi";
-
-// interface Job {
-//   _id: string;
-//   work_type: string;
-//   work_days: string;
-//   work_hours: string;
-//   salary: string;
-//   language: string;
-//   visa_type: string;
-//   contact: string;
-//   location: string;
-// }
-
-// export default function MyJobsPage() {
-//   const { data: session, status } = useSession();
-//   const [jobs, setJobs] = useState<Job[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [editingJob, setEditingJob] = useState<Job | null>(null);
-//   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const fetchJobs = async () => {
-//       if (!session?.user?.id) return;
-
-//       setLoading(true);
-//       try {
-//         const res = await fetch(`/api/my-jobs`);
-//         const data = await res.json();
-//         setJobs(data);
-//       } catch {
-//         setErrorMessage("공고를 불러올 수 없습니다.");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchJobs();
-//   }, [session]);
-
-//   const handleUpdate = async () => {
-//     if (!editingJob) return;
-
-//     try {
-//       const res = await fetch(`/api/my-jobs/${editingJob._id}`, {
-//         method: "PUT",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(editingJob),
-//       });
-
-//       if (res.ok) {
-//         alert("공고가 수정되었습니다 ✅");
-//         setJobs((prevJobs) =>
-//           prevJobs.map((job) =>
-//             job._id === editingJob._id ? editingJob : job
-//           )
-//         );
-//         setEditingJob(null);
-//       } else {
-//         const errorData = await res.json();
-//         setErrorMessage(errorData.message || "오류가 발생했습니다 ❌");
-//       }
-//     } catch {
-//       console.error("Unexpected error during update");
-//       setErrorMessage("오류가 발생했습니다 ❌");
-//     }
-//   };
-
-//   const handleDelete = async (id: string) => {
-//     const confirmDelete = window.confirm("이 공고를 삭제하시겠습니까?");
-//     if (!confirmDelete) return;
-
-//     try {
-//       const res = await fetch(`/api/my-jobs/${id}`, { method: "DELETE" });
-
-//       if (res.ok) {
-//         setJobs((prevJobs) => prevJobs.filter((job) => job._id !== id));
-//         alert("공고가 삭제되었습니다 ✅");
-//       } else {
-//         const errorData = await res.json();
-//         setErrorMessage(errorData.message || "삭제 중 오류가 발생했습니다 ❌");
-//       }
-//     } catch {
-//       console.error("Unexpected error during delete");
-//       setErrorMessage("삭제 중 오류가 발생했습니다 ❌");
-//     }
-//   };
-
-//   if (status === "loading" || loading) return <p className={styles.loadingText}>로딩 중...</p>;
-
-//   if (!session)
-//     return (
-//       <main className={styles.myJobsContainer}>
-//         <h2 className={styles.pageTitle}>내 공고 목록</h2>
-//         <p className={styles.errorMessage}>로그인 해주세요.</p>
-//       </main>
-//     );
-
-//   return (
-//     <main className={styles.myJobsContainer}>
-//       <button onClick={() => router.push('/profile')} className={styles.backButton}>
-//           <FiArrowLeftCircle size={24} /> 뒤로
-//         </button>
-
-//       <Link href="/post" className={styles.addJobLink}>
-//         ➕ 공고 등록
-//       </Link>
-
-//       <h2 className={styles.pageTitle}>내 공고 목록</h2>
-
-//       {errorMessage && (
-//         <p className={styles.errorMessage}>{errorMessage}</p>
-//       )}
-
-//       {jobs.length === 0 ? (
-//         <p className={styles.noJobsText}>등록된 공고가 없습니다.</p>
-//       ) : (
-//         <ul className={styles.jobsList}>
-//           {jobs.map((job) => (
-//             <li key={job._id} className={styles.jobCard}>
-//               <div className={styles.jobDetail}>
-//                 <strong>근무 형태:</strong>
-//                 <span>{job.work_type}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>근무 요일:</strong>
-//                 <span>{job.work_days}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>근무 시간:</strong>
-//                 <span>{job.work_hours}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>급여:</strong>
-//                 <span>{job.salary}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>언어:</strong>
-//                 <span>{job.language}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>비자 종류:</strong>
-//                 <span>{job.visa_type}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>연락처:</strong>
-//                 <span>{job.contact}</span>
-//               </div>
-//               <div className={styles.jobDetail}>
-//                 <strong>지역:</strong>
-//                 <span>{job.location}</span>
-//               </div>
-
-//               <div className={styles.jobActions}>
-//                 <button
-//                   onClick={() => handleDelete(job._id)}
-//                   className={`${styles.actionButton} ${styles.deleteButton}`}
-//                 >
-//                   삭제
-//                 </button>
-//                 <button
-//                   onClick={() => setEditingJob(job)}
-//                   className={`${styles.actionButton} ${styles.editButton}`}
-//                 >
-//                   수정
-//                 </button>
-//               </div>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-
-//       {editingJob && (
-//         <form
-//           onSubmit={(e) => {
-//             e.preventDefault();
-//             handleUpdate();
-//           }}
-//           className={styles.editForm}
-//         >
-//           <h3 className={styles.formTitle}>공고 수정</h3>
-
-//           {[
-//             { name: "work_type", label: "근무 형태" },
-//             { name: "work_days", label: "근무 요일" },
-//             { name: "work_hours", label: "근무 시간" },
-//             { name: "salary", label: "급여" },
-//             { name: "language", label: "언어" },
-//             { name: "visa_type", label: "비자 종류" },
-//             { name: "contact", label: "연락처" },
-//             { name: "location", label: "지역" },
-//           ].map((field) => (
-//             <div key={field.name} className={styles.formGroup}>
-//               <label className={styles.formLabel}>{field.label}</label>
-//               <input
-//                 type="text"
-//                 value={editingJob[field.name as keyof Job] || ''}
-//                 onChange={(e) =>
-//                   setEditingJob({ ...editingJob, [field.name]: e.target.value })
-//                 }
-//                 className={styles.formInput}
-//               />
-//             </div>
-//           ))}
-
-//           <div className={styles.formActions}>
-//             <button type="submit" className={`${styles.actionButton} ${styles.saveButton}`}>
-//               저장
-//             </button>
-//             <button
-//               type="button"
-//               onClick={() => setEditingJob(null)}
-//               className={`${styles.actionButton} ${styles.cancelButton}`}
-//             >
-//               취소
-//             </button>
-//           </div>
-//         </form>
-//       )}
-//     </main>
-//   );
-// }
-
-
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FiArrowLeftCircle, FiEdit2, FiTrash2, FiEye, FiPlus } from 'react-icons/fi';
+import { FiArrowLeftCircle, FiEdit2, FiTrash2,  FiPlus } from 'react-icons/fi';
 import styles from 'styles/my-jobs.module.css';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface Job {
@@ -291,21 +59,7 @@ export default function MyJobsPage() {
     fetchJobs();
   }, [session]);
 
-  const handleViewJob = async (jobId: string) => {
-    try {
-      const res = await fetch(`/api/post/find-page?jobId=${jobId}`);
-      const data = await res.json();
-      
-      if (!res.ok) throw new Error(data.error || "Failed to find job");
-
-      const { page, elementId } = data;
-      router.push(`/?page=${page}&scrollTo=${elementId}`);
-      
-    } catch (err) {
-      console.error("Error viewing job:", err);
-      toast.error("공고로 이동할 수 없습니다");
-    }
-  };
+ 
 
   const handleUpdateJob = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -350,26 +104,7 @@ export default function MyJobsPage() {
     }
   };
 
-  const toggleJobStatus = async (jobId: string, currentStatus: boolean) => {
-    try {
-      const res = await fetch(`/api/my-jobs/${jobId}/status`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isActive: !currentStatus }),
-      });
-
-      if (res.ok) {
-        const updatedJob = await res.json();
-        setJobs(jobs.map(job => job._id === jobId ? updatedJob : job));
-        toast.success(`공고가 ${!currentStatus ? '활성화' : '비활성화'}되었습니다`);
-      } else {
-        throw new Error('Failed to toggle job status');
-      }
-    } catch (error) {
-      console.error('Error toggling job status:', error);
-      toast.error('상태 변경에 실패했습니다');
-    }
-  };
+ 
 
   // Pagination logic
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -423,33 +158,30 @@ export default function MyJobsPage() {
             {currentJobs.map((job) => (
               <div key={job._id} className={styles.jobCard}>
                 <div className={styles.jobHeader}>
-                  <span className={styles.jobStatus} data-active={job.isActive}>
-                    {job.isActive ? '활성' : '비활성'}
-                  </span>
+                  
                   <h3>{job.work_name}</h3>
                   <p className={styles.jobType}>{job.work_type}</p>
                 </div>
 
                 <div className={styles.jobDetails}>
-                  <p><strong>근무일:</strong> {job.work_days}</p>
-                  <p><strong>시간:</strong> {job.work_hours}</p>
-                  <p><strong>급여:</strong> {job.salary}</p>
-                  <p><strong>지역:</strong> {job.location}</p>
-                  <p>
-                    <strong>외국인:</strong> 
-                    <span className={job.accepts_foreigners ? styles.yes : styles.no}>
-                      {job.accepts_foreigners ? ' 가능' : ' 불가능'}
+                <p><strong>ish turi:</strong> {job.work_days}</p>
+                 <p><strong>ish nomi:</strong> {job.work_hours}</p>
+                  <p><strong>jinsi:</strong> {job.salary}</p>
+                <p><strong>shaxar:</strong> {job.location}</p>
+                <p><strong>ish soati:</strong> {job.work_hours}</p>
+                 <p>
+                   <strong>외국인:</strong> 
+                   <span className={job.accepts_foreigners ? styles.yes : styles.no}>
+                       {job.accepts_foreigners ? ' 가능' : ' 불가능'}
                     </span>
-                  </p>
+                  </p>                  <p><strong>contact:</strong> {job.contact}</p>
+                   <p><strong>ish kunlari:</strong> {job.work_days}</p>
+                   <p><strong>description:</strong> {job.description}</p>
+                   <p><strong>createdAt:</strong> {job.createdAt}</p>
+
                 </div>
 
                 <div className={styles.jobActions}>
-                  <button 
-                    onClick={() => handleViewJob(job._id)}
-                    className={styles.actionButton}
-                  >
-                    <FiEye size={16} /> 보기
-                  </button>
                   <button 
                     onClick={() => setEditingJob(job)}
                     className={styles.actionButton}
@@ -462,11 +194,7 @@ export default function MyJobsPage() {
                   >
                     <FiTrash2 size={16} /> 삭제
                   </button>
-                  <button
-                    onClick={() => toggleJobStatus(job._id, job.isActive)}
-                    className={job.isActive ? styles.deactivateButton : styles.activateButton}
-                  >
-                  </button>
+                  
                 </div>
               </div>
             ))}
@@ -608,6 +336,8 @@ export default function MyJobsPage() {
           </div>
         </div>
       )}
+            <ToastContainer position="top-right" autoClose={3000} />
+
     </div>
   );
 }

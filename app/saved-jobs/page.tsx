@@ -5,7 +5,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FiShare2, FiPhone, FiClock, FiDollarSign, FiUser, FiMapPin, FiCalendar, FiTrash2, FiArrowLeftCircle } from 'react-icons/fi';
+import { FiShare2, FiPhone, FiClock, FiDollarSign, FiUser, FiMapPin, FiCalendar, FiTrash2, FiArrowLeftCircle, FiUsers } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import styles from 'styles/savedjobs.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
+import { FaFemale, FaMale } from "react-icons/fa";
 
 interface SavedJob {
   _id: string;
@@ -21,6 +22,7 @@ interface SavedJob {
     _id: string;
     work_name: string;
     work_type: string;
+    gender_preference: 'male' | 'female' | 'any';
     location: string;
     work_hours: string;
     salary: string;
@@ -69,19 +71,19 @@ export default function SavedJobsPage() {
       const res = await fetch(`/api/post/find-page?jobId=${jobId}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Xatolik");
-  
+
       const { page } = data;
       const elementId = `id_${jobId}`;
-  
+
       // ✅ Sahifani to‘g‘ri page va scrollTo bilan ochamiz
       router.push(`/?page=${page}&scrollTo=${elementId}`);
     } catch (err) {
       console.error("❌ handleViewJob error:", err);
     }
   };
-  
-  
-  
+
+
+
 
   const handleRemoveJob = async (jobId: string) => {
     if (!confirm('이 일자리를 삭제하시겠습니까?')) return;
@@ -177,12 +179,12 @@ export default function SavedJobsPage() {
 
       {currentJobs.length > 0 ? (
         <div className={styles.jobsGrid}>
-          {currentJobs.map(({ jobData,  jobId }, index) => (
+          {currentJobs.map(({ jobData, jobId }, index) => (
             <div
               key={jobId}
               className={styles.jobCard}
               style={{ animationDelay: `${index * 0.1}s` }}
-            >      <ToastContainer position="top-right" autoClose={3000} />
+            >
               <div className={styles.jobCardContent}>
                 <div className={styles.jobHeader}>
                   <span className={styles.timeAgo}>
@@ -200,6 +202,16 @@ export default function SavedJobsPage() {
                 <ul className={styles.jobDetailsList}>
                   <li><FiClock size={16} color="#3b82f6" /> 근무 시간: {jobData.work_hours}</li>
                   <li><FiDollarSign size={16} color="#10b981" /> 급여: {jobData.salary}</li>
+                  <li>
+                    {jobData.gender_preference === 'any' ? (
+                      <FiUsers size={16} color="#6b7280" />
+                    ) : jobData.gender_preference === 'male' ? (
+                      <FaMale size={16} color="#3b82f6" />
+                    ) : (
+                      <FaFemale size={16} color="#ec4899" />
+                    )}
+                    성별: {jobData.gender_preference === 'any' ? '무관' : jobData.gender_preference === 'male' ? '남성' : '여성'}
+                  </li>
                   <li>
                     <FiUser size={16} color="#f59e0b" /> 외국인:
                     {jobData.accepts_foreigners ? (
@@ -258,14 +270,14 @@ export default function SavedJobsPage() {
                   >
                     {expandedJob === jobId ? '간략히 보기' : '자세히 보기'}
                   </button>
-                  <button 
-  onClick={() => handleViewJob(jobId)}
-className={styles.viewButton}
+                  <button
+                    onClick={() => handleViewJob(jobId)}
+                    className={styles.viewButton}
                   >
                     원본 보기
                   </button>
-                  <button 
-                    onClick={() => handleRemoveJob(jobId)} 
+                  <button
+                    onClick={() => handleRemoveJob(jobId)}
                     className={styles.removeButton}
                   >
                     <FiTrash2 size={16} /> 삭제
@@ -300,7 +312,7 @@ className={styles.viewButton}
           )}
         </div>
       )}
-
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }

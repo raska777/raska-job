@@ -8,6 +8,7 @@ import { FiSearch, FiMapPin, FiArrowLeftCircle } from 'react-icons/fi';
 import 'react-toastify/dist/ReactToastify.css';
 
 import "styles/searchPage.css";
+import { ToastContainer } from 'react-toastify';
 
 
 // Korean translations
@@ -178,6 +179,8 @@ function SearchPageContent() {
 
       {/* Results Section */}
       <main className="search-results">
+      <ToastContainer position="top-right" autoClose={1000} />
+
       <JobList
   selectedCity={selectedCity}
   searchQuery={searchTerm}

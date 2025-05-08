@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 
-import { FiShare2, FiPhone } from 'react-icons/fi';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FiShare2, FiPhone, FiUsers } from 'react-icons/fi';
+import { FaStar, FaRegStar, FaTransgender, FaMale, FaFemale } from 'react-icons/fa';
 import { FiClock, FiDollarSign, FiCalendar, FiUser, FiMapPin } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
@@ -18,6 +18,7 @@ interface Job {
   _id: string;
   work_name: string;
   work_type: string;
+  gender_preference: 'male' | 'female' | 'any';
   location: string;
   work_hours: string;
   salary: string;
@@ -101,6 +102,7 @@ useEffect(() => {
           _id: job._id,
           work_name: job.work_name || '정보 없음',
           work_type: job.work_type || '정보 없음',
+          gender_preference: job.gender_preference || "",
           location: job.location || '정보 없음',
           work_hours: job.work_hours || '협의',
           salary: job.salary || '협의',
@@ -310,6 +312,16 @@ useEffect(() => {
                   <ul className={styles.jobDetailsList}>
                     <li><FiClock size={16} color="#3b82f6" /> 근무 시간: {job.work_hours}</li>
                     <li><FiDollarSign size={16} color="#10b981" /> 급여: {job.salary}</li>
+                    <li>
+                          {job.gender_preference === 'any' ? (
+                           <FiUsers size={16} color="#6b7280" />
+                          ) : job.gender_preference === 'male' ? (
+                            <FaMale size={16} color="#3b82f6" />
+                          ) : (
+                            <FaFemale size={16} color="#ec4899" />
+                          )}
+                          성별: {job.gender_preference === 'any' ? '무관' : job.gender_preference === 'male' ? '남성' : '여성'}
+                        </li>
                     <li>
                       <FiUser size={16} color="#f59e0b" /> 외국인:
                       {job.accepts_foreigners ? (

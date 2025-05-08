@@ -1,9 +1,12 @@
 
 
+
 // 'use client';
 
 // import { useState } from 'react';
 // import { useSession } from 'next-auth/react';
+// import { containsBadWord } from '@/utils/filter';
+
 // import 'styles/postjob.css';
 
 // interface FormData {
@@ -83,6 +86,21 @@
 //       setError('필수 항목을 모두 입력해주세요!');
 //       return;
 //     }
+//     const combinedText = `
+//   ${form.work_name} 
+//   ${form.description} 
+//   ${form.work_type} 
+//   ${form.work_days} 
+//   ${form.salary} 
+//   ${form.contact} 
+//   ${form.location}
+// `;
+
+// if (containsBadWord(combinedText)) {
+//   setError('공고에 부적절한 단어가 포함되어 있습니다.');
+//   return;
+// }
+
 
 //     setError('');
 //     setIsFormSubmitted(true);
@@ -320,9 +338,6 @@
   
 // }
 
-
-
-
 'use client';
 
 import { useState } from 'react';
@@ -334,6 +349,7 @@ import 'styles/postjob.css';
 interface FormData {
   work_name: string;
   work_type: string;
+  gender_preference: string;
   work_days: string;
   work_hours: string;
   custom_work_hours?: string;
@@ -355,7 +371,13 @@ const workTypes = [
   '정규직', '계약직', '파트타임', '아르바이트', '인턴', '프리랜서'
 ];
 
+const genderOptions = [
+  { value: 'any', label: '성별 무관' },
+  { value: 'male', label: '남성' },
+  { value: 'female', label: '여성' },
+];
 
+const salaryTypes = ['월급', '일급', '시급'];
 
 export default function PostJob() {
   const { data: session } = useSession();
@@ -363,6 +385,7 @@ export default function PostJob() {
   const [form, setForm] = useState<FormData>({
     work_name: '',
     work_type: '',
+    gender_preference: 'any',
     work_days: '',
     work_hours: '',
     salary: '',
@@ -402,27 +425,27 @@ export default function PostJob() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
-    if (!form.work_type ||!form.work_name|| !form.work_days || !form.work_hours || 
+    // Validatsiya
+    if (!form.work_type || !form.work_name || !form.work_days || !form.work_hours || 
         !form.salary || !form.contact || !form.location) {
       setError('필수 항목을 모두 입력해주세요!');
       return;
     }
+
     const combinedText = `
-  ${form.work_name} 
-  ${form.description} 
-  ${form.work_type} 
-  ${form.work_days} 
-  ${form.salary} 
-  ${form.contact} 
-  ${form.location}
-`;
+      ${form.work_name} 
+      ${form.description} 
+      ${form.work_type} 
+      ${form.work_days} 
+      ${form.salary} 
+      ${form.contact} 
+      ${form.location}
+    `;
 
-if (containsBadWord(combinedText)) {
-  setError('공고에 부적절한 단어가 포함되어 있습니다.');
-  return;
-}
-
+    if (containsBadWord(combinedText)) {
+      setError('공고에 부적절한 단어가 포함되어 있습니다.');
+      return;
+    }
 
     setError('');
     setIsFormSubmitted(true);
@@ -449,6 +472,7 @@ if (containsBadWord(combinedText)) {
           setForm({
             work_name: '',
             work_type: '',
+            gender_preference: 'any',
             work_days: '',
             work_hours: '',
             salary: '',
@@ -497,6 +521,21 @@ if (containsBadWord(combinedText)) {
                   <option value="">선택하세요</option>
                   {workTypes.map(type => (
                     <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">선호 성별 *</label>
+                <select
+                  name="gender_preference"
+                  value={form.gender_preference}
+                  onChange={handleChange}
+                  className="form-input"
+                  required
+                >
+                  {genderOptions.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
                   ))}
                 </select>
               </div>
@@ -574,9 +613,9 @@ if (containsBadWord(combinedText)) {
                     onChange={handleChange}
                     className="form-input"
                   >
-                    <option value="월급">월급</option>
-                    <option value="일급">일급</option>
-                    <option value="시급">시급</option>
+                    {salaryTypes.map(type => (
+                      <option key={type} value={type}>{type}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -641,6 +680,7 @@ if (containsBadWord(combinedText)) {
                   className="cancel-btn"
                   onClick={() => {
                     setIsFormVisible(false);
+                    setError('');
                   }}
                 >
                   작성 취소
@@ -657,5 +697,4 @@ if (containsBadWord(combinedText)) {
       )}
     </main>
   );
-  
 }
