@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FiArrowLeftCircle, FiEdit2, FiTrash2,  FiPlus } from 'react-icons/fi';
+import { FiArrowLeftCircle, FiEdit2, FiTrash2, FiPlus } from 'react-icons/fi';
 import styles from 'styles/my-jobs.module.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +15,8 @@ interface Job {
   _id: string;
   work_name: string;
   work_type: string;
+  gender_preference: 'male' | 'female' | 'any';
+
   work_days: string;
   work_hours: string;
   salary: string;
@@ -59,7 +61,7 @@ export default function MyJobsPage() {
     fetchJobs();
   }, [session]);
 
- 
+
 
   const handleUpdateJob = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +106,7 @@ export default function MyJobsPage() {
     }
   };
 
- 
+
 
   // Pagination logic
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -158,43 +160,45 @@ export default function MyJobsPage() {
             {currentJobs.map((job) => (
               <div key={job._id} className={styles.jobCard}>
                 <div className={styles.jobHeader}>
-                  
-                  <h3>{job.work_name}</h3>
-                  <p className={styles.jobType}>{job.work_type}</p>
+
+                  <h3>{job.work_type}</h3>
+                  <p className={styles.jobType}>{job.work_name}</p>
                 </div>
 
                 <div className={styles.jobDetails}>
-                <p><strong>ish turi:</strong> {job.work_days}</p>
-                 <p><strong>ish nomi:</strong> {job.work_hours}</p>
-                  <p><strong>jinsi:</strong> {job.salary}</p>
-                <p><strong>shaxar:</strong> {job.location}</p>
-                <p><strong>ish soati:</strong> {job.work_hours}</p>
-                 <p>
-                   <strong>외국인:</strong> 
-                   <span className={job.accepts_foreigners ? styles.yes : styles.no}>
-                       {job.accepts_foreigners ? ' 가능' : ' 불가능'}
+                  <p><strong>shaxar:</strong> {job.location}</p>
+                  <p><strong>ish soati:</strong> {job.work_hours}</p>
+                  <p><strong>maosh:</strong> {job.salary}</p>
+
+                  <p><strong>jinsi:</strong> {job.gender_preference === 'any' ? '무관' : job.gender_preference === 'male' ? '남성' : '여성'}</p>
+                  <p>
+                    <strong>외국인:</strong>
+                    <span className={job.accepts_foreigners ? styles.yes : styles.no}>
+                      {job.accepts_foreigners ? ' 가능' : ' 불가능'}
                     </span>
-                  </p>                  <p><strong>contact:</strong> {job.contact}</p>
-                   <p><strong>ish kunlari:</strong> {job.work_days}</p>
-                   <p><strong>description:</strong> {job.description}</p>
-                   <p><strong>createdAt:</strong> {job.createdAt}</p>
+                  </p>
+                  <p><strong>ish kunlari:</strong> {job.work_days}</p>
+
+                  <p><strong>contact:</strong> {job.contact}</p>
+                  <p><strong>description:</strong> {job.description}</p>
+                  <p><strong>createdAt:</strong> {job.createdAt}</p>
 
                 </div>
 
                 <div className={styles.jobActions}>
-                  <button 
+                  <button
                     onClick={() => setEditingJob(job)}
                     className={styles.actionButton}
                   >
                     <FiEdit2 size={16} /> 수정
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleDeleteJob(job._id)}
                     className={styles.deleteButton}
                   >
                     <FiTrash2 size={16} /> 삭제
                   </button>
-                  
+
                 </div>
               </div>
             ))}
@@ -230,7 +234,7 @@ export default function MyJobsPage() {
                 <input
                   type="text"
                   value={editingJob.work_name}
-                  onChange={(e) => setEditingJob({...editingJob, work_name: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, work_name: e.target.value })}
                   required
                 />
               </div>
@@ -239,7 +243,7 @@ export default function MyJobsPage() {
                 <label>근무 형태</label>
                 <select
                   value={editingJob.work_type}
-                  onChange={(e) => setEditingJob({...editingJob, work_type: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, work_type: e.target.value })}
                   required
                 >
                   <option value="공장">공장</option>
@@ -256,7 +260,7 @@ export default function MyJobsPage() {
                 <input
                   type="text"
                   value={editingJob.work_days}
-                  onChange={(e) => setEditingJob({...editingJob, work_days: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, work_days: e.target.value })}
                   required
                 />
               </div>
@@ -266,7 +270,7 @@ export default function MyJobsPage() {
                 <input
                   type="text"
                   value={editingJob.work_hours}
-                  onChange={(e) => setEditingJob({...editingJob, work_hours: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, work_hours: e.target.value })}
                   required
                 />
               </div>
@@ -276,7 +280,7 @@ export default function MyJobsPage() {
                 <input
                   type="text"
                   value={editingJob.salary}
-                  onChange={(e) => setEditingJob({...editingJob, salary: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, salary: e.target.value })}
                   required
                 />
               </div>
@@ -286,7 +290,7 @@ export default function MyJobsPage() {
                 <input
                   type="text"
                   value={editingJob.location}
-                  onChange={(e) => setEditingJob({...editingJob, location: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, location: e.target.value })}
                   required
                 />
               </div>
@@ -296,7 +300,7 @@ export default function MyJobsPage() {
                 <input
                   type="text"
                   value={editingJob.contact}
-                  onChange={(e) => setEditingJob({...editingJob, contact: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, contact: e.target.value })}
                   required
                 />
               </div>
@@ -305,7 +309,7 @@ export default function MyJobsPage() {
                 <label>상세 설명</label>
                 <textarea
                   value={editingJob.description}
-                  onChange={(e) => setEditingJob({...editingJob, description: e.target.value})}
+                  onChange={(e) => setEditingJob({ ...editingJob, description: e.target.value })}
                   rows={5}
                 />
               </div>
@@ -315,7 +319,7 @@ export default function MyJobsPage() {
                   type="checkbox"
                   id="acceptsForeigners"
                   checked={editingJob.accepts_foreigners}
-                  onChange={(e) => setEditingJob({...editingJob, accepts_foreigners: e.target.checked})}
+                  onChange={(e) => setEditingJob({ ...editingJob, accepts_foreigners: e.target.checked })}
                 />
                 <label htmlFor="acceptsForeigners">외국인 지원 가능</label>
               </div>
@@ -336,7 +340,7 @@ export default function MyJobsPage() {
           </div>
         </div>
       )}
-            <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} />
 
     </div>
   );

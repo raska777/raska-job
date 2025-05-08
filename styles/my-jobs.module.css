@@ -153,30 +153,41 @@
 }
 
 .jobHeader {
-  padding: 1.25rem 1.25rem 0;
+  padding: 0.1rem 1.25rem 0;
+  
 }
 
 .jobType {
   color: #64748b;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  font-size: 0.25rem;
+  font-size: small;
+  margin-bottom: -15px;
 }
 
 .jobDetails {
   padding: 1rem 1.25rem;
   font-size: 0.9375rem;
-  line-height: 1.6;
+  line-height: 1;
+  font-size: small;
+  margin-bottom: -15px;
+
 }
 
 .jobDetails p {
-  margin: 0.5rem 0;
   display: flex;
+  border-bottom: 1px dotted rgba(59, 130, 246, 0.4);
+  font-size: small;
+
+
 }
 
 .jobDetails strong {
   min-width: 80px;
   display: inline-block;
   color: #475569;
+  margin-right: 1rem;
+  font-size: small;
+  
 }
 
 /* Status Indicators */
