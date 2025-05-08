@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 
 import { FiShare2, FiPhone, FiUsers } from 'react-icons/fi';
-import { FaStar, FaRegStar, FaTransgender, FaMale, FaFemale } from 'react-icons/fa';
+import { FaStar, FaRegStar,  FaMale, FaFemale } from 'react-icons/fa';
 import { FiClock, FiDollarSign, FiCalendar, FiUser, FiMapPin } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
