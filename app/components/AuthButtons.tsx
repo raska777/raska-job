@@ -74,7 +74,7 @@ const AuthButtons = () => {
           className="raskajob-auth-button raskajob-logout-button"
           onClick={() => signOut()}
         >
-          Logout
+          로그아웃
         </button>
       </div>
     );
@@ -85,11 +85,11 @@ const AuthButtons = () => {
           className="raskajob-auth-button raskajob-login-button"
           onClick={() => signIn()}
         >
-          Login
+          로그인
         </button>
         <Link href="/register">
           <button className="raskajob-auth-button raskajob-signup-button">
-            Sign Up
+          회원가입
           </button>
         </Link>
       </div>

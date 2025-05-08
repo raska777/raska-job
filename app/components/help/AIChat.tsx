@@ -207,7 +207,8 @@ export default function AIChat({ compact = false, initialMessages = [] }: AIChat
             <div className={styles.welcomeMessage}>
               <h4>Immigratsiya boʻyicha yordamchi AI</h4>
               <p>Savolingizni yozing yoki quyidagi takliflardan birini tanlang</p>
-            </div>
+              <p>현재 이 페이지는 우즈베크어만 지원됩니다. 곧 다국어 기능이 업데이트될 예정입니다!</p>
+              </div>
           )}
 
           {messages.map((message) => (

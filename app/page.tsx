@@ -317,17 +317,6 @@ function HomeContent() {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-  
   return (
     <div className="raskajob-container min-h-screen flex flex-col">
       <header className="raskajob-header relative overflow-hidden">
@@ -389,7 +378,7 @@ function HomeContent() {
         {/* Qidiruv inputi */}
         <input
           type="text"
-          placeholder="Ish qidirish..."
+          placeholder="일자리를 검색하세요..."
           className="search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -421,21 +410,21 @@ function HomeContent() {
     onClick={() => setActiveTab('jobs')}
   >
     <FaSearch className="mr-2" />
-    Ish O'rinlari
+    일자리
   </button>
   <button
     className={`raskajob-tab-button ${activeTab === 'resources' ? 'active' : ''}`}
     onClick={() => setActiveTab('resources')}
   >
     <FaBook className="mr-2" />
-    Resurslar
+    자료
   </button>
   <button
     className={`raskajob-tab-button ${activeTab === 'documents' ? 'active' : ''}`}
     onClick={() => setActiveTab('documents')}
   >
     <FaFileAlt className="mr-2" />
-    Hujjatlar
+    서류
   </button>
 </div>
 
@@ -477,7 +466,10 @@ function HomeContent() {
             <>
               <div className="resources-container">
                 <div className="resource-section mb-8">
+                <p>현재 이 페이지는 우즈베크어만 지원됩니다. 곧 다국어 기능이 업데이트될 예정입니다!</p>
+
                   <h2 className="text-xl font-bold mb-4 flex items-center">
+                    
                     <FaInfoCircle className="mr-2 text-blue-500" />
                     Koreyada Ishchi va Talabalar uchun Resurslar
                   </h2>
@@ -512,6 +504,8 @@ function HomeContent() {
           ) : (
             <div className="documents-container">
               <div className="document-section mb-8">
+              <p>현재 이 페이지는 우즈베크어만 지원됩니다. 곧 다국어 기능이 업데이트될 예정입니다!</p>
+
                 <h2 className="text-xl font-bold mb-4 flex items-center">
                   <FaFileAlt className="mr-2 text-blue-500" />
                   Foydali Hujjatlar va Shablonlar
