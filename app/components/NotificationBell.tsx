@@ -1,9 +1,10 @@
 
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { FaRegBell } from 'react-icons/fa';
+import { FaRegBell} from 'react-icons/fa';
 import { IoMdNotificationsOff } from 'react-icons/io';
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
@@ -18,12 +19,12 @@ export default function NotificationSubscriptionButton() {
     const fetchSubscriptionStatus = async () => {
       try {
         const res = await fetch('/api/user/subscription');
-        if (!res.ok) throw new Error('구독 상태를 불러오는데 실패했습니다');
+        if (!res.ok) throw new Error('Failed to load subscription status');
         const data = await res.json();
         setIsSubscribed(data.isSubscribed);
       } catch (err) {
-        console.error('구독 상태 확인 오류:', err);
-        setError('구독 상태를 불러올 수 없습니다');
+        console.error('Subscription status error:', err);
+        setError('Failed to load subscription status');
       }
     };
 
@@ -54,19 +55,19 @@ export default function NotificationSubscriptionButton() {
         method: 'PATCH',
       });
 
-      if (!res.ok) throw new Error('서버 오류');
+      if (!res.ok) throw new Error('Server error');
 
       const data = await res.json();
       setIsSubscribed(data.isSubscribed);
 
       setSuccessMsg(
         data.isSubscribed
-          ? '성공적으로 구독되었습니다!'
-          : '구독이 취소되었습니다'
+          ? 'Subscribed to notifications!'
+          : 'Unsubscribed from notifications'
       );
     } catch (err) {
-      console.error('구독 변경 오류:', err);
-      setError('오류가 발생했습니다');
+      console.error('Subscription toggle error:', err);
+      setError('An error occurred');
     } finally {
       setLoading(false);
     }
@@ -81,56 +82,46 @@ export default function NotificationSubscriptionButton() {
   if (!session) return null;
 
   return (
-    <div className="absolute  top-4 z-50  " style={{ right: '0px' }}>
-      <div className="relative flex flex-col items-end gap-1">
-        {/* 상태 메시지 */}
-        {error && (
-          <div className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 text-xs p-2 rounded flex items-center gap-1">
-            <FaExclamationCircle />
-            <span>{error}</span>
-          </div>
-        )}
-        {successMsg && (
-          <div className="bg-green-100 dark:bg-green-600 text-green-800 dark:text-green-100 text-xs p-2 rounded flex items-center gap-1">
-            <FaCheckCircle />
-            <span>{successMsg}</span>
-          </div>
-        )}
+    <div className="absolute top-1 right-12 z-50">
+      <div className="relative flex items-center gap-2">
+        {/* All messages appear on the left side */}
+        <div className="flex flex-col items-end">
+          {/* Always visible subscribe text */}
+          {!isSubscribed && (
+            <div className="text-xs text-gray-400 whitespace-nowrap">
+              Subscribe to notifications
+            </div>
+          )}
+          
+          {/* Success/error messages (more transparent) */}
+          {error && (
+            <div className="text-xs text-red-400 whitespace-nowrap flex items-center gap-1">
+              <FaExclamationCircle size={12} />
+              <span>{error}</span>
+            </div>
+          )}
+          {successMsg && (
+            <div className="text-xs text-green-400 whitespace-nowrap flex items-center gap-1">
+              <FaCheckCircle size={12} />
+              <span>{successMsg}</span>
+            </div>
+          )}
+        </div>
 
-        {/* 구독 버튼 */}
+        {/* Fixed width icon button */}
         <button
           onClick={toggleSubscription}
           disabled={loading}
-          className={`flex items-center gap-2 px-3 py-2 mr-4 rounded-full text-sm font-medium transition-colors ${
-            isSubscribed 
-              ? 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
-              : 'bg-blue-500 text-white hover:bg-blue-600'
-          }`}
+          className="w-[25px] h-[25px] flex items-center justify-center text-gray-600 hover:text-blue-500 transition-colors focus:outline-none"
         >
           {loading ? (
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
           ) : isSubscribed ? (
-            <>
-              <IoMdNotificationsOff />
-              <span>구독 취소</span>
-            </>
+            <IoMdNotificationsOff size={18} />
           ) : (
-            <>
-              <FaRegBell />
-              <span>구독하기</span>
-            </>
+            <FaRegBell size={18} />
           )}
         </button>
-
-        {/* 안내 문구 */}
-        {!isSubscribed && (
-          <div className="relative">
-          <p className="absolute text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap text-right" style={{ right: '32px' }}>
-          채용 알림을 받아보세요
-          </p>
-        </div>
-         
-        )}
       </div>
     </div>
   );

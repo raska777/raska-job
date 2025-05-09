@@ -114,6 +114,7 @@
         gradient 12s ease infinite,
         subtle-pulse 6s ease infinite;
     }
+    
   }.raskajob-tabs {
     display: flex;
     overflow-x: auto;
